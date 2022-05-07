@@ -619,12 +619,13 @@ nav ul li a:hover {
 }
 
 /* responsive */
-
 @media(max-width:900px) {
     .post-item,
     .post-item:nth-child(even) {
         width: 100%;
         margin-left: 0;
     }
+
 }
+
 
