@@ -9,6 +9,7 @@ const backgroundPic = document.getElementById('backgroundPic');
 const btnChangePhotos = document.getElementById('btnChangePhotos');
 const changePhotosContainer = document.getElementById('changePhotosContainer');
 const changePhotosForm = document.getElementById('changePhotosForm');
+const logoutBTN = document.getElementById('logoutBTN');
 
 // Ինպուտների ID-ները profileForm-ի ճիշտ աշխատանքի համար
 const firstNameInput = document.getElementById('firstname');
@@ -36,10 +37,14 @@ if (profileForm) {
         const photoFile = document.getElementById('photoInput').files[0];
         const backgroundFile = document.getElementById('backgroundInput').files[0];
         const diplomyFile = document.getElementById('diplomyInput').files[0];
+        const address = document.getElementById('address').value;
+        const phone = document.getElementById('phone').value;
 
         const formData = new FormData();
         formData.append('firstname', firstname);
         formData.append('lastname', lastname);
+        formData.append('address', address);
+        formData.append('phone', phone);
 
         const filesArray = [];
         if (photoFile) filesArray.push(photoFile);
@@ -58,6 +63,7 @@ if (profileForm) {
 
             profileForm.reset();
             if (editFormContainer) editFormContainer.style.display = 'none';
+            alert('after 2 hours we are aswer your account if your diplom has not fake your account like been doooctors groupe')
             window.location.reload();
         } catch (error) {
             console.error(error);
@@ -160,3 +166,18 @@ document.addEventListener("click", async (e) => {
         }
     }
 });
+
+if (logoutBTN) {
+    logoutBTN.addEventListener('click', async (e) => {
+        e.preventDefault(); // Կանխում ենք հղման default աշխատանքը
+
+        try {
+            await axios.get('/users/logout', { withCredentials: true });
+
+            window.location.href = "/users/login";
+        } catch (error) {
+            console.error("Logout error:", error);
+            window.location.href = "/users/login";
+        }
+    });
+}

@@ -1,17 +1,16 @@
 <!DOCTYPE html>
-<html lang="hy">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> users </title>
+    <title>User Profile</title>
     <link rel="stylesheet" href="/css/users.css">
 </head>
 
-<!-- HTML / EJS ՖԱՅԼՈՒՄ (Չաթի տվյալները հեռացված են) -->
 <body
         data-current-user-id="<%= (typeof user !== 'undefined' && user) ? user.id : '' %>"
-        data-current-user-name="<%= (typeof myConfirmData !== 'undefined' && myConfirmData) ? myConfirmData.firstname : 'Ես' %>"
+        data-current-user-name="<%= (typeof myConfirmData !== 'undefined' && myConfirmData && myConfirmData.firstname) ? myConfirmData.firstname : 'Me' %>"
 >
 
 <header>
@@ -41,7 +40,8 @@
                         <a href="/confirm/all-users" class="menu-item" id="btnAllUsers">All Users Data</a>
                         <a href="/users/index" class="menu-item" id="btnAllProfiles">All Profiles</a>
                         <a href="/confirm/updatePhotos" class="menu-item" id="btnChangePhotos">Change Photos</a>
-                        <a href="/users/apparatus" class="menu-item" id="btnChangePhotos">medical apparatus</a>
+                        <a href="/users/apparatus" class="menu-item" id="btnChangePhotos">Medical Apparatus</a>
+                        <a href="/users/logout" class="menu-item" id="logoutBTN">Logout</a>
                     </div>
                 </div>
             <% } %>
@@ -57,9 +57,13 @@
     <div class="users-profile">
         <div class="profile-top">
             <img src="<%= (confirmData && confirmData.photo) ? '/media/' + confirmData.photo : '/media/profile.jpg' %>" alt="Profile picture" class="profile-picture" id="profilePic">
-            <img src="<%= (confirmData && confirmData.background) ? '/media/' + confirmData.background : '/media/backgroud.jpg' %>" alt="backgroud picture" class="backgroud-picture" id="backgroundPic">
+            <img src="<%= (confirmData && confirmData.background) ? '/media/' + confirmData.background : '/media/backgroud.jpg' %>" alt="Background picture" class="backgroud-picture" id="backgroundPic">
             <div class="main-profile">
-                <h1><%= (confirmData) ? confirmData.firstname + ' ' + confirmData.lastname : 'your blogs' %></h1>
+                <h1><%= (confirmData) ? confirmData.firstname + ' ' + confirmData.lastname : 'Your Blogs' %></h1>
+
+                <!-- ԴԻՆԱՄԻԿ ՀԱՍՑԵ ԵՎ ՀԵՌԱԽՈՍԱՀԱՄԱՐ (ԱՆԳԼԵՐԵՆ) -->
+                <h2 class="doc-address">📍 Address: <%= (confirmData && confirmData.address) ? confirmData.address : 'Address not specified' %></h2>
+                <h2 class="doc-phone">📞 Phone: <%= (confirmData && confirmData.phone) ? confirmData.phone : 'Phone not specified' %></h2>
             </div>
         </div>
 
@@ -75,16 +79,27 @@
                         <label for="lastname">Lastname:</label>
                         <input type="text" id="lastname" required>
                     </div>
+
+                    <!-- ԱՆԳԼԵՐԵՆ ԴԱՇՏԵՐ ՖՈՐՄԱՅԻ ՄԵՋ -->
                     <div>
-                        <label for="photoInput">(photo):</label>
+                        <label for="address">Address:</label>
+                        <input type="text" id="address" placeholder="Isahakyan street 1/1" required>
+                    </div>
+                    <div>
+                        <label for="phone">Phone:</label>
+                        <input type="text" id="phone" placeholder="000.00000" required>
+                    </div>
+
+                    <div>
+                        <label for="photoInput">Photo:</label>
                         <input type="file" id="photoInput" accept="image/*" required>
                     </div>
                     <div>
-                        <label for="backgroundInput">(backgroud):</label>
+                        <label for="backgroundInput">Background:</label>
                         <input type="file" id="backgroundInput" accept="image/*" required>
                     </div>
                     <div>
-                        <label for="diplomyInput">(diplomy):</label>
+                        <label for="diplomyInput">Diploma:</label>
                         <input type="file" id="diplomyInput" accept="image/*" required>
                     </div>
                     <div>
@@ -99,11 +114,11 @@
                 <h3>Update Photos</h3>
                 <form id="changePhotosForm">
                     <div>
-                        <label for="updatePhoto">(photo):</label>
+                        <label for="updatePhoto">Photo:</label>
                         <input type="file" id="updatePhoto" accept="image/*" required>
                     </div>
                     <div>
-                        <label for="updateBackground">(backgroud):</label>
+                        <label for="updateBackground">Background:</label>
                         <input type="file" id="updateBackground" accept="image/*" required>
                     </div>
                     <div>
@@ -113,14 +128,12 @@
             </div>
         <% } %>
     </div>
-    <% if (!isOwnProfile) { %>
-        <!-- Կոճակը տանում է դեպի չաթի էջ՝ փոխանցելով տվյալ օգտատիրոջ ID-ն հասցեում -->
-        <a href="/users/chat/<%= confirmData.userId %>" class="btn-chat" style="padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 10px;">
-            Գրել Նամակ
+
+    <% if (!isOwnProfile && confirmData) { %>
+        <a href="/users/chat/<%= confirmData.userId || confirmData.id %>" class="btn-chat" style="padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 10px;">
+            Send Message
         </a>
     <% } %>
-    </div>
-
 </section>
 
 <div class="ownPost">
@@ -135,11 +148,24 @@
             <button class="delete-btn" data-id="<%= post.id %>">Delete</button>
         </div>
     <% }) %>
+</div>
 
+<button class="chat-floating-btn" id="chatBtn">💬</button>
 
-
+<div class="chat-window" id="chatWindow" data-recipient-id="<%= (confirmData) ? (confirmData.userId || confirmData.id || '') : '' %>">
+    <div class="chat-header">
+        <span>Chat</span>
+        <button id="closeChat">×</button>
+    </div>
+    <div class="chat-body"></div>
+    <div class="chat-input">
+        <input type="text" id="messageInput" placeholder="Write message...">
+        <button id="sendMessageBtn">Send</button>
+    </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
 <script src="/js/users.js"></script>
 
 </body>

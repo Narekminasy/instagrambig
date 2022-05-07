@@ -29,7 +29,6 @@ const Confirm = sequelize.define(
             allowNull: false,
         },
 
-
         background: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -39,6 +38,12 @@ const Confirm = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
+        address: {
+            type: DataTypes.STRING
+        },
+        phone: {
+            type: DataTypes.STRING
+        }
     },
     {
         underscored: true,

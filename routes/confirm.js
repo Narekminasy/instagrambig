@@ -7,6 +7,8 @@ import upload from "../middlewares/upload.js";
 import postsController from "../controllers/postsControllers.js";
 import Confirm from '../models/confirm.js'
 import Post from "../models/posts.js";
+import commentsController from "../controllers/commentsController.js";
+
 
 const router = Router();
 
@@ -81,6 +83,7 @@ router.get("/all-profiles/:id", auth, async (req, res, next) => {
 });
 
 router.post('/updatePhotos', auth, upload.array("image", 2),controller.updatePhotos);
+
 
 
 

@@ -68,3 +68,37 @@ socket.on("updateUserStatus", (onlineUsersList) => {
         }
     }
 });
+// Լսում ենք սեղմումները ամբողջ messages ցուցակի վրա (Event Delegation)
+messagesList.addEventListener('click', async (event) => {
+    // Ստուգում ենք՝ արդյոք սեղմվել է հենց ջնջելու կոճակը
+    if (event.target.classList.contains('delete-btn')) {
+        const button = event.target;
+        const messageId = button.getAttribute('data-id'); // Վերցնում ենք նամակի ID-ն
+
+        console.log("Փորձում եմ Axios-ով բազայից ջնջել նամակ ID՝", messageId);
+
+        if (confirm("Ցանկանո՞ւմ եք ջնջել այս հաղորդագրությունը:")) {
+            try {
+                const response = await axios.delete(`/users/${messageId}`);
+
+                // Axios-ի դեպքում պատասխանը ավտոմատ գտնվում է response.data օբյեկտի մեջ
+                console.log("🚀 Սերվերի պատասխանը՝", response.data.add);
+
+                // Գտնում ենք նամակի տողը (li) էկրանին և ջնջում այն
+                const liElement = document.getElementById(`msg-${messageId}`);
+                if (liElement) {
+                    liElement.remove();
+                }
+
+            } catch (error) {
+                console.error("❌ Սխալ՝ նամակը ջնջելիս:", error);
+
+                if (error.response && error.response.data) {
+                    alert(error.response.data.message || "Չհաջողվեց ջնջել նամակը:");
+                } else {
+                    alert("Կապի սխալ: Խնդրում ենք փորձել նորից:");
+                }
+            }
+        }
+    }
+});

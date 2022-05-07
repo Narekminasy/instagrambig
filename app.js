@@ -10,6 +10,9 @@ import { createServer } from "http";
 import path from "path";
 import usersRouter from "./routes/index.js";
 
+// 💥 ԱՎԵԼԱՑՎԱԾ Է. Ներմուծում ենք հաղորդագրությունների մոդելը
+import Messages from "./models/messages.js";
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 const server = createServer(app);
@@ -56,7 +59,8 @@ io.on("connection", (socket) => {
     });
 
     // Անձնական նամակի լսում և վերահասցեագրում
-    socket.on("private message", (data) => {
+    // 💥 ՈՒՂՂՎԱԾ Է. Ֆունկցիան դարձրել ենք async՝ բազայի հետ աշխատելու համար
+    socket.on("private message", async (data) => {
         const recipientId = String(data.recipientId);
         const text = data.text;
 
@@ -68,6 +72,21 @@ io.on("connection", (socket) => {
         console.log(`🎯 ՍՏԱՑՈՂ (Recipient ID): ${recipientId}`);
         console.log(`💬 ՏԵՔՍՏ: "${text}"`);
 
+        // 💥 ԱՎԵԼԱՑՎԱԾ Է. Նամակի ավտոմատ պահպանում տվյալների բազայում
+        try {
+            if (text && senderId && recipientId) {
+                await Messages.create({
+                    userId: senderId,    // Ով է ուղարկել
+                    sendId: recipientId, // Ում է գնացել
+                    message: text        // Բուն հաղորդագրությունը
+                });
+                console.log("💾 Նամակը հաջողությամբ գրանցվեց տվյալների բազայում:");
+            }
+        } catch (dbError) {
+            console.error("❌ Սխալ՝ նամակը բազայում պահելիս:", dbError);
+        }
+
+        // Real-time ուղարկում ստացողին, եթե նա օնլայն է
         const recipientSocketId = users[recipientId];
 
         if (recipientSocketId) {

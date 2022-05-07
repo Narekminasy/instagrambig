@@ -141,7 +141,6 @@ export const controller = {
                 message: "Logged out successfully",
             });
 
-
         } catch (e) {
             next(e);
         }
@@ -182,7 +181,7 @@ export const controller = {
 
             const userId = req.user.id; // 'req.user.userId'-ի փոխարեն
 
-            const { firstname, lastname} = req.body;
+            const { firstname, lastname, address, phone} = req.body;
 
             const existingConfirm = await Confirm.findOne({
                 where: {
@@ -202,6 +201,8 @@ export const controller = {
                 userId,
                 firstname,
                 lastname,
+                address,
+                phone,
                 photo: photo.filename,
                 background: background.filename,
                 medicalDiploma: medicalDiploma.filename,
@@ -209,7 +210,7 @@ export const controller = {
 
             return res.status(201).json({
                 confirm,
-                message: "confirm successfully"
+                message: "confirm already send"
             });
         }catch (e){
             next(e);

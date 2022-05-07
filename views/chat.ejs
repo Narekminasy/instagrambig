@@ -17,7 +17,29 @@
 <body>
 <div class="chat-box">
     <h2>Անձնական Չաթ <span id="status-dot" style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #ccc; margin-left: 8px;"></span></h2>
-    <ul id="messages"></ul>
+
+    <ul id="messages">
+        <!-- Բեռնում ենք տվյալների բազայի հին նամակները -->
+        <% if (typeof history !== 'undefined' && history.length > 0) { %>
+            <% history.forEach(function(msg) { %>
+                <% if (String(msg.userId) === String(currentUserId)) { %>
+                    <!-- Քո ուղարկած նամակները (Ավելացվել է ջնջելու կոճակ և flex սթայլ) -->
+                    <li id="msg-<%= msg.id %>" style="background: #e1ffb1; display: flex; justify-content: space-between; align-items: center; padding: 8px; margin-bottom: 5px; border-radius: 4px;">
+                        <span>Ես: <%= msg.message %></span>
+                        <!-- ❌ Ջնջելու կոճակը -->
+                        <button class="delete-btn" data-id="<%= msg.id %>" style="background: none; border: none; color: red; cursor: pointer; font-weight: bold; margin-left: 10px;">✕</button>
+                    </li>
+                <% } else { %>
+                    <!-- Դիմացինի ուղարկած նամակները (առանց ջնջելու կոճակի) -->
+                    <li style="background: #ffffff; text-align: left; padding: 8px; margin-bottom: 5px; border-radius: 4px; border: 1px solid #eee;">
+                        Դիմացինը: <%= msg.message %>
+                    </li>
+                <% } %>
+            <% }); %>
+        <% } %>
+    </ul>
+
+
     <div class="inputs">
         <input type="text" id="messageInput" placeholder="Գրեք նամակ...">
         <button id="sendBtn">Ուղարկել</button>
@@ -25,6 +47,7 @@
 </div>
 
 <!-- Սկրիպտներ -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 
 <script>
@@ -36,6 +59,7 @@
 <script src="/js/chat.js"></script>
 </body>
 </html>
+
 
 
 <!--🔥 Ինչն է քեզ պակասում հիմա (Հաջորդ տրամաբանական քայլը)Քանի որ Socket.io-ի real-time կապը, սխալների ֆիլտրացիան [INDEX] և օնլայն/օֆլայն կլորակները արդեն 100% պատրաստ են [INDEX], քո հաջորդ կարևորագույն խնդիրն այն է, որ էջը թարմացնելիս (F5) կամ չաթից դուրս գալիս այս նամակները կորչում են, որովհետև դրանք դեռ չեն պահվում տվյալների բազայում (Database)։Շնորհավորում եմ չաթի կայուն կապ ստանալու առթիվ։ Կուզենա՞ս հիմա միասին ստեղծենք Message մոդելը Sequelize-ում, որպեսզի սերվերը նամակը ստանալիս անի await Message.create(...), իսկ չաթի էջը բացվելիս բազայից ավտոմատ բեռնի (load) այդ երկու հոգու հին նամակների պատմությունը։-->

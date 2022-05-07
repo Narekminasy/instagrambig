@@ -2,12 +2,15 @@ import { Router } from "express";
 import validation from "../middlewares/validation.js";
 import schema from "../middlewares/schemas/users.schema.js";
 import {controller as loginController, controller} from "../controllers/Users.js";
+// import {messagesController } from "../controllers/messagesController.js"
+import messagesController from "../controllers/messagesController.js";
 import auth from "../middlewares/authorization.js"
 import posts from "../models/posts.js";
 import users from "../models/users.js";
 import Confirm from '../models/confirm.js'
 import comments from '../models/Comments.js';
-
+import { Op } from "sequelize"; // 💥 ԿԱՐԵՎՈՐ. Ամենավերևում ներմուծիր Op-ը
+import Messages from "../models/messages.js";
 
 const router = Router();
 
@@ -134,18 +137,32 @@ router.get("/apparatus", auth, async (req, res, next) => {
 
 router.get("/chat/:id", auth, async (req, res, next) => {
     try {
-        const targetUserId = req.params.id; // Ում որ սեղմել ենք
-        const currentUserId = req.user.id;  // Ով որ հիմա լոգին է եղել
+        const targetUserId = req.params.id; // Ում էջում գտնվում ենք
+        const currentUserId = req.user.id;  // Մեր ID-ն (լոգին եղած օգտատերը)
 
+        const history = await Messages.findAll({
+            where: {
+                [Op.or]: [
+                    { userId: currentUserId, sendId: targetUserId },
+                    { userId: targetUserId, sendId: currentUserId }
+                ]
+            },
+            order: [["created_at", "ASC"]] // Դասավորում ենք հնից նոր
+        });
+
+        // Փոխանցում ենք պատմությունը (history) չաթի EJS էջին
         res.render("chat", {
             targetUserId: targetUserId,
-            currentUserId: currentUserId
+            currentUserId: currentUserId,
+            history: history // Ավելացված է այստեղ
         });
+
     } catch (e) {
         next(e);
     }
 });
 
+router.delete("/:id", auth, messagesController.deleteMessage);
 
 
 
