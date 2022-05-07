@@ -1,4 +1,3 @@
-// --- ԷԼԵՄԵՆՏՆԵՐԻ ՍԱՀՄԱՆՈՒՄ ---
 const confirmBtn = document.getElementById('confirmBtn');
 const editFormContainer = document.getElementById('editFormContainer');
 const profileForm = document.getElementById('profileForm');
@@ -11,23 +10,19 @@ const changePhotosContainer = document.getElementById('changePhotosContainer');
 const changePhotosForm = document.getElementById('changePhotosForm');
 const logoutBTN = document.getElementById('logoutBTN');
 
-// Ինպուտների ID-ները profileForm-ի ճիշտ աշխատանքի համար
 const firstNameInput = document.getElementById('firstname');
 const lastNameInput = document.getElementById('lastname');
 
-// Սկզբնական թաքցնում ենք կոնտեյներները
 if (dropdownMenu) dropdownMenu.style.display = 'none';
 if (editFormContainer) editFormContainer.style.display = 'none';
 if (changePhotosContainer) changePhotosContainer.style.display = 'none';
 
-// Խմբագրման ֆորմայի բացում / փակում
 if (confirmBtn && editFormContainer) {
     confirmBtn.addEventListener('click', () => {
         editFormContainer.style.display = editFormContainer.style.display === 'none' ? 'block' : 'none';
     });
 }
 
-// Պրոֆիլի տվյալների ուղարկում (Confirm Profile)
 if (profileForm) {
     profileForm.addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -71,7 +66,6 @@ if (profileForm) {
     });
 }
 
-// Որոնման մենյուի բացում / փակում
 if (searchLinksBtn && dropdownMenu) {
     searchLinksBtn.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -85,7 +79,6 @@ if (searchLinksBtn && dropdownMenu) {
     });
 }
 
-// Մենյուից դուրս սեղմելիս փակել այն
 document.addEventListener('click', (e) => {
     if (dropdownMenu && !dropdownMenu.contains(e.target) && e.target !== searchLinksBtn) {
         dropdownMenu.style.display = 'none';
@@ -94,7 +87,6 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Մենյուի կետերի ակտիվացում (Active Class)
 document.querySelectorAll('.menu-item').forEach(item => {
     item.addEventListener('click', () => {
         document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
@@ -102,7 +94,6 @@ document.querySelectorAll('.menu-item').forEach(item => {
     });
 });
 
-// Նկարների փոփոխման պատուհանի բացում
 if (btnChangePhotos) {
     btnChangePhotos.addEventListener('click', (e) => {
         e.preventDefault();
@@ -113,7 +104,6 @@ if (btnChangePhotos) {
     });
 }
 
-// Նկարների թարմացման ֆորմա (Update Photos)
 if (changePhotosForm) {
     changePhotosForm.addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -148,7 +138,6 @@ if (changePhotosForm) {
     });
 }
 
-// Պոստերի ջնջում (Delete Blog Post)
 document.addEventListener("click", async (e) => {
     if (e.target.classList.contains("delete-btn")) {
         const postId = e.target.getAttribute("data-id");

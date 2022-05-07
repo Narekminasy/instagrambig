@@ -1,14 +1,13 @@
-// 1. Էջի բլոկների (div) էլեմենտները
+//div
 const loginSection = document.getElementById("loginSection");
 const forgotSection = document.getElementById("forgotSection");
 
-// 2. Կոճակները
+//buttons
 const loginBtn = document.getElementById("loginBtn");
 const forgotBtn = document.getElementById("forgot"); // Ձեր "forgot password?" կոճակը loginSection-ում
 const forgotSubmitBtn = document.getElementById("forgotSubmitBtn"); // Կոճակը forgotSection-ում
 const backToLoginBtn = document.getElementById("backToLoginBtn"); // Back կոճակը forgotSection-ում
 
-// --- ԼՈԳԻՆԻ ՏՐԱՄԱԲԱՆՈՒԹՅՈՒՆԸ ---
 loginBtn.addEventListener("click", async () => {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
@@ -30,15 +29,11 @@ loginBtn.addEventListener("click", async () => {
     }
 });
 
-// --- ԷԿՐԱՆՆԵՐԻ ՓՈՓՈԽՈՒԹՅՈՒՆԸ (TOGGLING) ---
-
-// Երբ սեղմում են "forgot password?" կոճակին, բացվում են նոր input-ները
 forgotBtn.addEventListener("click", () => {
     loginSection.style.display = "none";
     forgotSection.style.display = "block";
 });
 
-// Երբ սեղմում են "Back to Login", վերադառնում են սկզբնական էջին
 backToLoginBtn.addEventListener("click", () => {
     forgotSection.style.display = "none";
     loginSection.style.display = "block";
