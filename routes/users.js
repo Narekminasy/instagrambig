@@ -55,4 +55,9 @@ router.post(
 
 router.get("/logout", controller.logout);
 
+router.get("/about", (req, res) => {
+    res.render("about");
+});
+
+
 export default router;
