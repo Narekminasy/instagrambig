@@ -27,10 +27,10 @@ app.get("/", async (req, res) => {
             posts = await Post.findAll({ order: [['createdAt', 'DESC']] });
         }
 
-        res.render("index", { posts: posts });
+        res.render("home", { posts: posts });
     } catch (error) {
         console.error(error);
-        res.render("index", { posts: [] });
+        res.render("home", { posts: [] });
     }
 });
 
