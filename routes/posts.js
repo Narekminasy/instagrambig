@@ -8,8 +8,6 @@ import admin from "../middlewares/admin.js";
 
 const router = Router();
 
-// router.post('/posts',auth, upload.single("image"),postsController.createPosts);
-
 router.post(
     '/posts',
     auth,
@@ -21,7 +19,6 @@ router.post(
 router.get('/all-posts',auth, postsController.getAllPosts);
 
 router.delete("/:id", auth, admin, (req, res, next) => {
-    // console.log("DELETE ROUTE WORKS", req.params.id);
     next();
 }, postsController.deletePosts);
 
