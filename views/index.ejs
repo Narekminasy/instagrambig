@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="hy">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dental Blog</title>
+
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+
+
+<body>
+
+
+<header>
+
+    <nav>
+
+        <div class="logo">
+            🦷 Dental Student
+        </div>
+
+
+        <ul>
+
+            <li>
+                <a href="/users/home">
+                    Home
+                </a>
+            </li>
+
+            <li>
+                <a href="/users/register">
+                    Register
+                </a>
+            </li>
+
+            <li>
+                <a href="/users/login">
+                    Login
+                </a>
+            </li>
+
+            <li>
+                <a href="/users/index">
+                    Blog
+                </a>
+            </li>
+
+        </ul>
+
+
+    </nav>
+
+</header>
+
+
+
+
+
+<main>
+
+
+    <h1>
+        Dental Student Blog
+    </h1>
+
+
+
+    <div class="wrapper">
+
+
+
+        <div class="blog">
+
+
+            <h2>
+                Create Post
+            </h2>
+
+
+
+            <input
+                    id="titleInp"
+                    class="title"
+                    type="text"
+                    placeholder="Post title"
+            >
+
+
+
+            <input
+                    id="descriptionInp"
+                    class="create"
+                    type="text"
+                    placeholder="Post description"
+            >
+
+
+
+            <input
+                    id="imageInp"
+                    type="file"
+                    accept="image/*"
+            >
+
+
+
+            <button
+                    id="create-btn"
+                    class="create">
+                Create
+            </button>
+
+
+        </div>
+
+
+
+
+
+        <div class="right-box">
+
+
+            <h1>
+                BLOGS
+            </h1>
+
+
+
+            <% posts.forEach(post => { %>
+
+
+                <div
+                        class="post-item"
+                        id="post-<%= post.id %>"
+                >
+
+
+                    <h2>
+                        <%= post.title %>
+                    </h2>
+
+
+
+                    <p>
+                        <%= post.description %>
+                    </p>
+
+
+
+
+                    <% if (post.image) { %>
+
+                        <img
+                                src="/media/<%= post.image %>"
+                                alt="Post Image"
+                        >
+
+                    <% } %>
+
+
+
+
+
+                    <button
+                            class="delete-btn"
+                            data-id="<%= post.id %>">
+                        Delete
+                    </button>
+
+
+
+
+
+                    <input
+                            class="commnetsInp"
+                            data-id="<%= post.id %>"
+                            type="text"
+                            placeholder="Write comment..."
+                    >
+
+
+
+
+                    <button
+                            class="send-btn"
+                            data-id="<%= post.id %>"
+                    >
+                        Send
+                    </button>
+
+
+
+                </div>
+
+
+
+            <% }) %>
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+</main>
+
+
+
+
+
+
+<footer>
+
+
+    <ul>
+
+        <li>
+            About us
+        </li>
+
+        <li>
+            Contact
+        </li>
+
+        <li>
+            Privacy
+        </li>
+
+    </ul>
+
+
+
+    <p class="p_fist">
+        © 2026 Dental Student Blog
+    </p>
+
+
+</footer>
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script src="/js/index.js"></script>
+
+
+</body>
+
+</html>
