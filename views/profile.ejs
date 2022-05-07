@@ -4,23 +4,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> profiles </title>
+    <title data-i18n="profiles_page.title"> profiles </title>
     <link rel="stylesheet" href="/css/profile.css">
 </head>
 
 <body>
 
 <header>
-    <a href="/users/home" class="logo">
+    <a href="/users/home" class="logo" data-i18n="nav.logo">
         🦷 Dental Clinic
     </a>
+
+    <div class="lang-dropdown">
+        <button class="lang-dropbtn" id="currentLangBtn">🌐 HY</button>
+        <div class="lang-dropdown-content">
+            <a href="#" onclick="changeLanguage('hy')">🇦🇲 HY</a>
+            <a href="#" onclick="changeLanguage('en')">🇺🇸 EN</a>
+            <a href="#" onclick="changeLanguage('ru')">🇷🇺 RU</a>
+        </div>
+    </div>
+
 </header>
 
 <main class="about-page">
     <section class="about-container">
         <div class="search_box">
-            <h1>Users and Doctors</h1>
-            <input type="text" id="search-input" placeholder="Search doctors...">
+            <h1 data-i18n="profiles_page.heading">Users and Doctors</h1>
+            <input type="text" id="search-input" placeholder="Search doctors..." data-i18n-placeholder="profiles_page.search_placeholder">
         </div>
 
         <div class="instagram-grid">
@@ -36,11 +46,9 @@
                             <span class="user-fullname"><%= user.firstname %> <%= user.lastname %></span>
                         </div>
                     </a>
-
-
                 <% }); %>
             <% } else { %>
-                <p class="no-users">No users or doctors found.</p>
+                <p class="no-users" data-i18n="profiles_page.no_users">No users or doctors found.</p>
             <% } %>
         </div>
 
@@ -49,25 +57,12 @@
 
 <footer>
     <ul>
-        <li>
-            <a href="/users/about">
-                About Us
-            </a>
-        </li>
-        <li>
-            <a href="/users/Contact">
-                Contact
-            </a>
-        </li>
-
-        <li>
-            <a href="/users/privacy" style="color: white;">
-                Privacy
-            </a>
-        </li>
+        <li><a href="/users/about" data-i18n="footer.about">About Us</a></li>
+        <li><a href="/users/Contact" data-i18n="footer.contact">Contact</a></li>
+        <li><a href="/users/privacy" style="color: white;" data-i18n="footer.privacy">Privacy</a></li>
     </ul>
 
-    <p class="p_fist">
+    <p class="p_fist" data-i18n="footer.copy">
         © 2026 Dental Clinic
     </p>
 </footer>

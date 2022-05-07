@@ -2,238 +2,84 @@
 <html lang="hy">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Dental Clinic Home</title>
-
+    <title data-i18n="title">Dental Clinic Home</title>
     <link rel="stylesheet" href="/css/main.css">
-
 </head>
-
 
 <body>
 
-
 <header>
-
     <nav>
-
-        <a href="/users/home" class="logo">
+        <a href="/users/home" class="logo" data-i18n="nav.logo">
             🦷 Dental Clinic
         </a>
 
+        <div class="lang-dropdown">
+            <button class="lang-dropbtn" id="currentLangBtn">🌐 HY</button>
+            <div class="lang-dropdown-content">
+                <a href="#" onclick="changeLanguage('hy')">🇦🇲 HY</a>
+                <a href="#" onclick="changeLanguage('en')">🇺🇸 EN</a>
+                <a href="#" onclick="changeLanguage('ru')">🇷🇺 RU</a>
+            </div>
+        </div>
+
 
         <ul>
-
-            <li>
-                <a href="/users/home">
-                    Home
-                </a>
-            </li>
-
-
-            <li>
-                <a href="/users/register">
-                    Register
-                </a>
-            </li>
-
-
-            <li>
-                <a href="/users/login">
-                    Login
-                </a>
-            </li>
-
-            <li>
-                <a href="/users/users">
-                    Profile
-                </a>
-            </li>
-
-
-            <li>
-                <a href="/users/index">
-                    Blog
-                </a>
-            </li>
-
-            <li>
-                <a href="/users/About">
-                    About Us
-                </a>
-            </li>
-
-            <li>
-                <a href="/users/Contact">
-                    Contact
-                </a>
-            </li>
-
+            <li><a href="/users/home" data-i18n="nav.home">Home</a></li>
+            <li><a href="/users/register" data-i18n="nav.register">Register</a></li>
+            <li><a href="/users/login" data-i18n="nav.login">Login</a></li>
+            <li><a href="/users/users" data-i18n="nav.profile">Profile</a></li>
+            <li><a href="/users/index" data-i18n="nav.blog">Blog</a></li>
+            <li><a href="/users/About" data-i18n="nav.about">About Us</a></li>
+            <li><a href="/users/Contact" data-i18n="nav.contact">Contact</a></li>
         </ul>
-
     </nav>
-
 </header>
 
-
-
-
-
 <main>
-
-
     <section class="hero">
-
-
         <div class="hero-box">
-
-
-            <h1>
-                Welcome to Dental Clinic 🦷
-            </h1>
-
-
-
-            <p>
-                Discover our dental excellence, view our successful treatments, and see how we transform smiles.
-            </p>
-
-
-
+            <h1 data-i18n="hero.title">Welcome to Dental Clinic 🦷</h1>
+            <p data-i18n="hero.subtitle">Discover our dental excellence, view our successful treatments, and see how we transform smiles.</p>
             <div class="home-buttons">
-
-
-                <button id="registerHome">
-                    Register
-                </button>
-
-
-                <button id="loginHome">
-                    Login
-                </button>
-
-
+                <button id="registerHome" data-i18n="buttons.register">Register</button>
+                <button id="loginHome" data-i18n="buttons.login">Login</button>
             </div>
-
-
         </div>
-
-
-
     </section>
-
-
-
-
-
 
     <section class="info">
-
-
         <div class="card">
-
-            <h2>
-                🦷 Education
-            </h2>
-
-            <p>
-                Your smile is in the hands of expert doctors with premium medical education and practice.
-            </p>
-
+            <h2 data-i18n="cards.education_title">🦷 Education</h2>
+            <p data-i18n="cards.education_desc">Your smile is in the hands of expert doctors with premium medical education and practice.</p>
         </div>
 
-
-
-
         <div class="card">
-
-            <h2>
-                📝 Posts
-            </h2>
-
-            <p>
-                Create posts and share your dental experience.
-            </p>
-
+            <h2 data-i18n="cards.posts_title">📝 Posts</h2>
+            <p data-i18n="cards.posts_desc">Create posts and share your dental experience.</p>
         </div>
 
-
-
-
-
         <div class="card">
-
-            <h2>
-                👥 Contact
-            </h2>
-
-            <p>
-                Get in touch with our medical team to get a personalized treatment plan for your smile.
-            </p>
-
+            <h2 data-i18n="cards.contact_title">👥 Contact</h2>
+            <p data-i18n="cards.contact_desc">Get in touch with our medical team to get a personalized treatment plan for your smile.</p>
         </div>
-
-
     </section>
-
-
-
 </main>
 
-
-
-
-
 <footer>
-
-
     <ul>
-
-        <li>
-            <a href="/users/about">
-                About Us
-            </a>
-        </li>
-
-
-        <li>
-            <a href="/users/Contact">
-                Contact
-            </a>
-        </li>
-
-
-        <li>
-            <a href="/users/privacy" style="color: white;">
-                Privacy
-            </a>
-        </li>
-
-
+        <li><a href="/users/about" data-i18n="footer.about">About Us</a></li>
+        <li><a href="/users/Contact" data-i18n="footer.contact">Contact</a></li>
+        <li><a href="/users/privacy" style="color: white;" data-i18n="footer.privacy">Privacy</a></li>
     </ul>
-
-
-
-    <p class="p_fist" style="color: white">
+    <p class="p_fist" style="color: white" data-i18n="footer.copy">
         © 2026 Dental Clinic
     </p>
-
-
 </footer>
 
-
-
-
-
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
 <script src="/js/home.js"></script>
-
-
 </body>
-
 </html>

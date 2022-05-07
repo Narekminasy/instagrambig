@@ -4,184 +4,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Register | Dental Clinic</title>
-
+    <title data-i18n="register_page.title">Register | Dental Clinic</title>
     <link rel="stylesheet" href="/css/main.css">
 </head>
 
 <body>
 
 <header>
-
     <nav>
-
-        <a href="/users/home" class="logo">
+        <a href="/users/home" class="logo" data-i18n="nav.logo">
             🦷 Dental Clinic
         </a>
 
+        <div class="lang-dropdown">
+            <button class="lang-dropbtn" id="currentLangBtn">🌐 HY</button>
+            <div class="lang-dropdown-content">
+                <a href="#" onclick="changeLanguage('hy')">🇦🇲 HY</a>
+                <a href="#" onclick="changeLanguage('en')">🇺🇸 EN</a>
+                <a href="#" onclick="changeLanguage('ru')">🇷🇺 RU</a>
+            </div>
+        </div>
+
 
         <ul>
-
-            <li>
-                <a href="/users/home">
-                    Home
-                </a>
-            </li>
-
-            <li>
-                <a href="/users/register">
-                    Register
-                </a>
-            </li>
-
-            <li>
-                <a href="/users/login">
-                    Login
-                </a>
-            </li>
-
-            <li>
-                <a href="/users/users">
-                    Profile
-                </a>
-            </li>
-
-            <li>
-                <a href="/users/index">
-                    Blog
-                </a>
-            </li>
-
-            <li>
-                <a href="/users/About">
-                    About Us
-                </a>
-            </li>
-
-            <li>
-                <a href="/users/Contact">
-                    Contact
-                </a>
-            </li>
-
+            <li><a href="/users/home" data-i18n="nav.home">Home</a></li>
+            <li><a href="/users/register" data-i18n="nav.register">Register</a></li>
+            <li><a href="/users/login" data-i18n="nav.login">Login</a></li>
+            <li><a href="/users/users" data-i18n="nav.profile">Profile</a></li>
+            <li><a href="/users/index" data-i18n="nav.blog">Blog</a></li>
+            <li><a href="/users/About" data-i18n="nav.about">About Us</a></li>
+            <li><a href="/users/Contact" data-i18n="nav.contact">Contact</a></li>
         </ul>
-
-
     </nav>
-
 </header>
 
-
-
-
 <main>
-
-
     <section class="form-box">
-
-
-        <h1>
-            Create Account
-        </h1>
-
-
-        <p>
-            Join Dental Clinic Community
-        </p>
+        <h1 data-i18n="register_page.heading">Create Account</h1>
+        <p data-i18n="register_page.subheading">Join Dental Clinic Community</p>
 
         <h2 id="errorRegister" style="color: red; display: none;"></h2>
 
-        <input
-                id="name"
-                type="text"
-                placeholder="Name"
-        >
+        <!-- Ուշադրություն՝ placeholder-ների համար օգտագործում ենք հատուկ data-i18n-placeholder -->
+        <input id="name" type="text" placeholder="Name" data-i18n-placeholder="register_page.placeholder_name">
+        <input id="age" type="number" placeholder="Age" data-i18n-placeholder="register_page.placeholder_age">
+        <input id="email" type="text" placeholder="Email" data-i18n-placeholder="register_page.placeholder_email">
+        <input id="password" type="password" placeholder="Password" data-i18n-placeholder="register_page.placeholder_password">
 
-
-
-        <input
-                id="age"
-                type="number"
-                placeholder="Age"
-        >
-
-
-
-        <input
-                id="email"
-                type="text"
-                placeholder="Email"
-        >
-
-
-
-        <input
-                id="password"
-                type="password"
-                placeholder="Password"
-        >
-
-
-
-        <button id="registerBtn">
-            Register
-        </button>
-
-
-
+        <button id="registerBtn" data-i18n="register_page.btn_register">Register</button>
     </section>
-
-
 </main>
 
-
-
-
-
 <footer>
-
-
     <ul>
-
-        <li>
-            <a href="/users/about">
-                About Us
-            </a>
-        </li>
-
-        <li>
-            <a href="/users/Contact">
-                Contact
-            </a>
-        </li>
-
-        <li>
-            <a href="/users/privacy" style="color: white;">
-                Privacy
-            </a>
-        </li>
-
+        <li><a href="/users/about" data-i18n="footer.about">About Us</a></li>
+        <li><a href="/users/Contact" data-i18n="footer.contact">Contact</a></li>
+        <li><a href="/users/privacy" style="color: white;" data-i18n="footer.privacy">Privacy</a></li>
     </ul>
-
-
-
-    <p class="p_fist" style="color: white">
+    <p class="p_fist" style="color: white" data-i18n="footer.copy">
         © 2026 Dental Clinic
     </p>
-
-
 </footer>
 
-
-
-
-
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
 <script src="/js/register.js"></script>
 
-
 </body>
-
 </html>

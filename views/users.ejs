@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile</title>
+    <title data-i18n="profile_page.title">User Profile</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="/css/users.css">
 </head>
@@ -16,17 +16,28 @@
 
 <header>
     <nav>
-        <a href="/users/home" class="logo">
+        <a href="/users/home" class="logo" data-i18n="nav.logo">
             🦷 Dental Clinic
         </a>
+
+        <div class="lang-dropdown">
+            <button class="lang-dropbtn" id="currentLangBtn">🌐 HY</button>
+            <div class="lang-dropdown-content">
+                <a href="#" onclick="changeLanguage('hy')">🇦🇲 HY</a>
+                <a href="#" onclick="changeLanguage('en')">🇺🇸 EN</a>
+                <a href="#" onclick="changeLanguage('ru')">🇷🇺 RU</a>
+            </div>
+        </div>
+
+
         <ul>
-            <li><a href="/users/home">Home</a></li>
-            <li><a href="/users/register">Register</a></li>
-            <li><a href="/users/login">Login</a></li>
-            <li><a href="/users/users">Profile</a></li>
-            <li><a href="/users/index">Blog</a></li>
-            <li><a href="/users/About">About Us</a></li>
-            <li><a href="/users/Contact">Contact</a></li>
+            <li><a href="/users/home" data-i18n="nav.home">Home</a></li>
+            <li><a href="/users/register" data-i18n="nav.register">Register</a></li>
+            <li><a href="/users/login" data-i18n="nav.login">Login</a></li>
+            <li><a href="/users/users" data-i18n="nav.profile">Profile</a></li>
+            <li><a href="/users/index" data-i18n="nav.blog">Blog</a></li>
+            <li><a href="/users/About" data-i18n="nav.about">About Us</a></li>
+            <li><a href="/users/Contact" data-i18n="nav.contact">Contact</a></li>
         </ul>
     </nav>
 </header>
@@ -38,17 +49,17 @@
                 <div class="dropdown-wrapper">
                     <button type="button" id="search_linsk">...</button>
                     <div id="dropdownMenu" class="sidebar-menu">
-                        <a href="/confirm/all-users" class="menu-item" id="btnAllUsers">All Users Data</a>
-                        <a href="/users/index" class="menu-item" id="btnAllProfiles">All Profiles</a>
-                        <a href="/confirm/updatePhotos" class="menu-item" id="btnChangePhotos">Change Photos</a>
-                        <a href="/users/apparatus" class="menu-item" id="btnChangePhotos">Medical Apparatus</a>
-                        <a href="/users/logout" class="menu-item" id="logoutBTN">Logout</a>
+                        <a href="/confirm/all-users" class="menu-item" id="btnAllUsers" data-i18n="profile_page.all_users">All Users Data</a>
+                        <a href="/users/index" class="menu-item" id="btnAllProfiles" data-i18n="profile_page.all_profiles">All Profiles</a>
+                        <a href="/confirm/updatePhotos" class="menu-item" id="btnChangePhotos" data-i18n="profile_page.change_photos">Change Photos</a>
+                        <a href="/users/apparatus" class="menu-item" id="btnChangePhotos" data-i18n="profile_page.apparatus">Medical Apparatus</a>
+                        <a href="/users/logout" class="menu-item" id="logoutBTN" data-i18n="profile_page.logout">Logout</a>
                     </div>
                 </div>
             <% } %>
 
             <% if (isOwnProfile && !confirmData) { %>
-                <button type="button" id="confirmBtn" class="confirmBtn">Confirm Profile</button>
+                <button type="button" id="confirmBtn" class="confirmBtn" data-i18n="profile_page.confirm_btn">Confirm Profile</button>
             <% } %>
         </div>
     </section>
@@ -62,47 +73,53 @@
             <div class="main-profile">
                 <h1><%= (confirmData) ? confirmData.firstname + ' ' + confirmData.lastname : 'Your Blogs' %></h1>
 
-                <h2 class="doc-address">📍 Address: <%= (confirmData && confirmData.address) ? confirmData.address : 'Address not specified' %></h2>
-                <h2 class="doc-phone">📞 Phone: <%= (confirmData && confirmData.phone) ? confirmData.phone : 'Phone not specified' %></h2>
+                <h2 class="doc-address">
+                    <span data-i18n="profile_page.address_label">📍 Address: </span>
+                    <span><%= (confirmData && confirmData.address) ? confirmData.address : 'Address not specified' %></span>
+                </h2>
+                <h2 class="doc-phone">
+                    <span data-i18n="profile_page.phone_label">📞 Phone: </span>
+                    <span><%= (confirmData && confirmData.phone) ? confirmData.phone : 'Phone not specified' %></span>
+                </h2>
             </div>
         </div>
 
         <% if (isOwnProfile && !confirmData) { %>
             <div id="editFormContainer">
-                <h3>Confirm Profile</h3>
+                <h3 data-i18n="profile_page.form_title">Confirm Profile</h3>
                 <form id="profileForm">
                     <div>
-                        <label for="firstname">Firstname:</label>
+                        <label for="firstname" data-i18n="profile_page.label_firstname">Firstname:</label>
                         <input type="text" id="firstname" required>
                     </div>
                     <div>
-                        <label for="lastname">Lastname:</label>
+                        <label for="lastname" data-i18n="profile_page.label_lastname">Lastname:</label>
                         <input type="text" id="lastname" required>
                     </div>
 
                     <div>
-                        <label for="address">Address:</label>
+                        <label for="address" data-i18n="profile_page.label_address">Address:</label>
                         <input type="text" id="address" placeholder="Isahakyan street 1/1" required>
                     </div>
                     <div>
-                        <label for="phone">Phone:</label>
+                        <label for="phone" data-i18n="profile_page.label_phone">Phone:</label>
                         <input type="text" id="phone" placeholder="000.00000" required>
                     </div>
 
                     <div>
-                        <label for="photoInput">Photo:</label>
+                        <label for="photoInput" data-i18n="profile_page.label_photo">Photo:</label>
                         <input type="file" id="photoInput" accept="image/*" required>
                     </div>
                     <div>
-                        <label for="backgroundInput">Background:</label>
+                        <label for="backgroundInput" data-i18n="profile_page.label_bg">Background:</label>
                         <input type="file" id="backgroundInput" accept="image/*" required>
                     </div>
                     <div>
-                        <label for="diplomyInput">Diploma:</label>
+                        <label for="diplomyInput" data-i18n="profile_page.label_diploma">Diploma:</label>
                         <input type="file" id="diplomyInput" accept="image/*" required>
                     </div>
                     <div>
-                        <button type="submit">Send Data</button>
+                        <button type="submit" data-i18n="profile_page.btn_send">Send Data</button>
                     </div>
                 </form>
             </div>
@@ -110,18 +127,18 @@
 
         <% if (isOwnProfile) { %>
             <div id="changePhotosContainer">
-                <h3>Update Photos</h3>
+                <h3 data-i18n="profile_page.update_photos_title">Update Photos</h3>
                 <form id="changePhotosForm">
                     <div>
-                        <label for="updatePhoto">Photo:</label>
+                        <label for="updatePhoto" data-i18n="profile_page.label_photo">Photo:</label>
                         <input type="file" id="updatePhoto" accept="image/*" required>
                     </div>
                     <div>
-                        <label for="updateBackground">Background:</label>
+                        <label for="updateBackground" data-i18n="profile_page.label_bg">Background:</label>
                         <input type="file" id="updateBackground" accept="image/*" required>
                     </div>
                     <div>
-                        <button type="submit">Update</button>
+                        <button type="submit" data-i18n="profile_page.btn_update">Update</button>
                     </div>
                 </form>
             </div>
@@ -129,14 +146,14 @@
     </div>
 
     <% if (!isOwnProfile && confirmData) { %>
-        <a href="/users/chat/<%= confirmData.userId || confirmData.id %>" class="btn-chat" style="padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 10px;">
+        <a href="/users/chat/<%= confirmData.userId || confirmData.id %>" class="btn-chat" style="padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 10px;" data-i18n="profile_page.btn_chat">
             Send Message
         </a>
     <% } %>
 </section>
 
 <div class="ownPost">
-    <h1 class="blogsWorld">BLOGS</h1>
+    <h1 class="blogsWorld" data-i18n="profile_page.blogs_title">BLOGS</h1>
     <% posts.forEach(post => { %>
         <div class="post-item" id="post-<%= post.id %>">
             <h2><%= post.title %></h2>
@@ -144,7 +161,7 @@
             <% if (post.image) { %>
                 <img src="/media/<%= post.image %>" alt="Post Image">
             <% } %>
-            <button class="delete-btn" data-id="<%= post.id %>">Delete</button>
+            <button class="delete-btn" data-id="<%= post.id %>" data-i18n="profile_page.btn_delete">Delete</button>
         </div>
     <% }) %>
 </div>
@@ -152,41 +169,16 @@
 <div class="chat-window" id="chatWindow" data-recipient-id="<%= (confirmData) ? (confirmData.userId || confirmData.id || '') : '' %>">
 </div>
 
-
 <footer>
-
-
     <ul>
-
-        <li>
-            <a href="/users/about">
-                About Us
-            </a>
-        </li>
-
-        <li>
-            <a href="/users/Contact">
-                Contact
-            </a>
-        </li>
-
-        <li>
-            <a href="/users/privacy">
-                Privacy
-            </a>
-        </li>
-
+        <li><a href="/users/about" data-i18n="footer.about">About Us</a></li>
+        <li><a href="/users/Contact" data-i18n="footer.contact">Contact</a></li>
+        <li><a href="/users/privacy" data-i18n="footer.privacy">Privacy</a></li>
     </ul>
-
-
-
-    <p class="p_fist">
+    <p class="p_fist" data-i18n="footer.copy">
         © 2026 Dental Clinic
     </p>
-
-
 </footer>
-
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>

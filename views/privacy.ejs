@@ -1,17 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hy">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Dental Blog - Privacy Policy</title>
-
+    <title data-i18n="privacy_page.title">Dental Blog - Privacy Policy</title>
     <link rel="stylesheet" href="/css/main.css">
     <style>
         .privacy-container {
             background-color: #fff;
-            max-width: 11000px;
+            max-width: 1100px;
             margin: 40px auto;
             padding: 20px;
             color: white;
@@ -40,156 +38,78 @@
     </style>
 </head>
 
-
 <body>
 
-
 <header>
-
     <nav>
-
-        <a href="/users/home" class="logo">
+        <a href="/users/home" class="logo" data-i18n="nav.logo">
             🦷 Dental Clinic
         </a>
 
+        <div class="lang-dropdown">
+            <button class="lang-dropbtn" id="currentLangBtn">🌐 HY</button>
+            <div class="lang-dropdown-content">
+                <a href="#" onclick="changeLanguage('hy')">🇦🇲 HY</a>
+                <a href="#" onclick="changeLanguage('en')">🇺🇸 EN</a>
+                <a href="#" onclick="changeLanguage('ru')">🇷🇺 RU</a>
+            </div>
+        </div>
+
 
         <ul>
-
-            <li>
-                <a href="/users/home">
-                    Home
-                </a>
-            </li>
-
-            <li>
-                <a href="/users/register">
-                    Register
-                </a>
-            </li>
-
-            <li>
-                <a href="/users/login">
-                    Login
-                </a>
-            </li>
-
-            <li>
-                <a href="/users/users">
-                    Profile
-                </a>
-            </li>
-
-            <li>
-                <a href="/users/index">
-                    Blog
-                </a>
-            </li>
-
-            <li>
-                <a href="/users/About">
-                    About Us
-                </a>
-            </li>
-
-            <li>
-                <a href="/users/Contact">
-                    Contact
-                </a>
-            </li>
-
+            <li><a href="/users/home" data-i18n="nav.home">Home</a></li>
+            <li><a href="/users/register" data-i18n="nav.register">Register</a></li>
+            <li><a href="/users/login" data-i18n="nav.login">Login</a></li>
+            <li><a href="/users/users" data-i18n="nav.profile">Profile</a></li>
+            <li><a href="/users/index" data-i18n="nav.blog">Blog</a></li>
+            <li><a href="/users/About" data-i18n="nav.about">About Us</a></li>
+            <li><a href="/users/Contact" data-i18n="nav.contact">Contact</a></li>
         </ul>
-
-
     </nav>
-
 </header>
 
-
-
-
-
 <main>
-
     <div class="privacy-container">
-        <h1>Privacy Policy</h1>
-        <p>Last updated: August 24, 2026</p>
+        <h1 data-i18n="privacy_page.heading">Privacy Policy</h1>
+        <p data-i18n="privacy_page.last_updated">Last updated: August 24, 2026</p>
+        <p data-i18n="privacy_page.intro">Our dental clinic deeply values the privacy of your personal and medical data. This document outlines how we collect, utilize, and safeguard your information when you visit or interact with our platform.</p>
 
-        <p>Our dental clinic deeply values the privacy of your personal and medical data. This document outlines how we collect, utilize, and safeguard your information when you visit or interact with our platform.</p>
-
-        <h2>1. Information We Collect</h2>
-        <p>When you browse, register, or use our website, we may collect the following types of information:</p>
+        <h2 data-i18n="privacy_page.sec1_title">1. Information We Collect</h2>
+        <p data-i18n="privacy_page.sec1_text">When you browse, register, or use our website, we may collect the following types of information:</p>
         <ul>
-            <li>Personal details (Full name)</li>
-            <li>Contact information (Phone number, email address)</li>
-            <li>Medical history overview and appointment preferences</li>
+            <li data-i18n="privacy_page.sec1_li1">Personal details (Full name)</li>
+            <li data-i18n="privacy_page.sec1_li2">Contact information (Phone number, email address)</li>
+            <li data-i18n="privacy_page.sec1_li3">Medical history overview and appointment preferences</li>
         </ul>
 
-        <h2>2. How We Use Your Information</h2>
-        <p>The collected data is exclusively processed for the following operational purposes:</p>
+        <h2 data-i18n="privacy_page.sec2_title">2. How We Use Your Information</h2>
+        <p data-i18n="privacy_page.sec2_text">The collected data is exclusively processed for the following operational purposes:</p>
         <ul>
-            <li>Scheduling and managing your doctor appointments</li>
-            <li>Administering and securing your user profile</li>
-            <li>Sending clinic updates, newsletters, and educational blog posts</li>
+            <li data-i18n="privacy_page.sec2_li1">Scheduling and managing your doctor appointments</li>
+            <li data-i18n="privacy_page.sec2_li2">Administering and securing your user profile</li>
+            <li data-i18n="privacy_page.sec2_li3">Sending clinic updates, newsletters, and educational blog posts</li>
         </ul>
 
-        <h2>3. Medical Confidentiality & Data Security</h2>
-        <p>Your medical records are protected under strict patient-doctor confidentiality guidelines. We do not sell, trade, or share your data with third parties without your explicit written consent, unless required by law.</p>
+        <h2 data-i18n="privacy_page.sec3_title">3. Medical Confidentiality & Data Security</h2>
+        <p data-i18n="privacy_page.sec3_text">Your medical records are protected under strict patient-doctor confidentiality guidelines. We do not sell, trade, or share your data with third parties without your explicit written consent, unless required by law.</p>
 
-        <h2>4. Your Rights</h2>
-        <p>You reserve the right to review, update, modify, or permanently request the deletion of your personal records from our databases at any given time.</p>
+        <h2 data-i18n="privacy_page.sec4_title">4. Your Rights</h2>
+        <p data-i18n="privacy_page.sec4_text">You reserve the right to review, update, modify, or permanently request the deletion of your personal records from our databases at any given time.</p>
     </div>
-
 </main>
 
-
-
-
-
-
 <footer>
-
-
     <ul>
-
-        <li>
-            <a href="/users/about">
-                About Us
-            </a>
-        </li>
-
-        <li>
-            <a href="/users/Contact">
-                Contact
-            </a>
-        </li>
-
-        <li>
-            <a href="/users/privacy" style="color: white;">
-                Privacy
-            </a>
-        </li>
-
+        <li><a href="/users/about" data-i18n="footer.about">About Us</a></li>
+        <li><a href="/users/Contact" data-i18n="footer.contact">Contact</a></li>
+        <li><a href="/users/privacy" style="color: white;" data-i18n="footer.privacy">Privacy</a></li>
     </ul>
-
-
-
-    <p class="p_fist" style="color: white">
+    <p class="p_fist" style="color: white" data-i18n="footer.copy_blog">
         © 2026 Dental Student Blog
     </p>
-
-
 </footer>
 
-
-
-
-
-
 <script src="https://jsdelivr.net"></script>
-
 <script src="/js/index.js"></script>
-
-
 </body>
-
 </html>
