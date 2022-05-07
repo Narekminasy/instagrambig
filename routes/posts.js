@@ -20,18 +20,12 @@ router.post(
 
 router.get('/all-posts',auth, postsController.getAllPosts);
 
-// router.post(
-//     '/:id',
-//     auth,
-//     admin,
-//     postsController.deletePosts
-// );
 router.delete("/:id", auth, admin, (req, res, next) => {
     // console.log("DELETE ROUTE WORKS", req.params.id);
     next();
 }, postsController.deletePosts);
 
-// router.delete('/posts/:id',auth, postsController.deletePosts);
+
 
 
 export default router
