@@ -49,7 +49,6 @@ router.get("/all-profiles/:id", auth, async (req, res, next) => {
         console.log('targetUserId----', targetUserId);
         console.log('currentUserId----', currentUserId);
 
-        // 1. Գտնում ենք այն մարդու պրոֆիլը, ում էջում գտնվում ենք
         const userConfirm = await Confirm.findOne({
             where: { userId: targetUserId }
         });
@@ -58,7 +57,6 @@ router.get("/all-profiles/:id", auth, async (req, res, next) => {
             return res.status(404).send("User profile not found");
         }
 
-        // 2. ԱՎԵԼԱՑՎԱԾ Է՝ Գտնում ենք ՆԱԵՎ ՔՈ ՍԵՓԱԿԱՆ պրոֆիլը՝ անունդ իմանալու համար
         const myConfirm = await Confirm.findOne({
             where: { userId: currentUserId }
         });

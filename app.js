@@ -81,7 +81,6 @@ io.on("connection", (socket) => {
         } else {
             console.log(`Offline`);
         }
-        console.log(`---------------------------------\n`);
     });
 
     socket.on("disconnect", () => {

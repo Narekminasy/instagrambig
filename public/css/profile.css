@@ -1,5 +1,5 @@
 /* =====================
-   GLOBAL & LAYOUT STYLES
+   GLOBAL
 ===================== */
 * {
     margin: 0;
@@ -27,7 +27,7 @@ header {
 }
 
 .logo {
-    color: #008080; /* Մուգ փիրուզագույն Dental Student-ի համար */
+    color: #008080;
     font-size: 24px;
     font-weight: bold;
     text-decoration: none;
@@ -36,7 +36,7 @@ header {
 footer {
     background-color: #ffffff;
     padding: 30px 8%;
-    margin-top: auto; /* Հրում է ֆութերը միշտ էջի ամենաներքևի մասը */
+    margin-top: auto;
     border-top: 1px solid #edf2f7;
     text-align: center;
 }
@@ -66,7 +66,7 @@ footer ul li a:hover {
 }
 
 /* =====================
-   MAIN CONTAINER & GRID
+   MAIN CONTAINER
 ===================== */
 .about-page {
     flex: 1;
@@ -89,18 +89,15 @@ footer ul li a:hover {
     color: #1a1a1a;
 }
 
-/* Գլխավոր ցանցը (Instagram Grid) */
 .instagram-grid {
     display: grid;
-    /* Ավտոմատ տեղավորում է քարտերը էկրանի չափսից կախված (մինիմում 220px լայնությամբ) */
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 28px;
 }
-
-/* Օգտատիրոջ/Բժշկի քարտը */
+ /* users card*/
 .user-card {
     background: #ffffff;
-    border: 1px solid #dbdbdb; /* Instagram-ի նուրբ եզրագիծը */
+    border: 1px solid #dbdbdb;
     border-radius: 12px;
     padding: 25px 20px;
     display: flex;
@@ -111,11 +108,11 @@ footer ul li a:hover {
 }
 
 .user-card:hover {
-    transform: translateY(-3px); /* Թեթևակի բարձրանում է վերև պահելիս */
+    transform: translateY(-3px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.06);
 }
 
-/* Նկարի կլոր շրջանակը */
+
 .avatar-wrapper {
     width: 120px;
     height: 120px;
@@ -126,14 +123,12 @@ footer ul li a:hover {
     background-color: #fafafa;
 }
 
-/* Կլոր նկարը */
 .grid-avatar {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-/* Անուն ազգանունը */
 .user-info {
     width: 100%;
 }
@@ -145,7 +140,7 @@ footer ul li a:hover {
     display: block;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; /* Եթե շատ երկար անուն լինի, վերջում 3 կետ կդնի */
+    text-overflow: ellipsis;
 }
 
 .no-users {

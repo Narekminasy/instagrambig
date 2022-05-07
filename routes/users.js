@@ -9,7 +9,7 @@ import posts from "../models/posts.js";
 import users from "../models/users.js";
 import Confirm from '../models/confirm.js'
 import comments from '../models/Comments.js';
-import { Op } from "sequelize"; // 💥 ԿԱՐԵՎՈՐ. Ամենավերևում ներմուծիր Op-ը
+import { Op } from "sequelize"; //
 import Messages from "../models/messages.js";
 
 const router = Router();
@@ -39,21 +39,20 @@ router.get("/index", auth, async (req, res, next) => {
             include: [
                 {
                     model: users,
-                    attributes: ['name'] // Պոստը գրողի անունը
+                    attributes: ['name']
                 },
                 {
-                    model: comments, // Ներառում ենք պոստի մեկնաբանությունները
+                    model: comments,
                     include: [{
                         model: users,
-                        as: 'User', // Մեկնաբանությունը գրողի մոդելը (ըստ ձեր կապերի)
-                        attributes: ['id', 'name'] // Մեկնաբանությունը գրողի տվյալները
+                        as: 'User',
+                        attributes: ['id', 'name']
                     }]
                 }
             ],
             order: [['createdAt', 'DESC']]
         });
 
-        // Էջին ուղարկում ենք միայն պոստերը, քանի որ մեկնաբանությունները արդեն դրանց ներսում են
         res.render('index', { posts: allPosts });
 
     } catch (error) {
@@ -116,11 +115,11 @@ router.get("/apparatus", auth, async (req, res, next) => {
     try {
         const allPosts = await posts.findAll({
             where: {
-                isApparatus: true // Բերում է ՄԻԱՅՆ այն պոստերը, որոնք նշվել են որպես ապարատուրա
+                isApparatus: true
             },
             include: [{
                 model: users,
-                attributes: ['name', 'role'] // Պահում ենք հեղինակի տվյալները (անունը, դերը)
+                attributes: ['name', 'role']
             }],
             order: [['createdAt', 'DESC']]
         });
@@ -137,8 +136,8 @@ router.get("/apparatus", auth, async (req, res, next) => {
 
 router.get("/chat/:id", auth, async (req, res, next) => {
     try {
-        const targetUserId = req.params.id; // Ում էջում գտնվում ենք
-        const currentUserId = req.user.id;  // Մեր ID-ն (լոգին եղած օգտատերը)
+        const targetUserId = req.params.id;
+        const currentUserId = req.user.id;
 
         const history = await Messages.findAll({
             where: {
@@ -147,14 +146,14 @@ router.get("/chat/:id", auth, async (req, res, next) => {
                     { userId: targetUserId, sendId: currentUserId }
                 ]
             },
-            order: [["created_at", "ASC"]] // Դասավորում ենք հնից նոր
+            order: [["created_at", "ASC"]]
         });
 
-        // Փոխանցում ենք պատմությունը (history) չաթի EJS էջին
+
         res.render("chat", {
             targetUserId: targetUserId,
             currentUserId: currentUserId,
-            history: history // Ավելացված է այստեղ
+            history: history
         });
 
     } catch (e) {

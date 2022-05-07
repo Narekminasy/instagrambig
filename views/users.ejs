@@ -16,7 +16,7 @@
 <header>
     <nav>
         <a href="/users/home" class="logo">
-            🦷 Dental Student
+            🦷 Dental Clinic
         </a>
         <ul>
             <li><a href="/users/home">Home</a></li>
@@ -61,7 +61,6 @@
             <div class="main-profile">
                 <h1><%= (confirmData) ? confirmData.firstname + ' ' + confirmData.lastname : 'Your Blogs' %></h1>
 
-                <!-- ԴԻՆԱՄԻԿ ՀԱՍՑԵ ԵՎ ՀԵՌԱԽՈՍԱՀԱՄԱՐ (ԱՆԳԼԵՐԵՆ) -->
                 <h2 class="doc-address">📍 Address: <%= (confirmData && confirmData.address) ? confirmData.address : 'Address not specified' %></h2>
                 <h2 class="doc-phone">📞 Phone: <%= (confirmData && confirmData.phone) ? confirmData.phone : 'Phone not specified' %></h2>
             </div>
@@ -80,7 +79,6 @@
                         <input type="text" id="lastname" required>
                     </div>
 
-                    <!-- ԱՆԳԼԵՐԵՆ ԴԱՇՏԵՐ ՖՈՐՄԱՅԻ ՄԵՋ -->
                     <div>
                         <label for="address">Address:</label>
                         <input type="text" id="address" placeholder="Isahakyan street 1/1" required>
@@ -137,7 +135,7 @@
 </section>
 
 <div class="ownPost">
-    <h1>BLOGS</h1>
+    <h1 class="blogsWorld">BLOGS</h1>
     <% posts.forEach(post => { %>
         <div class="post-item" id="post-<%= post.id %>">
             <h2><%= post.title %></h2>
@@ -151,16 +149,41 @@
 </div>
 
 <div class="chat-window" id="chatWindow" data-recipient-id="<%= (confirmData) ? (confirmData.userId || confirmData.id || '') : '' %>">
-    <div class="chat-header">
-        <span>Chat</span>
-        <button id="closeChat">×</button>
-    </div>
-    <div class="chat-body"></div>
-    <div class="chat-input">
-        <input type="text" id="messageInput" placeholder="Write message...">
-        <button id="sendMessageBtn">Send</button>
-    </div>
 </div>
+
+
+<footer>
+
+
+    <ul>
+
+        <li>
+            <a href="/users/about">
+                About Us
+            </a>
+        </li>
+
+        <li>
+            <a href="/users/Contact">
+                Contact
+            </a>
+        </li>
+
+        <li>
+            Privacy
+        </li>
+
+    </ul>
+
+
+
+    <p class="p_fist">
+        © 2026 Dental Clinic
+    </p>
+
+
+</footer>
+
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>

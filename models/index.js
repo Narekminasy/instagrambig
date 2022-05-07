@@ -4,7 +4,6 @@ import posts from '../models/posts.js';
 import confirm from '../models/confirm.js'
 
 // User -> Posts
-// Մեկ user-ը կարող է ունենալ շատ post
 users.hasMany(posts, {
     foreignKey: 'userId',
 });
@@ -15,7 +14,6 @@ posts.belongsTo(users, {
 
 
 // User -> Comments
-// Մեկ user-ը կարող է գրել շատ comment
 users.hasMany(comments, {
     foreignKey: 'user_id',
 });
@@ -28,7 +26,6 @@ comments.belongsTo(users, {
 
 
 // Post -> Comments
-// Մեկ post-ը կարող է ունենալ շատ comment
 posts.hasMany(comments, {
     foreignKey: 'post_id',
 });

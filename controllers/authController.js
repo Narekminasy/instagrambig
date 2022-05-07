@@ -115,11 +115,7 @@ export async function updatePassword(id, hashedPassword) {
             `UPDATE users SET password = ? WHERE id = ?`,
             [hashedPassword, id]
         );
-
-        // Տեսնենք, թե ինչ է գալիս բազայից terminal-ում
         console.log("MySQL Result:", result);
-
-        // Եթե result-ը գոյություն ունի, ստուգում ենք affectedRows-ը
         if (result && (result.affectedRows > 0 || result.changedRows >= 0)) {
             return true;
         }

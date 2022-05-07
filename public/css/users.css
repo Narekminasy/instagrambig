@@ -9,9 +9,11 @@
 }
 
 body {
-    background-color: #f8f9fa;
-    color: #333;
+    background-color: #e2e8f0;
+    color: #0f172a;
 }
+
+
 
 a {
     text-decoration: none;
@@ -24,7 +26,7 @@ main {
 }
 
 /* =====================
-   HEADER & NAVBAR (Adviser style)
+   HEADER
 ===================== */
 header {
     background-color: #ffffff;
@@ -89,7 +91,7 @@ nav ul li a:hover {
 .users-container {
     max-width: 1300px;
     width: 92%;
-    margin: 10px auto 40px auto; /* ՈՒՂՂՎԱԾ Է. Վերևի margin-ը 40px-ից դարձրել ենք 10px */
+    margin: 10px auto 40px auto;
     background: #ffffff;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
@@ -100,7 +102,7 @@ nav ul li a:hover {
 /* Մենյուն բացվելիս */
 .users-container.menu-open {
     max-width: calc(100% - 320px);
-    margin-top: 10px;    /* ՈՒՂՂՎԱԾ Է. Այստեղ նույնպես ֆիքսում ենք 10px վերևից */
+    margin-top: 10px;
     margin-left: 280px;
     margin-right: 40px;
 }
@@ -268,7 +270,7 @@ nav ul li a:hover {
 }
 
 /* =====================
-   SIDEBAR MENU STYLES (MDB Style)
+   SIDEBAR MENU
 ===================== */
 .dropdown-wrapper {
     position: relative;
@@ -402,7 +404,7 @@ nav ul li a:hover {
     transform: scale(0.96);
 }
 
-/* Comment area */
+/* Comment */
 .commnetsInp,
 .send-btn {
     vertical-align: middle;
@@ -431,7 +433,7 @@ nav ul li a:hover {
 .ownPost {
     max-width: 1300px;
     width: 92%;
-    margin: 10px auto 40px auto; /* ՈՒՂՂՎԱԾ Է. Վերևի margin-ը 40px-ից դարձրել ենք 10px */
+    margin: 10px auto 40px auto;
     background: #ffffff;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
@@ -538,7 +540,7 @@ nav ul li a:hover {
     position: relative;
 }
 
-/* alternating left-right */
+/* left-right */
 
 .post-item:nth-child(odd) {
     margin-left: 0;
@@ -569,17 +571,23 @@ nav ul li a:hover {
 /* image */
 
 .post-item img {
-    width: 100%;
+    width: 700px;
     height: 100%;
     object-fit: cover;
     border-radius: 25px;
     margin: 20px 0;
 }
 
-/* buttons area */
+/* buttons */
 
 .post-item button {
     margin-right: 10px;
+}
+
+.blogsWorld{
+    text-align: center;
+    margin: 0 auto;
+    color : black;
 }
 
 .delete-btn {
@@ -627,5 +635,46 @@ nav ul li a:hover {
     }
 
 }
+
+/* =====================
+   FOOTER
+===================== */
+
+
+footer {
+
+    text-align:center;
+    padding:25px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+
+}
+
+
+
+footer ul {
+
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    list-style:none;
+    margin-bottom:15px;
+
+}
+
+
+
+footer li {
+
+    cursor:pointer;
+    color :black;
+
+}
+
+.p_fist{
+    background:balck;
+}
+
+
+
 
 

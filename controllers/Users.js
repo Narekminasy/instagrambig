@@ -179,7 +179,7 @@ export const controller = {
             // console.log(req.files);
             // console.log(req.body);
 
-            const userId = req.user.id; // 'req.user.userId'-ի փոխարեն
+            const userId = req.user.id;
 
             const { firstname, lastname, address, phone} = req.body;
 

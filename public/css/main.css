@@ -9,19 +9,17 @@
     font-family: "Segoe UI", Arial, sans-serif;
 }
 
+
+
 body {
-
-    background-image: url("https://media.istockphoto.com/id/638646756/photo/working-together-well-to-keep-you-well.jpg?s=2048x2048&w=is&k=20&c=QxPsSlPdTV5mluCUvKd8P9OWAl1XrkI3PAHI7SXzVwc=");
-
+    background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+    url("https://media.istockphoto.com/id/638646756/photo/working-together-well-to-keep-you-well.jpg?s=2048x2048&w=is&k=20&c=QxPsSlPdTV5mluCUvKd8P9OWAl1XrkI3PAHI7SXzVwc=");
     background-size: 100% auto;
-
     background-position: center top;
-
     background-repeat: no-repeat;
-
     background-attachment: fixed;
-
 }
+
 
 
 
@@ -285,7 +283,7 @@ input:focus {
 
 .right-box > h1 {
 
-    color:#0077b6;
+
     margin-bottom:25px;
 
 }
@@ -364,316 +362,115 @@ input:focus {
 
 }
 /*about*/
-/* =========================
-   ABOUT PAGE
-========================= */
 
-main.about-page {
-    min-height: calc(100vh - 180px);
-    padding: 70px 6%;
+.main-about {
+    background-color: #ffffff;
+    padding: 80px 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    gap: 60px;
 }
 
-
-/* MAIN ABOUT CARD */
-
-.about-container {
-    width: 100%;
-    max-width: 1500px;
-    min-height: 600px;
-
-    background: rgba(255, 255, 255, 0.96);
-
-    border-radius: 35px;
-
-    padding: 70px 80px;
-
-    box-shadow:
-            0 25px 70px rgba(0, 119, 182, 0.20);
-
-    position: relative;
-    overflow: hidden;
+.content-col {
+    flex: 1.2;
+    text-align: left;
 }
 
-
-/* decorative circles */
-
-.about-container::before {
-    content: "";
-    position: absolute;
-
-    width: 280px;
-    height: 280px;
-
-    background: #caf0f8;
-
-    border-radius: 50%;
-
-    top: -150px;
-    right: -100px;
-
-    opacity: 0.6;
-}
-
-
-.about-container::after {
-    content: "";
-    position: absolute;
-
-    width: 220px;
-    height: 220px;
-
-    background: #90e0ef;
-
-    border-radius: 50%;
-
-    bottom: -130px;
-    left: -100px;
-
-    opacity: 0.35;
-}
-
-
-/* TITLE */
-
-.about-container h1 {
-    position: relative;
-    z-index: 2;
-
-    text-align: center;
-
-    font-size: 52px;
-
-    color: #0077b6;
-
-    margin-bottom: 12px;
-
+.greeting {
+    font-size: 3.5rem;
     font-weight: 700;
+    color: #333333;
+    margin: 0 0 25px 0;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 
-.about-subtitle {
-    position: relative;
-    z-index: 2;
-
-    text-align: center;
-
-    font-size: 19px;
-
-    color: #667781;
-
-    margin-bottom: 55px;
+.down-arrow {
+    text-decoration: none;
+    font-size: 1.2rem;
+    color: #333333;
+    display: inline-block;
+    transition: transform 0.3s ease;
 }
 
-
-/* CONTENT */
-
-.about-content {
-    position: relative;
-    z-index: 2;
-
-    display: grid;
-
-    grid-template-columns: 1.5fr 0.8fr;
-
-    gap: 70px;
-
-    align-items: center;
+.down-arrow:hover {
+    transform: translateY(5px);
 }
 
-
-/* LEFT SIDE */
-
-.about-text {
-    padding-right: 20px;
+.wave-emoji {
+    display: inline-block;
 }
 
-
-.about-text h2 {
-    font-size: 34px;
-
-    color: #023e8a;
-
+.intro-text {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: #444444;
+    font-weight: 600;
     margin-bottom: 25px;
 }
 
 
-.about-text p {
-    font-size: 18px;
-
-    line-height: 1.9;
-
-    color: #4d5d65;
-
-    margin-bottom: 22px;
+.description-text {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #666666;
+    margin-bottom: 40px;
 }
 
-
-/* RIGHT SIDE */
-
-.about-values {
-    background: linear-gradient(
-            145deg,
-            #e8faff,
-            #f8fdff
-    );
-
-    padding: 40px 35px;
-
-    border-radius: 30px;
-
-    border: 1px solid #caf0f8;
-
-    box-shadow:
-            0 12px 30px rgba(0, 119, 182, 0.12);
-
-    position: relative;
+.description-text strong {
+    color: #222222;
 }
 
+.arrow-container {
+    margin-top: 20px;
+}
+.down-arrow {
+    font-size: 1.2rem;
+    color: #333333;
+    cursor: pointer;
+}
 
-.about-values::before {
-    content: "🦷";
-
-    position: absolute;
-
-    top: -28px;
-    right: 25px;
-
-    width: 60px;
-    height: 60px;
-
-    background: white;
-
-    border-radius: 50%;
-
+.image-col {
+    flex: 0.8;
     display: flex;
-    align-items: center;
     justify-content: center;
-
-    font-size: 28px;
-
-    box-shadow:
-            0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
-
-.about-values h3 {
-    font-size: 30px;
-
-    color: #0077b6;
-
-    margin-bottom: 30px;
+.image-col img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    object-fit: cover;
+    display: block;
 }
 
-
-.about-values p {
-    font-size: 17px;
-
-    color: #4d5d65;
-
-    margin: 18px 0;
-
-    padding: 12px 15px;
-
-    background: white;
-
-    border-radius: 14px;
-
-    box-shadow:
-            0 5px 15px rgba(0, 0, 0, 0.06);
-
-    transition: 0.3s;
-}
-
-
-.about-values p:hover {
-    transform: translateX(7px);
-
-    box-shadow:
-            0 8px 20px rgba(0, 119, 182, 0.12);
-}
-
-
-.about-values strong {
-    color: #0077b6;
-}
-
-
-/* =========================
-   ABOUT RESPONSIVE
-========================= */
-
-@media (max-width: 1000px) {
-
-    main.about-page {
-        padding: 50px 25px;
-    }
-
-    .about-container {
-        padding: 55px 45px;
-    }
-
-    .about-content {
-        grid-template-columns: 1fr;
-
+@media (max-width: 900px) {
+    .main-container {
+        flex-direction: column-reverse;
         gap: 40px;
+        text-align: center;
     }
-
-    .about-text {
-        padding-right: 0;
+    .content-col {
+        text-align: center;
     }
-
+    .greeting {
+        font-size: 2.5rem;
+    }
 }
 
-
-@media (max-width: 600px) {
-
-    main.about-page {
-        padding: 30px 15px;
-    }
-
-    .about-container {
-        padding: 40px 25px;
-
-        border-radius: 25px;
-    }
-
-    .about-container h1 {
-        font-size: 36px;
-    }
-
-    .about-subtitle {
-        font-size: 16px;
-
-        margin-bottom: 35px;
-    }
-
-    .about-text h2 {
-        font-size: 27px;
-    }
-
-    .about-text p {
-        font-size: 16px;
-
-        line-height: 1.7;
-    }
-
-    .about-values {
-        padding: 30px 22px;
-    }
-
-    .about-values h3 {
-        font-size: 25px;
-    }
-
-}
 /*contact*/
-
-/* =========================
-   CONTACT PAGE
-========================= */
 
 main.contact-page {
     min-height: 750px;
@@ -851,18 +648,14 @@ main.contact-page {
 
 .contact-message {
     margin-top: 40px;
-
     padding: 35px 50px;
-
     border-radius: 28px;
-
-    background:
-            rgba(0,119,182,.9);
-
-    box-shadow:
-            0 20px 45px rgba(0,0,0,.2);
+    /* Գծային գրադիենտը հեռացված է */
+    background-image: url("https://istockphoto.com");
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 20px 45px rgba(0,0,0,.2);
 }
-
 
 .contact-message h2 {
     color: white;
@@ -928,10 +721,6 @@ main.contact-page {
 }
 
 /* users table*/
-
-/* =========================
-USER PROFILE PREMIUM UI
-========================= */
 
 .users-container {
     min-height: 100vh;
@@ -1448,10 +1237,6 @@ footer li {
 
 }
 
-
-
-/* alternating left-right */
-
 .post-item:nth-child(odd){
 
     margin-left:0;
@@ -1614,7 +1399,6 @@ footer li {
 }
 
 /*comment css*/
-/* Ծալվող բլոկի արտաքին տեսքը */
 .comments-collapse {
     margin: 10px 0;
     font-family: sans-serif;
@@ -1624,7 +1408,7 @@ footer li {
 .comments-toggle {
     font-size: 13px;
     font-weight: 600;
-    color: #0284c7; /* Գեղեցիկ կապույտ գույն */
+    color: #0284c7;
     cursor: pointer;
     outline: none;
     user-select: none;
@@ -1632,19 +1416,17 @@ footer li {
 }
 
 .comments-toggle:hover {
-    text-decoration: underline; /* Մկնիկը վրան բերելիս գիծ է քաշվում */
+    text-decoration: underline;
     color: #0369a1;
 }
 
-/* Մեկնաբանությունների ցուցակի տարածությունը բացվելուց հետո */
 .comments-list {
     margin-top: 8px;
-    max-height: 250px; /* Եթե շատ լինեն, կհայտնվի scrollbar, որ էջը չերկարի */
+    max-height: 250px;
     overflow-y: auto;
     padding-right: 5px;
 }
 
-/* Մեկնաբանության առանձին բլոկը (փոքր և սեղմ) */
 .comments_look {
     background-color: #f8fafc;
     border-left: 3px solid #0284c7;
@@ -1674,25 +1456,22 @@ footer li {
     margin: 0;
 }
 
-/* Մեկնաբանության ընդհանուր բլոկը */
 .comments_look {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     padding: 10px 12px;
     margin-bottom: 8px;
-    background-color: #f8fafc; /* Թեթև բաց մոխրագույն */
+    background-color: #f8fafc;
     border-radius: 6px;
     border: 1px solid #e2e8f0;
     transition: background-color 0.2s ease;
 }
 
-/* Էֆեկտ, երբ մկնիկը պահվում է մեկնաբանության վրա */
 .comments_look:hover {
     background-color: #f1f5f9;
 }
 
-/* Օգտատիրոջ տվյալների և տեքստի բլոկը */
 .comment-user-info {
     display: flex;
     flex-wrap: wrap;
@@ -1702,7 +1481,6 @@ footer li {
     color: #475569;
 }
 
-/* Ջնջելու կոճակի (delete) ոճերը */
 .delteComment_Btn {
     background-color: transparent;
     color: #ef4444; /* Կարմիր գույն */
@@ -1717,7 +1495,6 @@ footer li {
     transition: all 0.2s ease-in-out;
 }
 
-/* Էֆեկտ, երբ մկնիկը պահում ենք ջնջելու կոճակի վրա (Hover) */
 .delteComment_Btn:hover {
     background-color: #ef4444;
     color: #ffffff;
@@ -1725,12 +1502,10 @@ footer li {
     box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
 }
 
-/* Էֆեկտ, երբ կոճակը սեղմում ենք (Active) */
 .delteComment_Btn:active {
     transform: scale(0.95);
 }
 
-/* Մեկնաբանության բուն տեքստը */
 .comment-text {
     margin-top: 5px;
     font-size: 14px;
@@ -1743,24 +1518,37 @@ footer li {
 
 .apparatus-container {
     display: flex;
-    flex-direction: column; /* Էլեմենտները դասավորում է իրար տակ */
-    align-items: center;    /* Բոլորին մեջտեղում է բերում */
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    gap: 10px;              /* Բոլոր էլեմենտների միջև դնում է ακριβώς 10px հեռավորություն */
+    gap: 10px;
     width: 100%;
 }
 
-.apparatus-subtitle {
-    color: black;
-    text-align: center;     /* Տեքստը գեղեցիկ մեջտեղում է անում */
-    max-width: 700px;       /* Որ տեքստը շատ չփռվի էկրանով մեկ */
-    margin: 0;              /* Հանում ենք ավելորդ default հեռավորությունները */
-}
 
-/* Որպեսզի պոստերի արանքն էլ 10px լինի */
 .apparatus-text {
     display: flex;
     flex-direction: column;
-    gap: 10px;              /* Պոստերը իրարից կհեռվացնի 10px-ով */
+    gap: 10px;
     width: 100%;
+}
+
+.mediaclText{
+    color: #ffffff;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.apparatus-subtitle {
+    color: #e0e0e0;
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin: 0 auto 40px auto;
+    text-align: center;
+    line-height: 1.6;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }

@@ -8,15 +8,12 @@ const postsController = {
         try {
             const userId = req.user.id;
 
-            // body-ից վերցնում ենք նաև isApparatus դաշտը
             const { title, firstname, description, isApparatus } = req.body;
 
             if (!req.file) {
                 return res.status(400).json({ message: "upload failed." });
             }
 
-            // Կախված նրանից, թե ֆրոնտից ինչպես եք ուղարկում FormData-ն՝
-            // ստուգում ենք, որ այն դառնա մաքուր Boolean (true կամ false)
             const isApparatusBool = isApparatus === "true" || isApparatus === true || isApparatus === "on";
 
             const existingPost = await posts.findOne({
@@ -33,13 +30,12 @@ const postsController = {
                 });
             }
 
-            // Բազայում պահելիս ավելացնում ենք isApparatusBool դաշտը
             const post = await posts.create({
                 title,
                 description,
                 userId,
                 image: req.file.filename,
-                isApparatus: isApparatusBool // ԱՅՍՏԵՂ ՓՈԽՎԵՑ
+                isApparatus: isApparatusBool
             });
 
             return res.status(201).json({
@@ -57,7 +53,7 @@ const postsController = {
                 include: [
                     {
                         model: users,
-                        attributes: ['id', 'name', 'email'] // Օգտագործեք 'name', քանի որ 'firstName/lastName' չունեք մոդելում
+                        attributes: ['id', 'name', 'email']
                     },
                     {
                         model: comments,
