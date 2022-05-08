@@ -15,7 +15,7 @@ loginBtn.addEventListener("click", async () => {
         );
         console.log(response.data);
         alert("Login success");
-        window.location.href = "/users/index";
+        window.location.href = "/users/users";
     } catch (error) {
         console.log(error.response?.data);
         alert("Login error");

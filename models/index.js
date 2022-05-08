@@ -1,6 +1,7 @@
 import users from '../models/users.js';
 import comments from '../models/Comments.js';
 import posts from '../models/posts.js';
+import confirm from '../models/confirm.js'
 
 // User -> Posts
 // Մեկ user-ը կարող է ունենալ շատ post

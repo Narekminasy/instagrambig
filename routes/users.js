@@ -63,6 +63,10 @@ router.get("/contact", (req, res) => {
     res.render("contact");
 });
 
+router.get("/users", (req, res) => {
+    res.render("users");
+});
+
 
 
 export default router;
