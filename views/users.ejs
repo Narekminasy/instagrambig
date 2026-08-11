@@ -37,29 +37,34 @@
             <!-- Ուղղված դասավորությամբ բաժին -->
             <div class="main-profile">
                 <h1><%= (confirmData) ? confirmData.firstname + ' ' + confirmData.lastname : 'your blogs' %></h1>
+
                 <!-- Կոճակների խմբավորումը աջ կողմի համար -->
                 <div class="profile-actions">
-                    <div class="dropdown-wrapper">
-                        <button type="button" id="search_linsk">...</button>
 
-                        <!-- Բացվող մենյու երկու կոճակներով -->
-                        <div id="dropdownMenu" class="dropdown-menu">
-                            <button type="button" id="btnAllUsers">All Users Data</button>
-                            <button type="button" id="btnAllProfiles">All Profiles</button>
+                    <% if (isOwnProfile) { %>
+                        <div class="dropdown-wrapper">
+                            <button type="button" id="search_linsk">...</button>
+
+                            <!-- Բացվող մենյու երկու կոճակներով -->
+                            <div id="dropdownMenu" class="dropdown-menu">
+                                <button type="button" id="btnAllUsers">All Users Data</button>
+                                <button type="button" id="btnAllProfiles">All Profiles</button>
+                            </div>
                         </div>
-                    </div>
+                    <% } %>
 
-                    <% if (confirmData) { %>
-                        <button type="button" class="confirmBtn" disabled>Profile Confirmed</button>
-                    <% } else { %>
+                    <!-- 2. Հաստատման կոճակը երևում է ՄԻԱՅՆ էջի տիրոջ մոտ և ՄԻԱՅՆ այն դեպքում, եթե դեռ հաստատված չէ -->
+                    <% if (isOwnProfile && !confirmData) { %>
                         <button type="button" id="confirmBtn" class="confirmBtn">Confirm Profile</button>
                     <% } %>
+
                 </div>
 
             </div>
         </div>
 
-        <% if (!confirmData) { %>
+        <!-- Ֆորման բացվում է միայն էջի տիրոջ մոտ, եթե դեռ հաստատված չէ -->
+        <% if (isOwnProfile && !confirmData) { %>
             <div id="editFormContainer">
                 <h3>Confirm Profile</h3>
                 <form id="profileForm">

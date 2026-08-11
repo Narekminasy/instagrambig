@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="hy">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> profiles </title>
+    <link rel="stylesheet" href="/css/profile.css">
+</head>
+
+<body>
+
+<header>
+    <a href="/users/home" class="logo">
+        🦷 Dental Student
+    </a>
+</header>
+
+<main class="about-page">
+    <section class="about-container">
+        <div class="search_box">
+            <h1>Users and Doctors</h1>
+        </div>
+
+        <div class="instagram-grid">
+            <% if (profiles && profiles.length > 0) { %>
+                <% profiles.forEach(user => { %>
+                    <a href="/confirm/all-profiles/<%= user.userId %>" class="user-card">
+                        <div class="avatar-wrapper">
+                            <img src="<%= user.photo ? '/media/' + user.photo : '/media/profile.jpg' %>"
+                                 alt="<%= user.firstname %>"
+                                 class="grid-avatar">
+                        </div>
+                        <div class="user-info">
+                            <span class="user-fullname"><%= user.firstname %> <%= user.lastname %></span>
+                        </div>
+                    </a>
+
+
+                <% }); %>
+            <% } else { %>
+                <p class="no-users">No users or doctors found.</p>
+            <% } %>
+        </div>
+
+    </section>
+</main>
+
+<footer>
+    <ul>
+        <li>
+            <a href="/users/about">
+                About Us
+            </a>
+        </li>
+        <li>
+            <a href="/users/Contact">
+                Contact
+            </a>
+        </li>
+        <li>
+            Privacy
+        </li>
+    </ul>
+
+    <p class="p_fist">
+        © 2026 Dental Student Blog
+    </p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/profile.js"></script>
+
+</body>
+</html>

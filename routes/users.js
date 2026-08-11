@@ -7,6 +7,7 @@ import posts from "../models/posts.js";
 import users from "../models/users.js";
 import Confirm from '../models/confirm.js'
 
+
 const router = Router();
 
 router.get("/home", auth, async (req, res, next) => {
@@ -54,6 +55,9 @@ router.post(
 
 router.get("/logout", controller.logout);
 
+router.post('/forgot-password', controller.forgotPassword);
+
+
 router.get("/about", (req, res) => {
     res.render("about");
 });
@@ -71,7 +75,8 @@ router.get("/users", auth, async (req, res, next) => {
         });
 
         res.render("users", {
-            confirmData: userConfirm
+            confirmData: userConfirm,
+            isOwnProfile: true
         });
     } catch (e) {
         next(e);

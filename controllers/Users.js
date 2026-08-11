@@ -3,10 +3,12 @@ import jwt from "jsonwebtoken";
 import Users from "../models/users.js";
 import Confirm from "../models/confirm.js";
 
+
 import {
     findByEmail,
     create,
     checkEmailUnique,
+    updatePassword
 } from "../controllers/authController.js";
 import posts from "../models/posts.js";
 
@@ -142,6 +144,34 @@ export const controller = {
             next(e);
         }
     },
+
+    async forgotPassword(req, res, next) {
+        try {
+            const { email, newPassword } = req.body;
+
+            if (!email || !newPassword) {
+                return next(HttpErrors(400, "Email and new password are required"));
+            }
+
+            const user = await findByEmail(email);
+            if (!user) {
+                return next(HttpErrors(404, "User not found"));
+            }
+
+            const hashedPassword = Users.hashPassword(newPassword);
+
+            const isUpdated = await updatePassword(user.id, hashedPassword);
+
+            if (!isUpdated) {
+                return next(HttpErrors(500, "Failed to update password"));
+            }
+
+            return res.json({ success: true, message: "Password updated successfully" });
+        } catch (e) {
+            next(e);
+        }
+    },
+
 
     async getConfirm(req, res, next) {
         try {

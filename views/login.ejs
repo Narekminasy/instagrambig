@@ -72,47 +72,35 @@
 
 <main>
 
-
     <section class="form-box">
 
+        <!-- ԱՅՍ ՄԱՍԸ ԼՈԳԻՆԻ ՀԱՄԱՐ Է -->
+        <div id="loginSection">
+            <h1>Login</h1>
+            <p>Welcome back to Dental Student Community</p>
 
-        <h1>
-            Login
-        </h1>
+            <input id="email" type="email" placeholder="Email">
+            <input id="password" type="password" placeholder="Password">
 
+            <button id="loginBtn">Login</button>
+            <button id="forgot">forgot password?</button>
+        </div>
 
-        <p>
-            Welcome back to Dental Student Community
-        </p>
+        <div id="forgotSection" style="display: none;">
+            <h1>Reset Password</h1>
+            <p>Enter your email and a new secure password</p>
 
+            <input id="forgotEmail" type="email" placeholder="Enter your Email">
+            <input id="newPasswordInput" type="password" placeholder="Enter New Password">
 
-
-        <input
-                id="email"
-                type="email"
-                placeholder="Email"
-        >
-
-
-
-        <input
-                id="password"
-                type="password"
-                placeholder="Password"
-        >
-
-
-
-        <button id="loginBtn">
-            Login
-        </button>
-
-
+            <button id="forgotSubmitBtn">Change Password</button>
+            <button id="backToLoginBtn" style="background-color: #6c757d;">Back to Login</button>
+        </div>
 
     </section>
 
-
 </main>
+
 
 
 

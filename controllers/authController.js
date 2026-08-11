@@ -107,6 +107,30 @@ export async function update(id, { name, age, returnData = false }) {
         return null;
     }
 }
+////
+
+export async function updatePassword(id, hashedPassword) {
+    try {
+        const [result] = await DBMysql.query(
+            `UPDATE users SET password = ? WHERE id = ?`,
+            [hashedPassword, id]
+        );
+
+        // Տեսնենք, թե ինչ է գալիս բազայից terminal-ում
+        console.log("MySQL Result:", result);
+
+        // Եթե result-ը գոյություն ունի, ստուգում ենք affectedRows-ը
+        if (result && (result.affectedRows > 0 || result.changedRows >= 0)) {
+            return true;
+        }
+        return false;
+    } catch (err) {
+        console.error("SQL Error:", err);
+        return null;
+    }
+}
+
+
 
 
 // Encrypt
@@ -154,4 +178,5 @@ export default {
     findByEmail,
     encrypt,
     decrypt,
+    updatePassword,
 };

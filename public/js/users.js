@@ -55,10 +55,10 @@ if (profileForm) {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 },
-                withCredentials: true // Սա թույլ է տալիս cookie-ն ուղարկել POST հարցման ժամանակ
+                withCredentials: true
             });
 
-            alert('Տվյալները հաջողությամբ ուղարկվեցին։');
+            alert('data send sucsessfully');
 
             profileForm.reset();
             if (editFormContainer) editFormContainer.style.display = 'none';
@@ -76,7 +76,6 @@ if (profileForm) {
     });
 }
 
-// 5. «...» երեք կետով կոճակի սեղմումը (Մենյուի բացում)
 if (searchLinksBtn && dropdownMenu) {
     searchLinksBtn.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -84,7 +83,6 @@ if (searchLinksBtn && dropdownMenu) {
     });
 }
 
-// 6. Էկրանի ցանկացած այլ տեղ սեղմելիս մենյուն ավտոմատ կփակվի
 document.addEventListener('click', () => {
     if (dropdownMenu) {
         dropdownMenu.style.display = 'none';
@@ -94,10 +92,12 @@ document.addEventListener('click', () => {
 if (btnAllUsers) {
     btnAllUsers.addEventListener('click', async () => {
         try {
-            const response = await axios.get('/confirm/all-users', {
-                withCredentials: true
-            });
-            console.log('All Users:', response.data);
+            // const response = await axios.get('/confirm/all-users', {
+            //     withCredentials: true
+            // });
+            // console.log('All Users:', response.data);
+            // alert('Օգտատերերի տվյալները տպվեցին Console-ում (F12)։');
+            window.location.href = "/confirm/all-users";
         } catch (error) {
             console.error(error);
         }
