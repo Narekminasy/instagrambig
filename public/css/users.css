@@ -1,3 +1,6 @@
+/* =====================
+   GLOBAL STYLES
+===================== */
 * {
     margin: 0;
     padding: 0;
@@ -5,47 +8,30 @@
     font-family: "Segoe UI", Arial, sans-serif;
 }
 
-
 body {
-
-    background: grey;
-    background-size: 100% auto;
-
-    background-position: center top;
-
-    background-repeat: no-repeat;
-
-    background-attachment: fixed;
-
+    background-color: #f8f9fa;
+    color: #333;
 }
-
-
-
 
 a {
     text-decoration: none;
-    color: white;
+    color: inherit;
 }
-
 
 main {
     flex: 1;
     padding: 40px 8%;
 }
 
-
-
 /* =====================
-   HEADER
+   HEADER & NAVBAR (Adviser style)
 ===================== */
-
-
 header {
-
-    padding: 20px 8%;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    background-color: #ffffff;
+    padding: 15px 4%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid #edf2f7;
 }
-
 
 nav {
     display: flex;
@@ -53,13 +39,32 @@ nav {
     align-items: center;
 }
 
-
 .logo {
-    color: white;
-    font-size: 26px;
+    color: #008080; /* Մուգ փիրուզագույն */
+    font-size: 24px;
     font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
+/* Փնտրման դաշտը */
+#searh {
+    width: 300px;
+    padding: 8px 16px;
+    font-size: 14px;
+    border: 1px solid #cbd5e0;
+    border-radius: 20px;
+    outline: none;
+    background-color: #f8f9fa;
+    transition: all 0.3s ease;
+}
+
+#searh:focus {
+    border-color: #008080;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(0, 128, 128, 0.1);
+}
 
 nav ul {
     display: flex;
@@ -67,15 +72,234 @@ nav ul {
     gap: 25px;
 }
 
-
 nav ul li a {
     font-size: 16px;
+    color: #4a5568;
     transition: .3s;
 }
 
-
 nav ul li a:hover {
-    color: #caf0f8;
+    color: #008080;
+}
+
+/* =====================
+   USERS PROFILE CONTAINER (Ռեսպոնսիվ և Լայն)
+===================== */
+.users-container {
+    max-width: 1300px; /* Մեծացված էկրանների համար */
+    width: 92%; /* Հարմարվողականություն նոութբուքերի համար */
+    margin: 40px auto;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.profile-top {
+    position: relative;
+    height: auto; /* Ավտոմատ կմեծանա ըստ պարունակության */
+    background: #ffffff;
+}
+
+/* Ֆոնային մեծ նկարը */
+.backgroud-picture {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    display: block;
+}
+
+/* Պրոֆիլի կլոր նկարը */
+.profile-picture {
+    position: absolute;
+    left: 50px;
+    top: 260px; /* Նստում է ճիշտ կիսով չափ ֆոնի վրա */
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 5px solid #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+    background-color: #fff;
+    z-index: 2;
+}
+
+/* Պրոֆիլի տեքստային և կոճակների սպիտակ բաժինը */
+.main-profile {
+    position: relative;
+    padding: 25px 50px 25px 260px; /* Ձախից 260px տարածք՝ կլոր նկարից հեռու մնալու համար */
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Անունը ձախում, կոճակները աջում */
+    background-color: #ffffff;
+    min-height: 230px;
+}
+
+/* Օգտատիրոջ անունը */
+.main-profile h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1; /* Ավելացրու սա, որպեսզի տեքստի տողի բարձրությունը չմեծանա */
+    transform: translateY(-54px);
 }
 
 
+/* ԿՈՃԱԿՆԵՐԻ ԽՄԲԱՎՈՐՈՒՄԸ ՆՈՒՅՆ ԳԾԻ ՎՐԱ */
+.profile-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Կոճակների միջև հեռավորությունը */
+}
+
+/* «Confirm Profile» և հաստատված կոճակի ոճը */
+.confirmBtn {
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #008080;
+    background-color: transparent;
+    border: 1.5px solid #008080;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.confirmBtn:hover:not(:disabled) {
+    background-color: #008080;
+    color: #ffffff;
+}
+
+/* Երբ կոճակը հաստատված է */
+.confirmBtn:disabled {
+    background-color: #e2f0d9;
+    border-color: #a9d18e;
+    color: #385723;
+    cursor: not-allowed;
+}
+
+/* «...» երեք կետով կոճակը */
+#search_linsk {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid #cccccc;
+    background: #ffffff;
+    color: #666666;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+#search_linsk:hover {
+    background: #f1f1f1;
+}
+
+/* =====================
+   FORM STYLES (Պրոֆիլի հաստատման ֆորմա)
+===================== */
+#editFormContainer {
+    padding: 40px;
+    border-top: 1px solid #eeeeee;
+    background-color: #ffffff;
+}
+
+#editFormContainer h3 {
+    margin-top: 0;
+    margin-bottom: 24px;
+    font-size: 20px;
+    color: #2c3e50;
+}
+
+#profileForm div {
+    margin-bottom: 20px;
+}
+
+#profileForm label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+#profileForm input[type="text"] {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px 14px;
+    font-size: 14px;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+#profileForm input[type="text"]:focus {
+    border-color: #008080;
+    box-shadow: 0 0 0 3px rgba(0, 128, 128, 0.1);
+}
+
+#profileForm input[type="file"] {
+    display: block;
+    font-size: 14px;
+    color: #4a5568;
+}
+
+#profileForm button[type="submit"] {
+    padding: 12px 30px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #008080;
+    border: none;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#profileForm button[type="submit"]:hover {
+    background-color: #006666;
+}
+
+/* =====================
+   DROPDOWN MENU STYLES (Բացվող պատուհան)
+===================== */
+.dropdown-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 45px; /* Կոճակից մի փոքր ներքև */
+    right: 0; /* Բացվում է դեպի ձախ, որ էկրանից դուրս չգա */
+    background-color: #ffffff;
+    min-width: 160px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    overflow: hidden;
+}
+
+.dropdown-menu button {
+    display: block;
+    width: 100%;
+    padding: 10px 16px;
+    font-size: 14px;
+    text-align: left;
+    background: transparent;
+    border: none;
+    color: #4a5568;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.dropdown-menu button:hover {
+    background-color: #f7fafc;
+    color: #008080;
+}

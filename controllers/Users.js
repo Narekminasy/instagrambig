@@ -1,12 +1,14 @@
 import HttpErrors from "http-errors";
 import jwt from "jsonwebtoken";
 import Users from "../models/users.js";
+import Confirm from "../models/confirm.js";
 
 import {
     findByEmail,
     create,
     checkEmailUnique,
 } from "../controllers/authController.js";
+import posts from "../models/posts.js";
 
 const { JWT_SECRET } = process.env;
 
@@ -143,11 +145,82 @@ export const controller = {
 
     async getConfirm(req, res, next) {
         try {
-            const 
+            // console.log(req.files);
+            // console.log(req.body);
+
+            const userId = req.user.id; // 'req.user.userId'-ի փոխարեն
+
+            const { firstname, lastname} = req.body;
+
+            const existingConfirm = await Confirm.findOne({
+                where: {
+                    userId,
+                }
+            });
+
+            if (existingConfirm) {
+                return res.status(409).json({
+                    message: "User already confirmed!"
+                });
+            }
+
+            const [photo, background, medicalDiploma] = req.files;
+
+            const confirm = await Confirm.create({
+                userId,
+                firstname,
+                lastname,
+                photo: photo.filename,
+                background: background.filename,
+                medicalDiploma: medicalDiploma.filename,
+            });
+
+            return res.status(201).json({
+                confirm,
+                message: "confirm successfully"
+            });
         }catch (e){
             next(e);
         }
-    }
+    },
 
+    async getAllUsers(req, res, next) {
+        try {
+            const allUsers = await Confirm.findAll({
+                include: [
+                    {
+                        model: Users,
+                        attributes: ['id', 'email'],
+                    }
+                ],
+                order: [['createdAt', 'DESC']]
+            });
+
+            return res.json({
+                users: allUsers,
+                message: "All users retrieved successfully"
+            });
+
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    async getAllprofile(req, res, next) {
+        try {
+            const allUsersProfile = await Confirm.findAll({
+                attributes: ['photo'],
+                order: [['createdAt', 'DESC']]
+            });
+
+            return res.json({
+                users: allUsersProfile,
+                message: "All users retrieved successfully"
+            });
+
+        } catch (e) {
+            next(e);
+        }
+    }
 
 };

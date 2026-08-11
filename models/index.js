@@ -37,9 +37,21 @@ comments.belongsTo(posts, {
     foreignKey: 'postId',
 });
 
+//confirm
+
+users.hasOne(confirm, {
+    foreignKey: 'userId',
+    onDelete: 'CASCADE',
+});
+
+confirm.belongsTo(users, {
+    foreignKey: 'userId',
+});
+
 
 export default {
     users,
     comments,
     posts,
+    confirm,
 };

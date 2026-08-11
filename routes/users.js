@@ -5,8 +5,7 @@ import {controller as loginController, controller} from "../controllers/Users.js
 import auth from "../middlewares/authorization.js"
 import posts from "../models/posts.js";
 import users from "../models/users.js";
-// import admin from "../middlewares/admin.js";
-// import postsController from "../controllers/postsControllers.js";
+import Confirm from '../models/confirm.js'
 
 const router = Router();
 
@@ -63,9 +62,22 @@ router.get("/contact", (req, res) => {
     res.render("contact");
 });
 
-router.get("/users", (req, res) => {
-    res.render("users");
+router.get("/users", auth, async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+
+        const userConfirm = await Confirm.findOne({
+            where: { userId }
+        });
+
+        res.render("users", {
+            confirmData: userConfirm
+        });
+    } catch (e) {
+        next(e);
+    }
 });
+
 
 
 

@@ -36,6 +36,8 @@ sequelize.sync()
     })
     .catch(console.error);
 
+
+
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
 })

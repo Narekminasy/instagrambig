@@ -2,77 +2,98 @@
 <html lang="hy">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title> About us </title>
-
+    <title> users </title>
     <link rel="stylesheet" href="/css/users.css">
-
 </head>
-
 
 <body>
 
-
 <header>
-
     <nav>
-
         <a href="/users/home" class="logo">
             🦷 Dental Student
         </a>
-
-        <input id="searh" type="text" >
-
+        <input id="searh" type="text">
     </nav>
-
 </header>
 
 <section class="users-container">
-
     <div class="users-profile">
-
         <div class="profile-top">
 
-            <img
-                    src="/media/profile.jpg"
-                    alt="Profile picture"
-                    class="profile-picture"
-            >
+            <img src="<%= (confirmData && confirmData.photo) ? '/media/' + confirmData.photo : '/media/profile.jpg' %>"
+                 alt="Profile picture"
+                 class="profile-picture"
+                 id="profilePic">
 
-            <img
-                    src="/media/backgroud.jpg"
-                    alt="backgroud picture"
-                    class="backgroud-picture"
-            >
-            <!--users name-->
+            <!-- Նույնը անում ենք background-ի համար -->
+            <img src="<%= (confirmData && confirmData.background) ? '/media/' + confirmData.background : '/media/backgroud.jpg' %>"
+                 alt="backgroud picture"
+                 class="backgroud-picture"
+                 id="backgroundPic">
 
+            <!-- Ուղղված դասավորությամբ բաժին -->
             <div class="main-profile">
-                <button>...</button>
-                <button>Confirm Profile</button>
-                <h1>your blogs</h1>
+                <h1><%= (confirmData) ? confirmData.firstname + ' ' + confirmData.lastname : 'your blogs' %></h1>
+                <!-- Կոճակների խմբավորումը աջ կողմի համար -->
+                <div class="profile-actions">
+                    <div class="dropdown-wrapper">
+                        <button type="button" id="search_linsk">...</button>
+
+                        <!-- Բացվող մենյու երկու կոճակներով -->
+                        <div id="dropdownMenu" class="dropdown-menu">
+                            <button type="button" id="btnAllUsers">All Users Data</button>
+                            <button type="button" id="btnAllProfiles">All Profiles</button>
+                        </div>
+                    </div>
+
+                    <% if (confirmData) { %>
+                        <button type="button" class="confirmBtn" disabled>Profile Confirmed</button>
+                    <% } else { %>
+                        <button type="button" id="confirmBtn" class="confirmBtn">Confirm Profile</button>
+                    <% } %>
+                </div>
+
             </div>
-
-
         </div>
 
-
-
-
+        <% if (!confirmData) { %>
+            <div id="editFormContainer">
+                <h3>Confirm Profile</h3>
+                <form id="profileForm">
+                    <div>
+                        <label for="firstname">Firstname:</label>
+                        <input type="text" id="firstname" required>
+                    </div>
+                    <div>
+                        <label for="lastname">Lastname:</label>
+                        <input type="text" id="lastname" required>
+                    </div>
+                    <div>
+                        <label for="photoInput">(photo):</label>
+                        <input type="file" id="photoInput" accept="image/*" required>
+                    </div>
+                    <div>
+                        <label for="backgroundInput">(backgroud):</label>
+                        <input type="file" id="backgroundInput" accept="image/*" required>
+                    </div>
+                    <div>
+                        <label for="diplomyInput">(diplomy):</label>
+                        <input type="file" id="diplomyInput" accept="image/*" required>
+                    </div>
+                    <div>
+                        <button type="submit">Send Data</button>
+                    </div>
+                </form>
+            </div>
+        <% } %>
     </div>
-
 </section>
 
-
-
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-<script src="/js/home.js"></script>
-
+<script src="/js/users.js"></script>
 
 </body>
-
 </html>

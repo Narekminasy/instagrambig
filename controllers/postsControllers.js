@@ -11,7 +11,7 @@ const postsController = {
             const userId = req.user.id; // 'req.user.userId'-ի փոխարեն
 
 
-            const { title, description} = req.body;
+            const { firstname, description} = req.body;
 
             if (!req.file) {
                 return res.status(400).json({ message: "upload failed." });

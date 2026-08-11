@@ -19,7 +19,6 @@ const Confirm = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
-
         userId: {
             type: DataTypes.BIGINT,
             allowNull: false,
@@ -36,7 +35,7 @@ const Confirm = sequelize.define(
         },
 
         medicalDiploma: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false,
         },
     },
