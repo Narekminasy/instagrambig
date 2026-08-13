@@ -14,6 +14,7 @@ const commentsController = {
                 });
             }
 
+
             const comment = await Comments.create({
                 userId,
                 postId,
@@ -29,6 +30,7 @@ const commentsController = {
             next(e);
         }
     },
+
     async deleteMessage(req, res, next) {
         try {
             const userId = req.user.id;
