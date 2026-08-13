@@ -22,6 +22,10 @@ const Posts = sequelize.define("posts", {
     userId: {
         type: DataTypes.BIGINT,
         allowNull: false,
+    },
+    isApparatus: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
 })
 

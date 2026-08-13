@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="hy">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical apparatus</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <a href="/users/home" class="logo">
+            🦷 Dental Student
+        </a>
+
+        <ul>
+            <li><a href="/users/home">Home</a></li>
+            <li><a href="/users/register">Register</a></li>
+            <li><a href="/users/login">Login</a></li>
+            <li><a href="/users/users">Profile</a></li>
+            <li><a href="/users/index">Blog</a></li>
+            <li><a href="/users/About">About Us</a></li>
+            <li><a href="/users/Contact">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="apparatus-page">
+    <section class="apparatus-container">
+        <h1>Medical apparatus</h1>
+        <p class="apparatus-subtitle">
+            Advanced Diagnostics & Safety. Take a look at the modern medical equipment we use to provide world-class healthcare services.
+        </p>
+
+        <div class="apparatus-content">
+            <div class="apparatus-text">
+
+                <% posts.forEach(post => { %>
+                    <div class="post-item" id="post-<%= post.id %>">
+                        <h2><%= post.title %></h2>
+                        <p><%= post.description %></p>
+
+                        <% if (post.image) { %>
+                            <img src="/media/<%= post.image %>" alt="Post Image">
+                        <% } %>
+
+                        <button class="delete-btn" data-id="<%= post.id %>">
+                            Delete
+                        </button>
+
+                        <input class="commnetsInp" data-id="<%= post.id %>" type="text" placeholder="Write comment...">
+
+                        <button class="send-btn" data-id="<%= post.id %>">
+                            Send
+                        </button>
+                    </div> <!-- ՈՒՂՂՎԱԾ Է. post-item-ը հիմա փակվում է յուրաքանչյուր պոստի համար -->
+                <% }) %> <!-- ՈՒՂՂՎԱԾ Է. EJS forEach ցիկլը փակված է -->
+
+            </div> <!-- ՈՒՂՂՎԱԾ Է. apparatus-text-ը փակված է -->
+        </div> <!-- ՈՒՂՂՎԱԾ Է. apparatus-content-ը փակված է -->
+
+    </section>
+</main>
+
+<footer>
+    <ul>
+        <li><a href="/users/about">About Us</a></li>
+        <li><a href="/users/Contact">Contact</a></li>
+        <li>Privacy</li>
+    </ul>
+    <p class="p_fist">© 2026 Dental Student Blog</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/home.js"></script>
+
+</body>
+</html>

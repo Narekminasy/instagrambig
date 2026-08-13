@@ -8,16 +8,19 @@ createBtn.addEventListener("click", async (e) => {
     try {
         e.preventDefault();
 
-
         const titleVal = document.getElementById("titleInp").value;
         const descriptionVal = document.getElementById("descriptionInp").value;
 
         const imageInput = document.getElementById("imageInp");
         const imageFile = imageInput.files[0];
 
+        // Վերցնում ենք checkbox-ի վիճակը (true կամ false)
+        const isApparatusChecked = document.getElementById("isApparatusInp").checked;
+
         const formData = new FormData();
         formData.append("title", titleVal);
         formData.append("description", descriptionVal);
+        formData.append("isApparatus", isApparatusChecked); // ԱՅՍՏԵՂ ՈՒՂԱՐԿՎՈՒՄ Է ԲԱԶԱ
 
         if (imageFile) {
             formData.append("image", imageFile);
@@ -29,8 +32,6 @@ createBtn.addEventListener("click", async (e) => {
             }
         });
 
-
-
         alert('Successfully created posts.');
         location.reload();
     } catch (error) {
@@ -38,6 +39,7 @@ createBtn.addEventListener("click", async (e) => {
         alert('Something went wrong!');
     }
 });
+
 
 document.addEventListener("click", async (e) => {
     if (e.target.classList.contains("delete-btn")) {

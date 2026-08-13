@@ -5,17 +5,19 @@ import comments from "../models/Comments.js";
 const postsController = {
 
     async createPosts(req, res, next) {
-
         try {
-            // Փոխեք սա.
-            const userId = req.user.id; // 'req.user.userId'-ի փոխարեն
+            const userId = req.user.id;
 
-
-            const { title, firstname, description} = req.body;
+            // body-ից վերցնում ենք նաև isApparatus դաշտը
+            const { title, firstname, description, isApparatus } = req.body;
 
             if (!req.file) {
                 return res.status(400).json({ message: "upload failed." });
             }
+
+            // Կախված նրանից, թե ֆրոնտից ինչպես եք ուղարկում FormData-ն՝
+            // ստուգում ենք, որ այն դառնա մաքուր Boolean (true կամ false)
+            const isApparatusBool = isApparatus === "true" || isApparatus === true || isApparatus === "on";
 
             const existingPost = await posts.findOne({
                 where: {
@@ -31,14 +33,15 @@ const postsController = {
                 });
             }
 
+            // Բազայում պահելիս ավելացնում ենք isApparatusBool դաշտը
             const post = await posts.create({
                 title,
                 description,
                 userId,
                 image: req.file.filename,
+                isApparatus: isApparatusBool // ԱՅՍՏԵՂ ՓՈԽՎԵՑ
             });
-            // console.log('req.user',req.user);
-            // console.log('userId',userId);
+
             return res.status(201).json({
                 post,
                 message: "Post created successfully"

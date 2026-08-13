@@ -31,7 +31,7 @@ router.get("/login", (req, res) => {
 
 router.get("/index", auth, async (req, res, next) => {
     try {
-        // Հարցնում ենք բոլոր պոստերը
+
         const allPosts = await posts.findAll({
             include: [
                 {
@@ -109,6 +109,27 @@ router.get("/users", auth, async (req, res, next) => {
     }
 });
 
+router.get("/apparatus", auth, async (req, res, next) => {
+    try {
+        const allPosts = await posts.findAll({
+            where: {
+                isApparatus: true // Բերում է ՄԻԱՅՆ այն պոստերը, որոնք նշվել են որպես ապարատուրա
+            },
+            include: [{
+                model: users,
+                attributes: ['name', 'role'] // Պահում ենք հեղինակի տվյալները (անունը, դերը)
+            }],
+            order: [['createdAt', 'DESC']]
+        });
+
+        res.render("apparatus", {
+            isOwnProfile: true,
+            posts: allPosts
+        });
+    } catch (e) {
+        next(e);
+    }
+});
 
 
 
