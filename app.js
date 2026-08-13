@@ -30,6 +30,7 @@ app.use(express.static('public'));
 
 app.use(usersRouter);
 
+
 sequelize.sync()
     .then(() => {
         console.log("Tables synced");

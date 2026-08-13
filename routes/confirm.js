@@ -24,6 +24,7 @@ router.get('/all-users',auth);
 
 router.get('/all-users-progile',auth, controller.getAllprofile);
 
+
 router.get("/all-users", auth, async (req, res, next) => {
     try {
         const allProfiles = await Confirm.findAll({
