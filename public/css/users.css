@@ -31,6 +31,8 @@ header {
     padding: 15px 4%;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     border-bottom: 1px solid #edf2f7;
+    position: relative;
+    z-index: 1001;
 }
 
 nav {
@@ -40,7 +42,7 @@ nav {
 }
 
 .logo {
-    color: #008080; /* Մուգ փիրուզագույն */
+    color: #008080;
     font-size: 24px;
     font-weight: bold;
     display: flex;
@@ -48,7 +50,6 @@ nav {
     gap: 8px;
 }
 
-/* Փնտրման դաշտը */
 #searh {
     width: 300px;
     padding: 8px 16px;
@@ -83,37 +84,44 @@ nav ul li a:hover {
 }
 
 /* =====================
-   USERS PROFILE CONTAINER (Ռեսպոնսիվ և Լայն)
+   USERS PROFILE CONTAINER
 ===================== */
 .users-container {
-    max-width: 1300px; /* Մեծացված էկրանների համար */
-    width: 92%; /* Հարմարվողականություն նոութբուքերի համար */
-    margin: 40px auto;
+    max-width: 1300px;
+    width: 92%;
+    margin: 10px auto 40px auto; /* ՈՒՂՂՎԱԾ Է. Վերևի margin-ը 40px-ից դարձրել ենք 10px */
     background: #ffffff;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+/* Մենյուն բացվելիս */
+.users-container.menu-open {
+    max-width: calc(100% - 320px);
+    margin-top: 10px;    /* ՈՒՂՂՎԱԾ Է. Այստեղ նույնպես ֆիքսում ենք 10px վերևից */
+    margin-left: 280px;
+    margin-right: 40px;
 }
 
 .profile-top {
     position: relative;
-    height: auto; /* Ավտոմատ կմեծանա ըստ պարունակության */
+    height: auto;
     background: #ffffff;
 }
 
-/* Ֆոնային մեծ նկարը */
 .backgroud-picture {
     width: 100%;
-    height: 350px;
+    height: 450px;
     object-fit: cover;
     display: block;
 }
 
-/* Պրոֆիլի կլոր նկարը */
 .profile-picture {
     position: absolute;
     left: 50px;
-    top: 260px; /* Նստում է ճիշտ կիսով չափ ֆոնի վրա */
+    top: 360px;
     width: 180px;
     height: 180px;
     border-radius: 50%;
@@ -124,36 +132,31 @@ nav ul li a:hover {
     z-index: 2;
 }
 
-/* Պրոֆիլի տեքստային և կոճակների սպիտակ բաժինը */
 .main-profile {
     position: relative;
-    padding: 25px 50px 25px 260px; /* Ձախից 260px տարածք՝ կլոր նկարից հեռու մնալու համար */
+    padding: 25px 50px 25px 260px;
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Անունը ձախում, կոճակները աջում */
+    justify-content: space-between;
     background-color: #ffffff;
     min-height: 230px;
 }
 
-/* Օգտատիրոջ անունը */
 .main-profile h1 {
     margin: 0;
     font-size: 28px;
     font-weight: 700;
     color: #1a1a1a;
-    line-height: 1; /* Ավելացրու սա, որպեսզի տեքստի տողի բարձրությունը չմեծանա */
+    line-height: 1;
     transform: translateY(-54px);
 }
 
-
-/* ԿՈՃԱԿՆԵՐԻ ԽՄԲԱՎՈՐՈՒՄԸ ՆՈՒՅՆ ԳԾԻ ՎՐԱ */
 .profile-actions {
     display: flex;
     align-items: center;
-    gap: 12px; /* Կոճակների միջև հեռավորությունը */
+    gap: 12px;
 }
 
-/* «Confirm Profile» և հաստատված կոճակի ոճը */
 .confirmBtn {
     padding: 10px 24px;
     font-size: 14px;
@@ -171,7 +174,6 @@ nav ul li a:hover {
     color: #ffffff;
 }
 
-/* Երբ կոճակը հաստատված է */
 .confirmBtn:disabled {
     background-color: #e2f0d9;
     border-color: #a9d18e;
@@ -179,7 +181,6 @@ nav ul li a:hover {
     cursor: not-allowed;
 }
 
-/* «...» երեք կետով կոճակը */
 #search_linsk {
     width: 38px;
     height: 38px;
@@ -200,26 +201,26 @@ nav ul li a:hover {
 }
 
 /* =====================
-   FORM STYLES (Պրոֆիլի հաստատման ֆորմա)
+   FORM STYLES
 ===================== */
-#editFormContainer {
+#editFormContainer, #changePhotosContainer {
     padding: 40px;
     border-top: 1px solid #eeeeee;
     background-color: #ffffff;
 }
 
-#editFormContainer h3 {
+#editFormContainer h3, #changePhotosContainer h3 {
     margin-top: 0;
     margin-bottom: 24px;
     font-size: 20px;
     color: #2c3e50;
 }
 
-#profileForm div {
+#profileForm div, #changePhotosForm div {
     margin-bottom: 20px;
 }
 
-#profileForm label {
+#profileForm label, #changePhotosForm label {
     display: block;
     margin-bottom: 8px;
     font-size: 14px;
@@ -243,13 +244,13 @@ nav ul li a:hover {
     box-shadow: 0 0 0 3px rgba(0, 128, 128, 0.1);
 }
 
-#profileForm input[type="file"] {
+#profileForm input[type="file"], #changePhotosForm input[type="file"] {
     display: block;
     font-size: 14px;
     color: #4a5568;
 }
 
-#profileForm button[type="submit"] {
+#profileForm button[type="submit"], #changePhotosForm button[type="submit"] {
     padding: 12px 30px;
     font-size: 14px;
     font-weight: 600;
@@ -261,45 +262,478 @@ nav ul li a:hover {
     transition: background-color 0.2s;
 }
 
-#profileForm button[type="submit"]:hover {
+#profileForm button[type="submit"]:hover, #changePhotosForm button[type="submit"]:hover {
     background-color: #006666;
 }
 
 /* =====================
-   DROPDOWN MENU STYLES (Բացվող պատուհան)
+   SIDEBAR MENU STYLES (MDB Style)
 ===================== */
 .dropdown-wrapper {
     position: relative;
     display: inline-block;
 }
 
-.dropdown-menu {
-    position: absolute;
-    top: 45px; /* Կոճակից մի փոքր ներքև */
-    right: 0; /* Բացվում է դեպի ձախ, որ էկրանից դուրս չգա */
+.sidebar-menu {
+    position: fixed;
+    top: 71px;
+    left: 0;
+    width: 240px;
+    height: calc(100vh - 71px);
     background-color: #ffffff;
-    min-width: 160px;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    z-index: 10;
-    overflow: hidden;
+    box-shadow: 2px 0 15px rgba(0, 0, 0, 0.05);
+    border-right: 1px solid #e2e8f0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    padding-top: 15px;
+    transition: all 0.3s ease;
 }
 
-.dropdown-menu button {
-    display: block;
-    width: 100%;
-    padding: 10px 16px;
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 14px 24px;
     font-size: 14px;
-    text-align: left;
+    font-weight: 500;
+    color: #4f4f4f;
     background: transparent;
     border: none;
-    color: #4a5568;
+    text-align: left;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s ease;
 }
 
-.dropdown-menu button:hover {
-    background-color: #f7fafc;
-    color: #008080;
+.menu-item:hover {
+    background-color: #f8f9fa;
+    color: #1266f1;
 }
+
+.menu-item.active {
+    background-color: #1266f1;
+    color: #ffffff;
+    border-radius: 0 5px 5px 0;
+    margin-right: 10px;
+}
+
+
+
+/* =====================
+   BLOG PAGE
+===================== */
+
+/* //////////////////////////////////////////////////////////////////*/
+
+/* Post container */
+.post-item {
+    position: relative;
+    padding: 25px;
+    margin: 20px 0;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Delete button */
+.delete-btn {
+    border: none;
+    background: #ff4d4f;
+    color: white;
+    padding: 9px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.delete-btn:hover {
+    background: #d9363e;
+    transform: translateY(-1px);
+}
+
+.delete-btn:active {
+    transform: scale(0.96);
+}
+
+/* Comment input */
+.commnetsInp {
+    width: 60%;
+    padding: 11px 14px;
+    margin-top: 15px;
+    border: 1px solid #d9d9d9;
+    border-radius: 9px;
+    outline: none;
+    font-size: 14px;
+    transition: 0.2s ease;
+    box-sizing: border-box;
+}
+
+.commnetsInp:focus {
+    border-color: #1677ff;
+    box-shadow: 0 0 0 3px rgba(22, 119, 255, 0.12);
+}
+
+.commnetsInp::placeholder {
+    color: #999;
+}
+
+/* Send button */
+.send-btn {
+    border: none;
+    background: #1677ff;
+    color: white;
+    padding: 11px 18px;
+    margin-left: 8px;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.send-btn:hover {
+    background: #0958d9;
+    transform: translateY(-1px);
+}
+
+.send-btn:active {
+    transform: scale(0.96);
+}
+
+/* Comment area */
+.commnetsInp,
+.send-btn {
+    vertical-align: middle;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .commnetsInp {
+        width: 100%;
+        margin-bottom: 8px;
+    }
+
+    .send-btn {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .delete-btn {
+        width: 100%;
+    }
+}
+
+
+
+
+.ownPost {
+    max-width: 1300px;
+    width: 92%;
+    margin: 10px auto 40px auto; /* ՈՒՂՂՎԱԾ Է. Վերևի margin-ը 40px-ից դարձրել ենք 10px */
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.blog {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    height: max-content;
+    box-shadow: 0 8px 25px rgba(0,0,0,.1);
+}
+
+.blog h2 {
+    color: #0077b6;
+    margin-bottom: 20px;
+}
+
+.create {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.right-box {
+    background: #eef9ff;
+    padding: 30px;
+    border-radius: 20px;
+}
+
+.right-box > h1 {
+    color: #0077b6;
+    margin-bottom: 25px;
+}
+
+.post-item {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.1);
+}
+
+.post-item h2 {
+    color: #0077b6;
+    margin-bottom: 10px;
+}
+
+.post-item p {
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.post-item img {
+    width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 15px;
+}
+
+.delete-btn {
+    background: #d90429;
+}
+
+.delete-btn:hover {
+    background: #9d0208;
+}
+
+.commnetsInp {
+    margin-top: 15px;
+}
+
+.send-btn {
+    margin-top: 10px;
+}
+
+/* =====================
+   BEAUTIFUL BLOG POSTS
+===================== */
+
+.right-box {
+    background: transparent;
+    padding: 20px;
+}
+
+.right-box > h1 {
+    text-align: center;
+    font-size: 40px;
+    margin-bottom: 40px;
+}
+
+/* posts container */
+
+.post-item {
+    width: 85%;
+    background: white;
+    padding: 30px;
+    border-radius: 30px;
+    margin-bottom: 35px;
+    box-shadow: 0 15px 35px rgba(0,119,182,.15);
+    transition: .4s;
+    position: relative;
+}
+
+/* alternating left-right */
+
+.post-item:nth-child(odd) {
+    margin-left: 0;
+}
+
+.post-item:nth-child(even) {
+    margin-left: auto;
+    background: #f0fbff;
+}
+
+.post-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 45px rgba(0,119,182,.25);
+}
+
+.post-item h2 {
+    font-size: 28px;
+    color: #0077b6;
+    margin-bottom: 15px;
+}
+
+.post-item p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: #555;
+}
+
+/* image */
+
+.post-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 25px;
+    margin: 20px 0;
+}
+
+/* buttons area */
+
+.post-item button {
+    margin-right: 10px;
+}
+
+.delete-btn {
+    background: #ef233c;
+}
+
+.delete-btn:hover {
+    background: #c1121f;
+}
+
+.send-btn {
+    background: #00b4d8;
+}
+
+/* comment */
+
+.commnetsInp {
+    width: 70%;
+    display: inline-block;
+}
+
+/* little decoration */
+
+.post-item::before {
+    content: "🦷";
+    position: absolute;
+    top: -18px;
+    left: 25px;
+    background: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,.1);
+}
+
+/* responsive */
+
+@media(max-width:900px) {
+    .post-item,
+    .post-item:nth-child(even) {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+/*//// chat */
+
+
+.chat-floating-btn {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+
+    width: 62px;
+    height: 62px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #d4147f;
+    color: white;
+
+    font-size: 28px;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, .3);
+
+    z-index: 99999;
+}
+
+.chat-floating-btn:hover {
+    transform: scale(1.08);
+}
+
+
+/* Բացված chat-ը */
+.chat-window {
+    position: fixed;
+    right: 25px;
+    bottom: 100px;
+
+    width: 350px;
+    height: 450px;
+
+    background: white;
+    border-radius: 16px;
+
+    box-shadow: 0 10px 40px rgba(0, 0, 0, .3);
+
+    display: none;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    z-index: 99998;
+}
+
+.chat-window.active {
+    display: flex;
+}
+
+.chat-header {
+    height: 55px;
+    padding: 0 15px;
+
+    background: #d4147f;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.chat-header button {
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.chat-body {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+.chat-input {
+    display: flex;
+    padding: 10px;
+    gap: 8px;
+    border-top: 1px solid #ddd;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.chat-input button {
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background: #d4147f;
+    color: white;
+    cursor: pointer;
+}
+
+

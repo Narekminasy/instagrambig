@@ -11,16 +11,98 @@
 <body>
 
 <header>
+
     <nav>
+
         <a href="/users/home" class="logo">
             🦷 Dental Student
         </a>
-        <input id="searh" type="text">
+
+
+        <ul>
+
+            <li>
+                <a href="/users/home">
+                    Home
+                </a>
+            </li>
+
+
+            <li>
+                <a href="/users/register">
+                    Register
+                </a>
+            </li>
+
+
+            <li>
+                <a href="/users/login">
+                    Login
+                </a>
+            </li>
+
+            <li>
+                <a href="/users/users">
+                    Profile
+                </a>
+            </li>
+
+
+            <li>
+                <a href="/users/index">
+                    Blog
+                </a>
+            </li>
+
+            <li>
+                <a href="/users/About">
+                    About Us
+                </a>
+            </li>
+
+            <li>
+                <a href="/users/Contact">
+                    Contact
+                </a>
+            </li>
+
+
+
+        </ul>
+
     </nav>
+
 </header>
+
+
+
+<div class="menu_box">
+    <section class="menue">
+        <div class="profile-actions">
+
+            <% if (isOwnProfile) { %>
+                <div class="dropdown-wrapper">
+                    <button type="button" id="search_linsk">...</button>
+
+                    <div id="dropdownMenu" class="sidebar-menu">
+                        <a href="/confirm/all-users" class="menu-item" id="btnAllUsers">All Users Data</a>
+                        <a href="/users/index" class="menu-item" id="btnAllProfiles">All Profiles</a>
+                        <a href="#" class="menu-item" id="btnChangePhotos">Change Photos</a>
+                    </div>
+                </div>
+            <% } %>
+
+            <% if (isOwnProfile && !confirmData) { %>
+                <button type="button" id="confirmBtn" class="confirmBtn">Confirm Profile</button>
+            <% } %>
+
+        </div>
+    </section>
+</div>
 
 <section class="users-container">
     <div class="users-profile">
+
         <div class="profile-top">
 
             <img src="<%= (confirmData && confirmData.photo) ? '/media/' + confirmData.photo : '/media/profile.jpg' %>"
@@ -28,42 +110,16 @@
                  class="profile-picture"
                  id="profilePic">
 
-            <!-- Նույնը անում ենք background-ի համար -->
             <img src="<%= (confirmData && confirmData.background) ? '/media/' + confirmData.background : '/media/backgroud.jpg' %>"
                  alt="backgroud picture"
                  class="backgroud-picture"
                  id="backgroundPic">
 
-            <!-- Ուղղված դասավորությամբ բաժին -->
             <div class="main-profile">
                 <h1><%= (confirmData) ? confirmData.firstname + ' ' + confirmData.lastname : 'your blogs' %></h1>
-
-                <!-- Կոճակների խմբավորումը աջ կողմի համար -->
-                <div class="profile-actions">
-
-                    <% if (isOwnProfile) { %>
-                        <div class="dropdown-wrapper">
-                            <button type="button" id="search_linsk">...</button>
-
-                            <!-- Բացվող մենյու երկու կոճակներով -->
-                            <div id="dropdownMenu" class="dropdown-menu">
-                                <button type="button" id="btnAllUsers">All Users Data</button>
-                                <button type="button" id="btnAllProfiles">All Profiles</button>
-                            </div>
-                        </div>
-                    <% } %>
-
-                    <!-- 2. Հաստատման կոճակը երևում է ՄԻԱՅՆ էջի տիրոջ մոտ և ՄԻԱՅՆ այն դեպքում, եթե դեռ հաստատված չէ -->
-                    <% if (isOwnProfile && !confirmData) { %>
-                        <button type="button" id="confirmBtn" class="confirmBtn">Confirm Profile</button>
-                    <% } %>
-
-                </div>
-
             </div>
         </div>
 
-        <!-- Ֆորման բացվում է միայն էջի տիրոջ մոտ, եթե դեռ հաստատված չէ -->
         <% if (isOwnProfile && !confirmData) { %>
             <div id="editFormContainer">
                 <h3>Confirm Profile</h3>
@@ -94,8 +150,70 @@
                 </form>
             </div>
         <% } %>
+
+        <% if (isOwnProfile) { %>
+            <div id="changePhotosContainer">
+                <h3>Update Photos</h3>
+                <form id="changePhotosForm">
+                    <div>
+                        <label for="updatePhoto">(photo):</label>
+                        <input type="file" id="updatePhoto" accept="image/*" required>
+                    </div>
+                    <div>
+                        <label for="updateBackground">(backgroud):</label>
+                        <input type="file" id="updateBackground" accept="image/*" required>
+                    </div>
+                    <div>
+                        <button type="submit">Update</button>
+                    </div>
+                </form>
+            </div>
+        <% } %>
     </div>
 </section>
+
+<div class="ownPost">
+    <h1>BLOGS</h1>
+
+    <% posts.forEach(post => { %>
+        <div class="post-item" id="post-<%= post.id %>">
+
+            <h2><%= post.title %></h2>
+            <p><%= post.description %></p>
+
+            <% if (post.image) { %>
+                <img src="/media/<%= post.image %>" alt="Post Image">
+            <% } %>
+
+            <button
+                    class="delete-btn"
+                    data-id="<%= post.id %>">
+                Delete
+            </button>
+
+        </div>
+    <% }) %>
+</div>
+
+<button class="chat-floating-btn" id="chatBtn">
+    💬
+</button>
+
+<div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+        <span>Chat</span>
+        <button id="closeChat">×</button>
+    </div>
+
+    <div class="chat-body">
+    </div>
+
+    <div class="chat-input">
+        <input type="text" placeholder="write message...">
+        <button>Send</button>
+    </div>
+</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="/js/users.js"></script>

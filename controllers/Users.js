@@ -4,11 +4,13 @@ import Users from "../models/users.js";
 import Confirm from "../models/confirm.js";
 
 
+
 import {
     findByEmail,
     create,
     checkEmailUnique,
-    updatePassword
+    updatePassword,
+    updatePhoto
 } from "../controllers/authController.js";
 import posts from "../models/posts.js";
 
@@ -251,6 +253,37 @@ export const controller = {
         } catch (e) {
             next(e);
         }
-    }
+    },
 
+    async updatePhotos(req, res, next) {
+        try {
+            const userId = req.user.id;
+
+            const files = req.files;
+
+            if (!files || files.length === 0) {
+                return next(HttpErrors(400, "Photo or background is required"));
+            }
+
+            const photo = files[0]?.filename || null;
+            const background = files[1]?.filename || null;
+
+            const updated = await updatePhoto(
+                userId,
+                photo,
+                background
+            );
+
+            if (!updated) {
+                return next(HttpErrors(404, "User not found or photos not updated"));
+            }
+
+            return res.json({
+                message: "Photo and background updated successfully"
+            });
+
+        } catch (e) {
+            next(e);
+        }
+    }
 };

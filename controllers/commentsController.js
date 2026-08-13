@@ -38,7 +38,7 @@ const commentsController = {
             const comment = await Comments.findOne({
                 where: {
                     id: id,
-                    userId: userId
+                    user_id: userId
                 }
             });
             if (!comment) {

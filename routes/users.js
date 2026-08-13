@@ -6,6 +6,7 @@ import auth from "../middlewares/authorization.js"
 import posts from "../models/posts.js";
 import users from "../models/users.js";
 import Confirm from '../models/confirm.js'
+import comments from '../models/Comments.js';
 
 
 const router = Router();
@@ -30,20 +31,34 @@ router.get("/login", (req, res) => {
 
 router.get("/index", auth, async (req, res, next) => {
     try {
+        // Հարցնում ենք բոլոր պոստերը
         const allPosts = await posts.findAll({
-            include: [{
-                model: users,
-                attributes: ['name']
-            }],
+            include: [
+                {
+                    model: users,
+                    attributes: ['name'] // Պոստը գրողի անունը
+                },
+                {
+                    model: comments, // Ներառում ենք պոստի մեկնաբանությունները
+                    include: [{
+                        model: users,
+                        as: 'User', // Մեկնաբանությունը գրողի մոդելը (ըստ ձեր կապերի)
+                        attributes: ['id', 'name'] // Մեկնաբանությունը գրողի տվյալները
+                    }]
+                }
+            ],
             order: [['createdAt', 'DESC']]
         });
 
+        // Էջին ուղարկում ենք միայն պոստերը, քանի որ մեկնաբանությունները արդեն դրանց ներսում են
         res.render('index', { posts: allPosts });
 
     } catch (error) {
         next(error);
     }
 });
+
+
 
 router.post(
     "/login",
@@ -68,7 +83,17 @@ router.get("/contact", (req, res) => {
 
 router.get("/users", auth, async (req, res, next) => {
     try {
+
         const userId = req.user.id;
+
+        const allPosts = await posts.findAll({
+            where: { userId },
+            include: [{
+                model: users,
+                attributes: ['name']
+            }],
+            order: [['createdAt', 'DESC']]
+        });
 
         const userConfirm = await Confirm.findOne({
             where: { userId }
@@ -76,12 +101,15 @@ router.get("/users", auth, async (req, res, next) => {
 
         res.render("users", {
             confirmData: userConfirm,
-            isOwnProfile: true
+            isOwnProfile: true,
+            posts: allPosts
         });
     } catch (e) {
         next(e);
     }
 });
+
+
 
 
 

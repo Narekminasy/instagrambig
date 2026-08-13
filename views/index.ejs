@@ -44,6 +44,12 @@
             </li>
 
             <li>
+                <a href="/users/users">
+                    Profile
+                </a>
+            </li>
+
+            <li>
                 <a href="/users/index">
                     Blog
                 </a>
@@ -175,8 +181,6 @@
 
 
 
-
-
                     <button
                             class="delete-btn"
                             data-id="<%= post.id %>">
@@ -204,6 +208,37 @@
                         Send
                     </button>
 
+
+                    <details class="comments-collapse">
+                        <summary class="comments-toggle">
+                            See all comments (<%= post.comments ? post.comments.length : 0 %>)
+                        </summary>
+
+                        <div class="comments-list">
+                            <% if (post.comments && post.comments.length > 0) { %>
+                                <% post.comments.forEach(comment => { %>
+                                    <div class="comments_look" data-id="<%= comment.id %>">
+                    <span class="comment-user-info">
+                        <strong><%= comment.user_id %></strong>
+
+                        <% if (comment.createdAt) { %>
+                            <strong>🕒<%= new Date(comment.createdAt).toLocaleTimeString('hy-AM', {hour: '2-digit', minute:'2-digit'}) %></strong>
+                        <% } %>
+
+                        <button class="delteComment_Btn" data-id="<%= comment.id %>">delete</button>
+
+                        <% if (comment.User) { %>
+                            <span class="comment-user-name"><%= comment.User.name %></span>
+                        <% } %>
+                    </span>
+                                        <p class="comment-text"><%= comment.message %></p>
+                                    </div>
+                                <% }) %>
+                            <% } else { %>
+                                <p style="font-size: 12px; color: #94a3b8; margin: 5px 0;">No comments yet.</p>
+                            <% } %>
+                        </div>
+                    </details>
 
 
                 </div>

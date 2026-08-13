@@ -6,6 +6,7 @@ import admin from "../middlewares/admin.js";
 import upload from "../middlewares/upload.js";
 import postsController from "../controllers/postsControllers.js";
 import Confirm from '../models/confirm.js'
+import Post from "../models/posts.js";
 
 const router = Router();
 
@@ -39,10 +40,9 @@ router.get("/all-users", auth, async (req, res, next) => {
 
 router.get("/all-profiles/:id", auth, async (req, res, next) => {
     try {
-        const targetUserId = req.params.id; // Վերցնում ենք URL-ի միջի ID-ն
-        const currentUserId = req.user.id;  // Քո սեփական ID-ն token-ից
+        const targetUserId = req.params.id;
+        const currentUserId = req.user.id;
 
-        // Բազայից փնտրում ենք միայն այս օգտատիրոջ հաստատված տվյալները
         const userConfirm = await Confirm.findOne({
             where: { userId: targetUserId }
         });
@@ -51,18 +51,27 @@ router.get("/all-profiles/:id", auth, async (req, res, next) => {
             return res.status(404).send("User profile not found");
         }
 
-        // Ստուգում ենք՝ արդյոք սա իմ սեփական էջն է
-        const isOwnProfile = (Number(targetUserId) === Number(currentUserId));
+        // ՊԱՐՏԱԴԻՐ՝ posts-ը նախ պետք է ստեղծվի
+        const posts = await Post.findAll({
+            where: {
+                userId: targetUserId
+            }
+        });
 
-        // Ռենդեր ենք անում քո users.ejs էջը
+        const isOwnProfile =
+            Number(targetUserId) === Number(currentUserId);
+
         res.render("users", {
             confirmData: userConfirm,
-            isOwnProfile: isOwnProfile
+            isOwnProfile: isOwnProfile,
+            posts: posts
         });
+
     } catch (e) {
         next(e);
     }
 });
+router.post('/updatePhotos', auth, upload.array("image", 2),controller.updatePhotos);
 
 
 

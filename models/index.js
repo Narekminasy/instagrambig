@@ -17,24 +17,24 @@ posts.belongsTo(users, {
 // User -> Comments
 // Մեկ user-ը կարող է գրել շատ comment
 users.hasMany(comments, {
-    foreignKey: 'postId',
+    foreignKey: 'user_id',
 });
 
 comments.belongsTo(users, {
-    foreignKey: 'postId',
+    foreignKey: 'user_id',
+    as: 'User'
 });
 
-//userId
 
 
 // Post -> Comments
 // Մեկ post-ը կարող է ունենալ շատ comment
 posts.hasMany(comments, {
-    foreignKey: 'postId',
+    foreignKey: 'post_id',
 });
 
 comments.belongsTo(posts, {
-    foreignKey: 'postId',
+    foreignKey: 'post_id',
 });
 
 //confirm

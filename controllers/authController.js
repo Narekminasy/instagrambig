@@ -130,8 +130,22 @@ export async function updatePassword(id, hashedPassword) {
     }
 }
 
-
-
+export async function updatePhoto(id, photo,background) {
+    try {
+        const [result] = await DBMysql.query(
+            `UPDATE confirms
+             SET photo = COALESCE(?, photo),
+                 background = COALESCE(?, background)
+             WHERE user_id  = ?`,
+            [photo ?? null, background ?? null, id]
+        );
+        // console.log("MySQL Result:", result);
+        return result.affectedRows > 0;
+    } catch (err) {
+        console.error("SQL Error:", err);
+        return null;
+    }
+}
 
 // Encrypt
 export function encrypt(data) {

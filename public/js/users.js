@@ -1,38 +1,40 @@
-// 1. DOM էլեմենտների հայտարարում
 const confirmBtn = document.getElementById('confirmBtn');
 const editFormContainer = document.getElementById('editFormContainer');
 const profileForm = document.getElementById('profileForm');
 const searchLinksBtn = document.getElementById('search_linsk');
 const dropdownMenu = document.getElementById('dropdownMenu');
-const btnAllUsers = document.getElementById('btnAllUsers');
-const btnAllProfiles = document.getElementById('btnAllProfiles');
-
 const profilePic = document.getElementById('profilePic');
 const backgroundPic = document.getElementById('backgroundPic');
+const btnChangePhotos = document.getElementById('btnChangePhotos');
+const changePhotosContainer = document.getElementById('changePhotosContainer');
+const changePhotosForm = document.getElementById('changePhotosForm');
 
-// 2. Սկզբնական թաքցնումներ (ստուգումով, որ սխալ չտա)
+const chatBtn = document.getElementById("chatBtn");
+const chatWindow = document.getElementById("chatWindow");
+const closeChat = document.getElementById("closeChat");
+
 if (dropdownMenu) {
     dropdownMenu.style.display = 'none';
 }
 if (editFormContainer) {
     editFormContainer.style.display = 'none';
 }
+if (changePhotosContainer) {
+    changePhotosContainer.style.display = 'none';
+}
 
-// 3. Confirm Profile կոճակի սեղմումը
 if (confirmBtn && editFormContainer) {
     confirmBtn.addEventListener('click', () => {
         editFormContainer.style.display = editFormContainer.style.display === 'none' ? 'block' : 'none';
     });
 }
 
-// 4. Ֆորմայի Submit (Տվյալների ուղարկում)
 if (profileForm) {
     profileForm.addEventListener('submit', async (event) => {
         event.preventDefault();
 
         const firstname = document.getElementById('firstname').value;
         const lastname = document.getElementById('lastname').value;
-
         const photoFile = document.getElementById('photoInput').files[0];
         const backgroundFile = document.getElementById('backgroundInput').files[0];
         const diplomyFile = document.getElementById('diplomyInput').files[0];
@@ -51,27 +53,18 @@ if (profileForm) {
         });
 
         try {
-            const response = await axios.post('/confirm/confirm', formData, {
+            await axios.post('/confirm/confirm', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 },
                 withCredentials: true
             });
 
-            alert('data send sucsessfully');
-
             profileForm.reset();
             if (editFormContainer) editFormContainer.style.display = 'none';
-
             window.location.reload();
-
         } catch (error) {
             console.error(error);
-            if (error.response && error.response.status === 409) {
-                alert(`${error.response.data.message}`);
-            } else {
-                alert('server error');
-            }
         }
     });
 }
@@ -79,43 +72,127 @@ if (profileForm) {
 if (searchLinksBtn && dropdownMenu) {
     searchLinksBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        dropdownMenu.style.display = dropdownMenu.style.display === 'none' ? 'block' : 'none';
+
+        // 1. Բացում կամ փակում ենք մենյուն
+        const isMenuHidden = dropdownMenu.style.display === 'none';
+        dropdownMenu.style.display = isMenuHidden ? 'block' : 'none';
+
+        // 2. Եթե մենյուն բացվում է, ավելացնում ենք menu-open դասը, հակառակ դեպքում՝ հանում ենք
+        const container = document.querySelector('.users-container');
+        if (container) {
+            if (isMenuHidden) {
+                container.classList.add('menu-open');
+            } else {
+                container.classList.remove('menu-open');
+            }
+        }
     });
 }
 
-document.addEventListener('click', () => {
-    if (dropdownMenu) {
+document.addEventListener('click', (e) => {
+    if (dropdownMenu && !dropdownMenu.contains(e.target) && e.target !== searchLinksBtn) {
         dropdownMenu.style.display = 'none';
+
+        // Մենյուն փակելիս հանում ենք սեղմելու էֆեկտը
+        const container = document.querySelector('.users-container');
+        if (container) {
+            container.classList.remove('menu-open');
+        }
     }
 });
 
-if (btnAllUsers) {
-    btnAllUsers.addEventListener('click', async () => {
+document.querySelectorAll('.menu-item').forEach(item => {
+    item.addEventListener('click', () => {
+        document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
+        item.classList.add('active');
+    });
+});
+
+if (btnChangePhotos) {
+    btnChangePhotos.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (changePhotosContainer) {
+            changePhotosContainer.style.display = changePhotosContainer.style.display === 'none' ? 'block' : 'none';
+        }
+        if (dropdownMenu) {
+            dropdownMenu.style.display = 'none';
+        }
+    });
+}
+
+if (changePhotosForm) {
+    changePhotosForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const photoFile = document.getElementById('updatePhoto').files[0];
+        const backgroundFile = document.getElementById('updateBackground').files[0];
+
+        if (!photoFile && !backgroundFile) return;
+
+        const formData = new FormData();
+        const filesArray = [];
+
+        if (photoFile) filesArray.push(photoFile);
+        if (backgroundFile) filesArray.push(backgroundFile);
+
+        filesArray.forEach((file) => {
+            formData.append('image', file);
+        });
+
         try {
-            // const response = await axios.get('/confirm/all-users', {
-            //     withCredentials: true
-            // });
-            // console.log('All Users:', response.data);
-            // alert('Օգտատերերի տվյալները տպվեցին Console-ում (F12)։');
-            window.location.href = "/confirm/all-users";
+            await axios.post('/confirm/updatePhotos', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
+                withCredentials: true
+            });
+
+            changePhotosForm.reset();
+            if (changePhotosContainer) changePhotosContainer.style.display = 'none';
+            window.location.reload();
         } catch (error) {
             console.error(error);
         }
     });
 }
 
-// 8. «All Profiles» կոճակի հարցումը - ՈՒՂՂՎԱԾ ՏԱՐԲԵՐԱԿ
-if (btnAllProfiles) {
-    btnAllProfiles.addEventListener('click', async () => {
-        try {
-            // const response = await axios.get('/confirm/all-users-progile', {
-            //     withCredentials: true
-            // });
-            // console.log('All Profiles:', response);
+document.addEventListener("click", async (e) => {
+    if (e.target.classList.contains("delete-btn")) {
+        const postId = e.target.getAttribute("data-id");
 
-            window.location.href = "/users/index";
-        } catch (error) {
-            console.error(error);
+        if (confirm("are you sure?")) {
+            try {
+                const response = await axios.delete(`/posts/${postId}`, {
+                    withCredentials: true
+                });
+                const postElement = document.getElementById(`post-${postId}`);
+                if (postElement) {
+                    postElement.remove();
+                }
+
+                console.log(response.data.message);
+
+                location.reload();
+            } catch (error) {
+                // console.error("can not delete", error);
+                // alert("false");
+                console.error("can not delete", error.response?.data || error);
+
+                alert(
+                    error.response?.data?.message ||
+                    "Error"
+                );
+            }
         }
-    });
-}
+    }
+});
+
+chatBtn.addEventListener("click", () => {
+    chatWindow.classList.add("active");
+    chatBtn.style.display = "none";
+});
+
+closeChat.addEventListener("click", () => {
+    chatWindow.classList.remove("active");
+    chatBtn.style.display = "flex";
+});
