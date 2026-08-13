@@ -19,11 +19,13 @@ registerBtn.addEventListener("click", async (e) => {
             password,
         });
 
+
         alert("register successfully");
         window.location.href = "/users/login";
     }catch(err) {
         console.log(err);
         alert("Error");
     }
+
 
 })
