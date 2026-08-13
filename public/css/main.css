@@ -1739,3 +1739,28 @@ footer li {
     width: 100%;
 }
 
+/*/////Medical apparatus////////*/
+
+.apparatus-container {
+    display: flex;
+    flex-direction: column; /* Էլեմենտները դասավորում է իրար տակ */
+    align-items: center;    /* Բոլորին մեջտեղում է բերում */
+    justify-content: center;
+    gap: 10px;              /* Բոլոր էլեմենտների միջև դնում է ακριβώς 10px հեռավորություն */
+    width: 100%;
+}
+
+.apparatus-subtitle {
+    color: black;
+    text-align: center;     /* Տեքստը գեղեցիկ մեջտեղում է անում */
+    max-width: 700px;       /* Որ տեքստը շատ չփռվի էկրանով մեկ */
+    margin: 0;              /* Հանում ենք ավելորդ default հեռավորությունները */
+}
+
+/* Որպեսզի պոստերի արանքն էլ 10px լինի */
+.apparatus-text {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;              /* Պոստերը իրարից կհեռվացնի 10px-ով */
+    width: 100%;
+}
