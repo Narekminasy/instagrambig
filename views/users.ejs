@@ -113,6 +113,14 @@
             </div>
         <% } %>
     </div>
+    <% if (!isOwnProfile) { %>
+        <!-- Կոճակը տանում է դեպի չաթի էջ՝ փոխանցելով տվյալ օգտատիրոջ ID-ն հասցեում -->
+        <a href="/users/chat/<%= confirmData.userId %>" class="btn-chat" style="padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 10px;">
+            Գրել Նամակ
+        </a>
+    <% } %>
+    </div>
+
 </section>
 
 <div class="ownPost">
@@ -127,7 +135,6 @@
             <button class="delete-btn" data-id="<%= post.id %>">Delete</button>
         </div>
     <% }) %>
-</div>
 
 
 

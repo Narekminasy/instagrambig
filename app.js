@@ -8,23 +8,19 @@ import sequelize from "./clients/db.sequelize.js";
 import { Server } from "socket.io";
 import { createServer } from "http";
 import path from "path";
-////
 import usersRouter from "./routes/index.js";
 
 const app = express();
-
 const PORT = process.env.PORT || 3000;
-
-
 const server = createServer(app);
 const io = new Server(server);
 
-// migrate
+// Migrate
 migateRoute();
 
 // EJS
 app.set("view engine", "ejs");
-app.set("views", path.join(import.meta.dirname, "views"));
+app.set("views", path.join(process.cwd(), "views"));
 
 // Static
 app.use("/media", express.static("public/media"));
@@ -41,45 +37,62 @@ app.use(usersRouter);
 
 // Database
 sequelize.sync()
-    .then(() => {
-        console.log("Tables synced");
-    })
+    .then(() => { console.log("Tables synced"); })
     .catch(console.error);
+
 
 const users = {};
 
 io.on("connection", (socket) => {
-    console.log(`Նոր բրաուզեր միացավ. ${socket.id}`);
+    console.log(`\n[SOCKET] 🟢 Նոր բրաուզեր միացավ: ${socket.id}`);
 
+    // Օգտատիրոջ գրանցում
     socket.on("registerUser", (userId) => {
         users[String(userId)] = socket.id;
-        console.log(`Օգտատեր ${userId}-ը գրանցվեց սերվերում:`);
+        console.log(`[REGISTER] 👤 Օգտատեր [${userId}]-ը հիմա օնլայն է:`);
+
+        // Ակնթարթորեն բոլորին ուղարկում ենք օնլայնների ցուցակը
+        io.emit("updateUserStatus", Object.keys(users));
     });
 
-    // 3. Լսում ենք անձնական նամակի «տուփը»
+    // Անձնական նամակի լսում և վերահասցեագրում
     socket.on("private message", (data) => {
-        const recipientId = data.recipientId;
+        const recipientId = String(data.recipientId);
         const text = data.text;
 
-        const recipientSocketId = users[String(recipientId)];
+        // Գտնում ենք, թե ով է ուղարկողը ըստ իր սոկետի
+        const senderId = Object.keys(users).find(key => users[key] === socket.id) || data.senderId;
+
+        console.log(`\n--- 📥 ՆՈՐ ՀԱՂՈՐԴԱԳՐՈՒԹՅՈՒՆ ---`);
+        console.log(`✍️ ՈՒՂԱՐԿՈՂ (Sender ID): ${senderId}`);
+        console.log(`🎯 ՍՏԱՑՈՂ (Recipient ID): ${recipientId}`);
+        console.log(`💬 ՏԵՔՍՏ: "${text}"`);
+
+        const recipientSocketId = users[recipientId];
 
         if (recipientSocketId) {
+            console.log(`🚀 Ստացողը օնլայն է: Ուղարկում ենք...`);
             io.to(recipientSocketId).emit("receive private", {
+                senderId: senderId,
                 text: text
             });
         } else {
-            console.log(`Օգտատեր ${recipientId}-ը այս պահին օֆլայն է:`);
+            console.log(`⚠️ Ստացողը օֆլայն է:`);
         }
+        console.log(`---------------------------------\n`);
     });
 
+    // Դուրս գալու դեպքում
     socket.on("disconnect", () => {
         for (let userId in users) {
             if (users[userId] === socket.id) {
+                console.log(`[SOCKET] 🔴 Օգտատեր [${userId}]-ը դուրս եկավ:`);
                 delete users[userId];
-                console.log(`Օգտատեր ${userId}-ը դուրս եկավ:`);
                 break;
             }
         }
+        // Թարմացնում ենք բոլորի կարգավիճակը
+        io.emit("updateUserStatus", Object.keys(users));
     });
 });
 

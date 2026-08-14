@@ -29,6 +29,7 @@ const Confirm = sequelize.define(
             allowNull: false,
         },
 
+
         background: {
             type: DataTypes.STRING,
             allowNull: false,

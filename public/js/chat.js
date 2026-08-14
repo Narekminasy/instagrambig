@@ -1,36 +1,70 @@
 const socket = io();
 
-const myId = prompt("Գրիր ՔՈ ID-ն (օրինակ՝ 1 կամ 2).");
-const recipientId = prompt("Գրիր ՍՏԱՑՈՂԻ ID-ն (օրինակ՝ 2 կամ 1).");
+console.log("Չաթը միացավ բրաուզերում: Իմ ID =", myId, "| Ստացողի ID =", recipientId);
 
-if (myId) {
-    socket.emit("registerUser", Number(myId));
+if (myId && myId !== "null") {
+    socket.emit('registerUser', String(myId).trim());
 }
 
-const sendBtn = document.getElementById("sendBtn");
-const messageInput = document.getElementById("messageInput");
-const messagesList = document.getElementById("messages");
+const sendBtn = document.getElementById('sendBtn');
+const messageInput = document.getElementById('messageInput');
+const messagesList = document.getElementById('messages');
+const statusDot = document.getElementById('status-dot');
 
-sendBtn.addEventListener("click", () => {
-    const text = messageInput.value.trim();
-    if (text) {
+// Նամակ ուղարկելու տրամաբանություն
+if (sendBtn) {
+    sendBtn.addEventListener('click', () => {
+        const text = messageInput.value.trim();
+        console.log("Կոճակը սեղմվեց։ Տեքստ =", text);
 
-        socket.emit("private message", {
-            recipientId: recipientId,
-            text: text
-        });
+        if (text && recipientId) {
+            socket.emit('private message', {
+                senderId: myId,
+                recipientId: String(recipientId).trim(),
+                text: text
+            });
 
-        const li = document.createElement("li");
-        li.textContent = "Ես em: " + text;
+            // Ավելացնում ենք մեր էկրանին
+            const li = document.createElement('li');
+            li.textContent = "Ես: " + text;
+            li.style.background = "#e1ffb1";
+            messagesList.appendChild(li);
+
+            messageInput.value = '';
+            messagesList.scrollTop = messagesList.scrollHeight;
+        }
+    });
+}
+
+// Լսում ենք դիմացինից եկող նամակները
+socket.on('receive private', (data) => {
+    console.log("Նոր նամակ ստացվեց սերվերից:", data);
+
+    // Ցույց ենք տալիս էկրանին միայն եթե նամակը հենց այս ընթացիկ չաթից է
+    if (String(data.senderId) === String(recipientId)) {
+        const li = document.createElement('li');
+        li.textContent = `Դիմացինը: ` + data.text;
+        li.style.background = "#ffffff";
         messagesList.appendChild(li);
-
-        messageInput.value = "";
+        messagesList.scrollTop = messagesList.scrollHeight;
+    } else {
+        console.log(`[BACKGROUND] Օգտատեր ${data.senderId}-ը նամակ ուղարկեց, բայց դու այլ չաթում ես:`);
     }
 });
 
-// 5. Լսում ենք սերվերից եկող անձնական նամակները
-socket.on("receive private", (data) => {
-    const li = document.createElement("li");
-    li.textContent = "Դիմացինը գրեց: " + data.text;
-    messagesList.appendChild(li);
+// Լսում ենք օնլայն/օֆլայն կարգավիճակները
+socket.on("updateUserStatus", (onlineUsersList) => {
+    console.log("Օնլայն օգտատերերի ցուցակը սերվերից:", onlineUsersList);
+
+    if (statusDot) {
+        const isRecipientOnline = onlineUsersList.includes(String(recipientId));
+
+        if (isRecipientOnline) {
+            statusDot.style.background = "#28a745"; // Կանաչ
+            console.log(`Օգտատեր ${recipientId}-ը հիմա կապի մեջ է:`);
+        } else {
+            statusDot.style.background = "#dc3545"; // Կարմիր
+            console.log(`Օգտատեր ${recipientId}-ը անջատեց կապը:`);
+        }
+    }
 });

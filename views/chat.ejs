@@ -8,16 +8,15 @@
         body { font-family: sans-serif; padding: 20px; background: #f4f4f9; }
         .chat-box { max-width: 500px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         #messages { list-style-type: none; padding: 0; height: 300px; overflow-y: auto; border: 1px solid #ccc; margin-bottom: 10px; background: #fafafa; border-radius: 4px; padding: 10px; }
-        #messages li { padding: 8px; margin-bottom: 5px; background: #e1ffb1; border-radius: 4px; }
+        #messages li { padding: 8px; margin-bottom: 5px; border-radius: 4px; border: 1px solid #eee; }
         .inputs { display: flex; gap: 10px; }
         input { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
         button { padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; }
     </style>
 </head>
 <body>
-
 <div class="chat-box">
-    <h2>chat</h2>
+    <h2>Անձնական Չաթ <span id="status-dot" style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #ccc; margin-left: 8px;"></span></h2>
     <ul id="messages"></ul>
     <div class="inputs">
         <input type="text" id="messageInput" placeholder="Գրեք նամակ...">
@@ -25,9 +24,18 @@
     </div>
 </div>
 
-
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!-- Սկրիպտներ -->
 <script src="/socket.io/socket.io.js"></script>
-<script src="/chat.js"></script>
+
+<script>
+    const myId = "<%= currentUserId %>";
+    const recipientId = "<%= targetUserId %>";
+</script>
+
+<!-- Միացնում ենք քո ֆրոնտենդ ֆայլը ճիշտ հասցեով -->
+<script src="/js/chat.js"></script>
 </body>
 </html>
+
+
+<!--🔥 Ինչն է քեզ պակասում հիմա (Հաջորդ տրամաբանական քայլը)Քանի որ Socket.io-ի real-time կապը, սխալների ֆիլտրացիան [INDEX] և օնլայն/օֆլայն կլորակները արդեն 100% պատրաստ են [INDEX], քո հաջորդ կարևորագույն խնդիրն այն է, որ էջը թարմացնելիս (F5) կամ չաթից դուրս գալիս այս նամակները կորչում են, որովհետև դրանք դեռ չեն պահվում տվյալների բազայում (Database)։Շնորհավորում եմ չաթի կայուն կապ ստանալու առթիվ։ Կուզենա՞ս հիմա միասին ստեղծենք Message մոդելը Sequelize-ում, որպեսզի սերվերը նամակը ստանալիս անի await Message.create(...), իսկ չաթի էջը բացվելիս բազայից ավտոմատ բեռնի (load) այդ երկու հոգու հին նամակների պատմությունը։-->

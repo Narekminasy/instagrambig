@@ -132,12 +132,19 @@ router.get("/apparatus", auth, async (req, res, next) => {
 });
 
 
-router.get("/chat", (req, res) => {
-    res.render("chat");
+router.get("/chat/:id", auth, async (req, res, next) => {
+    try {
+        const targetUserId = req.params.id; // Ում որ սեղմել ենք
+        const currentUserId = req.user.id;  // Ով որ հիմա լոգին է եղել
+
+        res.render("chat", {
+            targetUserId: targetUserId,
+            currentUserId: currentUserId
+        });
+    } catch (e) {
+        next(e);
+    }
 });
-
-
-
 
 
 
