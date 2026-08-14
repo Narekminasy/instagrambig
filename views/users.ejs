@@ -8,80 +8,35 @@
     <link rel="stylesheet" href="/css/users.css">
 </head>
 
-<body>
+<!-- HTML / EJS ՖԱՅԼՈՒՄ (Չաթի տվյալները հեռացված են) -->
+<body
+        data-current-user-id="<%= (typeof user !== 'undefined' && user) ? user.id : '' %>"
+        data-current-user-name="<%= (typeof myConfirmData !== 'undefined' && myConfirmData) ? myConfirmData.firstname : 'Ես' %>"
+>
 
 <header>
-
     <nav>
-
         <a href="/users/home" class="logo">
             🦷 Dental Student
         </a>
-
-
         <ul>
-
-            <li>
-                <a href="/users/home">
-                    Home
-                </a>
-            </li>
-
-
-            <li>
-                <a href="/users/register">
-                    Register
-                </a>
-            </li>
-
-
-            <li>
-                <a href="/users/login">
-                    Login
-                </a>
-            </li>
-
-            <li>
-                <a href="/users/users">
-                    Profile
-                </a>
-            </li>
-
-
-            <li>
-                <a href="/users/index">
-                    Blog
-                </a>
-            </li>
-
-            <li>
-                <a href="/users/About">
-                    About Us
-                </a>
-            </li>
-
-            <li>
-                <a href="/users/Contact">
-                    Contact
-                </a>
-            </li>
-
+            <li><a href="/users/home">Home</a></li>
+            <li><a href="/users/register">Register</a></li>
+            <li><a href="/users/login">Login</a></li>
+            <li><a href="/users/users">Profile</a></li>
+            <li><a href="/users/index">Blog</a></li>
+            <li><a href="/users/About">About Us</a></li>
+            <li><a href="/users/Contact">Contact</a></li>
         </ul>
-
     </nav>
-
 </header>
-
-
 
 <div class="menu_box">
     <section class="menue">
         <div class="profile-actions">
-
             <% if (isOwnProfile) { %>
                 <div class="dropdown-wrapper">
                     <button type="button" id="search_linsk">...</button>
-
                     <div id="dropdownMenu" class="sidebar-menu">
                         <a href="/confirm/all-users" class="menu-item" id="btnAllUsers">All Users Data</a>
                         <a href="/users/index" class="menu-item" id="btnAllProfiles">All Profiles</a>
@@ -94,26 +49,15 @@
             <% if (isOwnProfile && !confirmData) { %>
                 <button type="button" id="confirmBtn" class="confirmBtn">Confirm Profile</button>
             <% } %>
-
         </div>
     </section>
 </div>
 
 <section class="users-container">
     <div class="users-profile">
-
         <div class="profile-top">
-
-            <img src="<%= (confirmData && confirmData.photo) ? '/media/' + confirmData.photo : '/media/profile.jpg' %>"
-                 alt="Profile picture"
-                 class="profile-picture"
-                 id="profilePic">
-
-            <img src="<%= (confirmData && confirmData.background) ? '/media/' + confirmData.background : '/media/backgroud.jpg' %>"
-                 alt="backgroud picture"
-                 class="backgroud-picture"
-                 id="backgroundPic">
-
+            <img src="<%= (confirmData && confirmData.photo) ? '/media/' + confirmData.photo : '/media/profile.jpg' %>" alt="Profile picture" class="profile-picture" id="profilePic">
+            <img src="<%= (confirmData && confirmData.background) ? '/media/' + confirmData.background : '/media/backgroud.jpg' %>" alt="backgroud picture" class="backgroud-picture" id="backgroundPic">
             <div class="main-profile">
                 <h1><%= (confirmData) ? confirmData.firstname + ' ' + confirmData.lastname : 'your blogs' %></h1>
             </div>
@@ -173,59 +117,23 @@
 
 <div class="ownPost">
     <h1>BLOGS</h1>
-
     <% posts.forEach(post => { %>
         <div class="post-item" id="post-<%= post.id %>">
-
             <h2><%= post.title %></h2>
             <p><%= post.description %></p>
-
             <% if (post.image) { %>
                 <img src="/media/<%= post.image %>" alt="Post Image">
             <% } %>
-
-            <button
-                    class="delete-btn"
-                    data-id="<%= post.id %>">
-                Delete
-            </button>
-
+            <button class="delete-btn" data-id="<%= post.id %>">Delete</button>
         </div>
     <% }) %>
 </div>
 
-<button class="chat-floating-btn" id="chatBtn">
-    💬
-</button>
 
-<div class="chat-window" id="chatWindow">
-    <div class="chat-header">
-        <span>Chat</span>
-        <button id="closeChat">×</button>
-    </div>
-
-    <div class="chat-body">
-    </div>
-
-    <div class="chat-input">
-        <input
-                type="text"
-                id="messageInput"
-                placeholder="write message..."
-        >
-
-        <button id="sendMessageBtn">
-            Send
-        </button>
-    </div>
-</div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="/socket.io/socket.io.js"></script>
 <script src="/js/users.js"></script>
-
-
 
 </body>
 </html>

@@ -42,8 +42,9 @@ router.get("/all-users", auth, async (req, res, next) => {
 router.get("/all-profiles/:id", auth, async (req, res, next) => {
     try {
         const targetUserId = req.params.id;
-        const currentUserId = req.user.id;
+        const currentUserId = req.user.id; // Լոգին եղած մարդու ID-ն
 
+        // 1. Գտնում ենք այն մարդու պրոֆիլը, ում էջում գտնվում ենք
         const userConfirm = await Confirm.findOne({
             where: { userId: targetUserId }
         });
@@ -52,26 +53,31 @@ router.get("/all-profiles/:id", auth, async (req, res, next) => {
             return res.status(404).send("User profile not found");
         }
 
-        // ՊԱՐՏԱԴԻՐ՝ posts-ը նախ պետք է ստեղծվի
-        const posts = await Post.findAll({
-            where: {
-                userId: targetUserId
-            }
+        // 2. ԱՎԵԼԱՑՎԱԾ Է՝ Գտնում ենք ՆԱԵՎ ՔՈ ՍԵՓԱԿԱՆ պրոֆիլը՝ անունդ իմանալու համար
+        const myConfirm = await Confirm.findOne({
+            where: { userId: currentUserId }
         });
 
-        const isOwnProfile =
-            Number(targetUserId) === Number(currentUserId);
+        const posts = await Post.findAll({
+            where: { userId: targetUserId }
+        });
+
+        const isOwnProfile = Number(targetUserId) === Number(currentUserId);
 
         res.render("users", {
             confirmData: userConfirm,
             isOwnProfile: isOwnProfile,
-            posts: posts
+            posts: posts,
+            user: req.user,
+            // Փոխանցում ենք քո սեփական պրոֆիլի տվյալները HTML-ին
+            myConfirmData: myConfirm
         });
 
     } catch (e) {
         next(e);
     }
 });
+
 router.post('/updatePhotos', auth, upload.array("image", 2),controller.updatePhotos);
 
 

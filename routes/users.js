@@ -132,6 +132,13 @@ router.get("/apparatus", auth, async (req, res, next) => {
 });
 
 
+router.get("/chat", (req, res) => {
+    res.render("chat");
+});
+
+
+
+
 
 
 
