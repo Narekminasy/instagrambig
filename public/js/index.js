@@ -107,20 +107,13 @@ sendBtns.forEach((btn) => {
 
 });
 
-
-// Ջնջում ենք հին սխալ տողը վերևից, իսկ ներքևի document.addEventListener-ի մեջ ավելացնում ենք սա.
-
 document.addEventListener("click", async (e) => {
-    // Ստուգում ենք՝ արդյոք սեղմված տարրը մեկնաբանության ջնջման կոճակն է
     if (e.target.classList.contains("delteComment_Btn")) {
         try {
-            console.log('Ջնջման հարցում...');
 
             const commentId = e.target.dataset.id;
 
             const response = await axios.delete(`/comments/${commentId}`);
-
-            alert('Մեկնաբանությունը հաջողությամբ ջնջվեց:');
 
             const commentElement = e.target.closest(".comments_look");
             if (commentElement) {
@@ -130,7 +123,7 @@ document.addEventListener("click", async (e) => {
             }
 
         } catch (error) {
-            console.error("Չհաջողվեց ջնջել մեկնաբանությունը", error.response?.data || error);
+            console.error(error.response?.data || error);
             alert(error.response?.data?.message || "Տեղի է ունեցել սխալ։");
         }
     }
