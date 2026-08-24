@@ -173,5 +173,10 @@ router.get("/chat/:id", auth, async (req, res, next) => {
 router.delete("/:id", auth, messagesController.deleteMessage);
 
 
+router.get("/privacy", auth, async (req, res, next) => {
+    res.render("privacy.ejs");
+});
+
+
 
 export default router;
