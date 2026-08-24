@@ -115,18 +115,19 @@
         <% if (typeof history !== 'undefined' && history.length > 0) { %>
             <% history.forEach(function(msg) { %>
                 <% if (String(msg.userId) === String(currentUserId)) { %>
-                    <li id="msg-<%= msg.id %>" style="background: #e1ffb1; display: flex; justify-content: space-between; align-items: center; padding: 8px; margin-bottom: 5px; border-radius: 4px;">
-                        <span>Ես: <%= msg.message %></span>
-                        <button class="delete-btn" data-id="<%= msg.id %>" style="background: none; border: none; color: red; cursor: pointer; font-weight: bold; margin-left: 10px;">✕</button>
+                    <li id="msg-<%= msg.id %>">
+                        <span><%= currentUserName %>: <%= msg.message %></span>
+                        <button class="delete-btn" data-id="<%= msg.id %>">✕</button>
                     </li>
                 <% } else { %>
-                    <li style="background: #ffffff; text-align: left; padding: 8px; margin-bottom: 5px; border-radius: 4px; border: 1px solid #eee;">
-                        Դիմացինը: <%= msg.message %>
+                    <li>
+                        <%= targetUserName %>: <%= msg.message %>
                     </li>
                 <% } %>
             <% }); %>
         <% } %>
     </ul>
+
 
 
     <div class="inputs">
@@ -139,11 +140,17 @@
 <script src="/socket.io/socket.io.js"></script>
 
 <script>
-    const myId = "<%= currentUserId %>";
-    const recipientId = "<%= targetUserId %>";
+    const myId = '<%= currentUserId %>';
+    const myName = '<%= currentUserName %>';
+    const recipientId = '<%= targetUserId %>';
+    const recipientName = '<%= targetUserName %>';
 </script>
 
+
 <script src="/js/chat.js"></script>
+
+
+
 </body>
 </html>
 

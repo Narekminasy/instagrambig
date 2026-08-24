@@ -149,11 +149,20 @@ router.get("/chat/:id", auth, async (req, res, next) => {
             order: [["created_at", "ASC"]]
         });
 
+        const currentUser = await users.findByPk(currentUserId);
+
+        const targetUser = await users.findByPk(targetUserId);
+
+        if (!targetUser || !currentUser) {
+            return res.status(404).send("User not found");
+        }
 
         res.render("chat", {
             targetUserId: targetUserId,
             currentUserId: currentUserId,
-            history: history
+            history: history,
+            targetUserName: targetUser.name,
+            currentUserName: currentUser.name,
         });
 
     } catch (e) {

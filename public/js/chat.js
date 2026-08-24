@@ -21,7 +21,7 @@ if (sendBtn) {
             });
 
             const li = document.createElement('li');
-            li.textContent = "Ես: " + text;
+            li.textContent = myName + ": " + text;
             li.style.background = "#e1ffb1";
             messagesList.appendChild(li);
 
@@ -31,11 +31,10 @@ if (sendBtn) {
     });
 }
 
-// Լսում ենք դիմացինից եկող նամակները
 socket.on('receive private', (data) => {
     if (String(data.senderId) === String(recipientId)) {
         const li = document.createElement('li');
-        li.textContent = `Դիմացինը: ` + data.text;
+        li.textContent = recipientName + ": " + data.text;
         li.style.background = "#ffffff";
         messagesList.appendChild(li);
         messagesList.scrollTop = messagesList.scrollHeight;
@@ -60,8 +59,6 @@ messagesList.addEventListener('click', async (event) => {
     if (event.target.classList.contains('delete-btn')) {
         const button = event.target;
         const messageId = button.getAttribute('data-id');
-
-        console.log("Փորձում եմ Axios-ով բազայից ջնջել նամակ ID՝", messageId);
 
         if (confirm("Want delete message?")) {
             try {
