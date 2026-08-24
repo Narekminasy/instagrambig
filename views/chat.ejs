@@ -105,10 +105,42 @@
         button:not(.delete-btn):hover {
             background: #1a83cb;
         }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #ffffff;
+            color: #4a5568;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background-color: #f7fafc;
+            color: #1a202c;
+            border-color: #cbd5e0;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
+        }
+
+        .back-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
     </style>
 </head>
 <body>
+<a href="/confirm/all-users" class="back-btn">Back</a>
+
 <div class="chat-box">
+
     <h2>chat <span id="status-dot" style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #ccc; margin-left: 8px;"></span></h2>
 
     <ul id="messages">
