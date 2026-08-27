@@ -10,6 +10,8 @@ import { createServer } from "http";
 import path from "path";
 import usersRouter from "./routes/index.js";
 
+
+
 import Messages from "./models/messages.js";
 
 const app = express();
@@ -36,6 +38,14 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use(usersRouter);
+
+app.get("/", (req, res) => {
+    res.render("index", {
+        alertMessage: "SweetAlert2-ը հաջողությամբ միացված է backend-ին:"
+    });
+});
+
+
 
 // Database
 sequelize.sync()
