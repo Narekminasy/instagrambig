@@ -39,14 +39,6 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use(usersRouter);
 
-app.get("/", (req, res) => {
-    res.render("index", {
-        alertMessage: "SweetAlert2-ը հաջողությամբ միացված է backend-ին:"
-    });
-});
-
-
-
 // Database
 sequelize.sync()
     .then(() => { console.log("Tables synced"); })
