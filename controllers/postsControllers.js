@@ -1,6 +1,6 @@
 import posts from "../models/posts.js";
 import users from "../models/users.js";
-import comments from "../models/Comments.js";
+import Comments from '../models/comments.js';
 
 const postsController = {
 
