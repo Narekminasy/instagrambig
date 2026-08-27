@@ -36,8 +36,15 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
+app.get("/", (req, res) => {
+    res.send("MinInst server is running");
+});
+
 // Routes
 app.use(usersRouter);
+
+
 
 // Database
 sequelize.sync()
