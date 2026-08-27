@@ -19,10 +19,20 @@ const PORT = process.env.PORT || 3000;
 const server = createServer(app);
 const io = new Server(server);
 
-app.get("/", (req, res) => {
-    res.send("MinInst server is running");
-});
+app.get("/", async (req, res) => {
+    try {
+        let posts = [];
 
+        if (typeof Post !== 'undefined') {
+            posts = await Post.findAll({ order: [['createdAt', 'DESC']] });
+        }
+
+        res.render("index", { posts: posts });
+    } catch (error) {
+        console.error(error);
+        res.render("index", { posts: [] });
+    }
+});
 
 // Migrate
 migateRoute();
