@@ -8,7 +8,7 @@ import auth from "../middlewares/authorization.js"
 import posts from "../models/posts.js";
 import users from "../models/users.js";
 import Confirm from '../models/confirm.js'
-import comments from '../models/Comments.js';
+import Comments from '../models/comments.js';
 import { Op } from "sequelize"; //
 import Messages from "../models/messages.js";
 
@@ -42,7 +42,7 @@ router.get("/index", auth, async (req, res, next) => {
                     attributes: ['name']
                 },
                 {
-                    model: comments,
+                    model: Comments,
                     include: [{
                         model: users,
                         as: 'User',
