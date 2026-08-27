@@ -1,5 +1,5 @@
 import users from '../models/users.js';
-import comments from '../models/comments.js';
+import Comments from '../models/comments.js';
 import posts from '../models/posts.js';
 import confirm from '../models/confirm.js'
 
@@ -12,13 +12,12 @@ posts.belongsTo(users, {
     foreignKey: 'userId',
 });
 
-
 // User -> Comments
-users.hasMany(comments, {
+users.hasMany(Comments, {
     foreignKey: 'user_id',
 });
 
-comments.belongsTo(users, {
+Comments.belongsTo(users, {
     foreignKey: 'user_id',
     as: 'User'
 });
@@ -26,11 +25,11 @@ comments.belongsTo(users, {
 
 
 // Post -> Comments
-posts.hasMany(comments, {
+posts.hasMany(Comments, {
     foreignKey: 'post_id',
 });
 
-comments.belongsTo(posts, {
+Comments.belongsTo(posts, {
     foreignKey: 'post_id',
 });
 
@@ -48,7 +47,7 @@ confirm.belongsTo(users, {
 
 export default {
     users,
-    comments,
+    Comments,
     posts,
     confirm,
 };
