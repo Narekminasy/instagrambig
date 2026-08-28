@@ -56,7 +56,7 @@ const postsController = {
                         attributes: ['id', 'name', 'email']
                     },
                     {
-                        model: comments,
+                        model: Comments,
                         attributes: ['id', 'message', 'createdAt'],
                     }
                 ],
@@ -116,3 +116,4 @@ const postsController = {
 }
 
 export default postsController;
+

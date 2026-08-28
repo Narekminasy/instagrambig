@@ -1,6 +1,5 @@
 const socket = io();
 
-
 if (myId && myId !== "null") {
     socket.emit('registerUser', String(myId).trim());
 }
@@ -44,7 +43,6 @@ socket.on('receive private', (data) => {
 });
 
 socket.on("updateUserStatus", (onlineUsersList) => {
-
     if (statusDot) {
         const isRecipientOnline = onlineUsersList.includes(String(recipientId));
 
@@ -55,12 +53,24 @@ socket.on("updateUserStatus", (onlineUsersList) => {
         }
     }
 });
+
 messagesList.addEventListener('click', async (event) => {
     if (event.target.classList.contains('delete-btn')) {
         const button = event.target;
         const messageId = button.getAttribute('data-id');
 
-        if (confirm("Want delete message?")) {
+        const result = await Swal.fire({
+            title: "Delete message?",
+            text: "Do you want to permanently delete this message?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, delete it",
+            cancelButtonText: "Cancel"
+        });
+
+        if (result.isConfirmed) {
             try {
                 const response = await axios.delete(`/users/${messageId}`);
                 const liElement = document.getElementById(`msg-${messageId}`);
@@ -68,14 +78,22 @@ messagesList.addEventListener('click', async (event) => {
                     liElement.remove();
                 }
 
+                Swal.fire({
+                    title: "Deleted!",
+                    text: response.data?.message || "Message removed successfully.",
+                    icon: "success",
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+
             } catch (error) {
                 console.error(error);
 
-                if (error.response && error.response.data) {
-                    alert(error.response.data.message || "Message send error");
-                } else {
-                    alert("Server error");
-                }
+                Swal.fire({
+                    title: "Error!",
+                    text: error.response?.data?.message || "Something went wrong on the server.",
+                    icon: "error"
+                });
             }
         }
     }
