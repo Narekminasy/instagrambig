@@ -54,9 +54,30 @@ async function updateLanguage(lang) {
 
 function changeLanguage(lang) {
     updateLanguage(lang);
+    const langContent = document.querySelector('.lang-dropdown-content');
+    if (langContent) {
+        langContent.classList.remove('show');
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('selectedLanguage') || 'hy';
     updateLanguage(savedLang);
+
+    const langBtn = document.getElementById('currentLangBtn');
+    const langContent = document.querySelector('.lang-dropdown-content');
+
+    if (langBtn && langContent) {
+        langBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            langContent.classList.toggle('show');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!langContent.contains(e.target) && e.target !== langBtn) {
+                langContent.classList.remove('show');
+            }
+        });
+    }
 });
