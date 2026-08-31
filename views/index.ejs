@@ -4,207 +4,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Dental Blog</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/6156/6156071.png">
 </head>
 
-
 <body>
 
-
 <header>
-
     <nav>
-
         <a href="/users/home" class="logo">
             🦷 Dental Clinic
         </a>
-
-
         <ul>
-
-            <li>
-                <a href="/users/home">
-                    Home
-                </a>
-            </li>
-
-            <li>
-                <a href="/users/register">
-                    Register
-                </a>
-            </li>
-
-            <li>
-                <a href="/users/login">
-                    Login
-                </a>
-            </li>
-
-            <li>
-                <a href="/users/users">
-                    Profile
-                </a>
-            </li>
-
-            <li>
-                <a href="/users/index">
-                    Blog
-                </a>
-            </li>
-
-            <li>
-                <a href="/users/About">
-                    About Us
-                </a>
-            </li>
-
-            <li>
-                <a href="/users/Contact">
-                    Contact
-                </a>
-            </li>
-
+            <li><a href="/users/home">Home</a></li>
+            <li><a href="/users/register">Register</a></li>
+            <li><a href="/users/login">Login</a></li>
+            <li><a href="/users/users">Profile</a></li>
+            <li><a href="/users/index">Blog</a></li>
+            <li><a href="/users/About">About Us</a></li>
+            <li><a href="/users/Contact">Contact</a></li>
         </ul>
-
-
     </nav>
-
 </header>
 
-
-
-
-
 <main>
-
-
     <h1 style="color:white;">
         Dental Clinic Blog
     </h1>
 
-
     <div class="wrapper">
-
-
-
         <div class="blog">
             <h2>Create Post</h2>
-
             <input id="titleInp" class="title" type="text" placeholder="Post title">
-
             <input id="descriptionInp" class="create" type="text" placeholder="Post description">
-
             <input id="imageInp" type="file" accept="image/*">
-
             <label style="display: block; margin: 10px 0; cursor: pointer;">
                 <input type="checkbox" id="isApparatusInp" name="isApparatus" value="true">
                 This is a medical apparatus.
             </label>
-
             <button id="create-btn" class="create">Create</button>
         </div>
 
-
-
-
-
-
         <div class="right-box">
-
-
             <h1 class="blogsWorld" style="color: white;">
                 BLOGS
             </h1>
 
-
-
             <% posts.forEach(post => { %>
-
-
-                <div
-                        class="post-item"
-                        id="post-<%= post.id %>"
-                >
-
-
-                    <h2>
-                        <%= post.title %>
-                    </h2>
-
-
-
-                    <p>
-                        <%= post.description %>
-                    </p>
-
-
-
+                <div class="post-item" id="post-<%= post.id %>">
+                    <h2><%= post.title %></h2>
+                    <p><%= post.description %></p>
 
                     <% if (post.image) { %>
-
-                        <img
-                                src="/media/<%= post.image %>"
-                                alt="Post Image"
-                        >
-
+                        <img src="/media/<%= post.image %>" alt="Post Image" style="max-width: 100%; height: auto;" loading="lazy">
                     <% } %>
 
-
-
-                    <button
-                            class="delete-btn"
-                            data-id="<%= post.id %>">
+                    <button class="delete-btn" data-id="<%= post.id %>">
                         Delete
                     </button>
 
-
-
-
-
-                    <input
-                            class="commnetsInp"
-                            data-id="<%= post.id %>"
-                            type="text"
-                            placeholder="Write comment..."
-                    >
-
-
-
-
-                    <button
-                            class="send-btn"
-                            data-id="<%= post.id %>"
-                    >
+                    <input class="commnetsInp" data-id="<%= post.id %>" type="text" placeholder="Write comment...">
+                    <button class="send-btn" data-id="<%= post.id %>">
                         Send
                     </button>
-
 
                     <details class="comments-collapse">
                         <summary class="comments-toggle">
                             See all comments (<%= post.comments ? post.comments.length : 0 %>)
                         </summary>
-
                         <div class="comments-list">
                             <% if (post.comments && post.comments.length > 0) { %>
                                 <% post.comments.forEach(comment => { %>
                                     <div class="comments_look" data-id="<%= comment.id %>">
-                    <span class="comment-user-info">
-                        <strong><%= comment.user_id %></strong>
-
-                        <% if (comment.createdAt) { %>
-                            <strong>🕒<%= new Date(comment.createdAt).toLocaleTimeString('hy-AM', {hour: '2-digit', minute:'2-digit'}) %></strong>
-                        <% } %>
-
-                        <button class="delteComment_Btn" data-id="<%= comment.id %>">delete</button>
-
-                        <% if (comment.User) { %>
-                            <span class="comment-user-name"><%= comment.User.name %></span>
-                        <% } %>
-                    </span>
+                                        <span class="comment-user-info">
+                                            <strong><%= comment.user_id %></strong>
+                                            <% if (comment.createdAt) { %>
+                                                <strong>🕒<%= new Date(comment.createdAt).toLocaleTimeString('hy-AM', {hour: '2-digit', minute:'2-digit'}) %></strong>
+                                            <% } %>
+                                            <button class="delteComment_Btn" data-id="<%= comment.id %>">delete</button>
+                                            <% if (comment.User) { %>
+                                                <span class="comment-user-name"><%= comment.User.name %></span>
+                                            <% } %>
+                                        </span>
                                         <p class="comment-text"><%= comment.message %></p>
                                     </div>
                                 <% }) %>
@@ -213,78 +96,25 @@
                             <% } %>
                         </div>
                     </details>
-
-
                 </div>
-
-
-
             <% }) %>
-
-
-
         </div>
-
-
-
     </div>
-
-
 </main>
 
-
-
-
-
-
 <footer>
-
-
     <ul>
-
-        <li>
-            <a href="/users/about">
-                About Us
-            </a>
-        </li>
-
-        <li>
-            <a href="/users/Contact">
-                Contact
-            </a>
-        </li>
-
-        <li>
-            <a href="/users/privacy" style="color: white;">
-                Privacy
-            </a>
-        </li>
-
+        <li><a href="/users/about">About Us</a></li>
+        <li><a href="/users/Contact">Contact</a></li>
+        <li><a href="/users/privacy" style="color: white;">Privacy</a></li>
     </ul>
-
-
-
     <p class="p_fist" style="color: white">
         © 2026 Dental Student Blog
     </p>
-
-
 </footer>
 
-
-
-<script src="https://jsdelivr.net"></script>
-
-
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
 <script src="/js/index.js"></script>
 
-
-
-
-
-
 </body>
-
 </html>
