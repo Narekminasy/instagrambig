@@ -1,9 +1,22 @@
 import "dotenv/config";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const getResendInstance = () => {
+    if (!process.env.RESEND_API_KEY) {
+        console.error("CRITICAL ERROR: RESEND_API_KEY is missing in Environment Variables!");
+        return null;
+    }
+    return new Resend(process.env.RESEND_API_KEY);
+};
 
 export const sendVerificationCode = async (email, name, code) => {
+    const resend = getResendInstance();
+
+    if (!resend) {
+        console.log("⚠️ Skipping email delivery because RESEND_API_KEY is not configured.");
+        return false;
+    }
+
     try {
         await resend.emails.send({
             from: "onboarding@resend.dev",
@@ -20,9 +33,10 @@ export const sendVerificationCode = async (email, name, code) => {
                 </div>
             `,
         });
-        console.log(`Email successfully sent to ${email} via Resend API.`);
+        console.log(`✅ Email successfully sent to ${email} via Resend API.`);
         return true;
     } catch (error) {
-        console.error("Resend API error:", error);
+        console.error("Resend API error during execution:", error);
+        return false;
     }
 };
