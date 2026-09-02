@@ -39,6 +39,7 @@
     "multer": "^2.2.0",
     "mysql2": "^3.23.2",
     "nodemailer": "^9.0.3",
+    "resend": "^6.25.0",
     "sequelize": "^6.37.8",
     "socket.io": "^4.8.3",
     "sweetalert2": "^11.26.25",

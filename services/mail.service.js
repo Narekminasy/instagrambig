@@ -1,26 +1,12 @@
-import "dotenv/config"
-import nodemailer from "nodemailer";
+import "dotenv/config";
+import { Resend } from "resend";
 
-
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    host: process.env.SMTP_HOST || '://gmail.com',
-    port: 587,
-    secure: false,
-    auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-    },
-    tls: {
-        rejectUnauthorized: false
-    }
-});
-
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendVerificationCode = async (email, name, code) => {
     try {
-        await transporter.sendMail({
-            from: process.env.EMAIL_FROM,
+        await resend.emails.send({
+            from: "onboarding@resend.dev",
             to: email,
             subject: "Email Verification Code",
             html: `
@@ -34,9 +20,9 @@ export const sendVerificationCode = async (email, name, code) => {
                 </div>
             `,
         });
+        console.log(`Email successfully sent to ${email} via Resend API.`);
         return true;
     } catch (error) {
-        console.error("Mail service error:", error);
-        throw new Error("Failed to send email. The email address might not exist.");
+        console.error("Resend API error:", error);
     }
 };
