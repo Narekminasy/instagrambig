@@ -9,6 +9,7 @@ const btnChangePhotos = document.getElementById('btnChangePhotos');
 const changePhotosContainer = document.getElementById('changePhotosContainer');
 const changePhotosForm = document.getElementById('changePhotosForm');
 const logoutBTN = document.getElementById('logoutBTN');
+const deleteLink = document.getElementById('btnDeleteUser');
 
 const firstNameInput = document.getElementById('firstname');
 const lastNameInput = document.getElementById('lastname');
@@ -302,3 +303,46 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+if (deleteLink) {
+    deleteLink.addEventListener('click', async (e) => {
+        e.preventDefault();
+
+        const result = await Swal.fire({
+            title: "Are you sure?",
+            text: "You will not be able to recover your account!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "Cancel"
+        });
+
+        if (result.isConfirmed) {
+            try {
+                const response = await axios.post('/users/secure-remove-my-account', {}, { withCredentials: true });
+
+
+                if (response.status === 200 || response.data.success) {
+                    await Swal.fire({
+                        title: "Deleted!",
+                        text: "Your account has been deleted.",
+                        icon: "success",
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                    window.location.href = "/users/login";
+                }
+            } catch (error) {
+                console.error("Axios error logs:", error);
+                const serverErrorMessage = error.response?.data?.message || "Failed to delete account.";
+                Swal.fire({
+                    title: "Error!",
+                    text: `${serverErrorMessage} (Status: ${error.response?.status})`,
+                    icon: "error"
+                });
+            }
+        }
+    });
+}

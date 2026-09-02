@@ -13,7 +13,6 @@ export const sendVerificationCode = async (email, name, code) => {
     const resend = getResendInstance();
 
     if (!resend) {
-        console.log("⚠️ Skipping email delivery because RESEND_API_KEY is not configured.");
         return false;
     }
 

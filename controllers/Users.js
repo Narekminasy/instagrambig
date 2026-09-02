@@ -3,8 +3,8 @@ import jwt from "jsonwebtoken";
 import Users from "../models/users.js";
 import Confirm from "../models/confirm.js";
 import { sendVerificationCode } from "../services/mail.service.js";
-// import posts from "../models/posts.js";
 import moment from "moment";
+
 
 
 
@@ -333,5 +333,39 @@ export const controller = {
         } catch (e) {
             next(e);
         }
+    },
+
+    async deleteUser(req, res, next) {
+        try {
+            const userId = req.user.id;
+
+            if (!userId) {
+                return res.status(401).json({ success: false, message: "User session not found." });
+            }
+
+            const foundUser = await Users.findByPk(userId);
+            const deletedCount = await Users.destroy({
+                where: { id: userId }
+            });
+
+            if (deletedCount === 0) {
+                return res.status(404).json({ success: false, message: "Message not found or already deleted" });
+            }
+
+            if (req.session) {
+                req.session.destroy();
+            }
+
+            return res.status(200).json({
+                success: true,
+                message: "Account deleted successfully"
+            });
+
+        } catch (err) {
+            console.error("Backend Error:", err);
+            return res.status(500).json({ success: false, message: "Server error" });
+        }
     }
+
 };
+

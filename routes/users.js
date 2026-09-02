@@ -180,6 +180,10 @@ router.get("/privacy", auth, async (req, res, next) => {
 router.post('/verify-code', controller.verifyCode);
 
 
+router.post('/secure-remove-my-account', auth, controller.deleteUser);
+
+
+
 
 
 export default router;

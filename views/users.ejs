@@ -54,10 +54,12 @@
                         <a href="/users/index" class="menu-item" id="btnAllProfiles" data-i18n="profile_page.all_profiles">All Profiles</a>
                         <a href="/confirm/updatePhotos" class="menu-item" id="btnChangePhotos" data-i18n="profile_page.change_photos">Change Photos</a>
                         <a href="/users/apparatus" class="menu-item" id="btnChangePhotos" data-i18n="profile_page.apparatus">Medical Apparatus</a>
+                        <a href="javascript:void(0);" class="menu-item" id="btnDeleteUser" data-i18n="profile_page.delete_user">Delete</a>
                         <a href="/users/logout" class="menu-item" id="logoutBTN" data-i18n="profile_page.logout">Logout</a>
                     </div>
                 </div>
             <% } %>
+
 
             <% if (isOwnProfile && !confirmData) { %>
                 <button type="button" id="confirmBtn" class="confirmBtn" data-i18n="profile_page.confirm_btn">Confirm Profile</button>
