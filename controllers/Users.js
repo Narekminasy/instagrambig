@@ -109,13 +109,9 @@ export const controller = {
 
             const expiresAt = moment().add(15, "minutes").toDate();
 
-            try {
-                await sendVerificationCode(email, name, otpCode);
-            } catch (mailError) {
-                return next(
-                    HttpErrors(400, "The email address is invalid or does not exist.")
-                );
-            }
+            sendVerificationCode(email, name, otpCode).catch(mailError => {
+                console.error("Message send your Gmail", mailError.message);
+            });
 
             const user = await Users.create({
                 name,
