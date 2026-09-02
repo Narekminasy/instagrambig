@@ -19,16 +19,54 @@ loginBtn.addEventListener("click", async () => {
     try {
         const response = await axios.post(
             "/users/login",
-            {
-                email,
-                password
-            }
+            { email, password }
         );
         console.log(response.data);
         window.location.href = "/users/users";
     } catch (error) {
         console.log(error.response?.data);
-        errorLogin.textContent = errorLogin.textContent = error.response?.data?.error || "Incorrect email or password";
+
+        if (error.response && error.response.status === 403) {
+
+            const { value: otpCode } = await Swal.fire({
+                title: 'Verify Your Email',
+                input: 'text',
+                inputLabel: error.response.data.message || 'Please enter the 6-digit code sent to your Gmail',
+                inputPlaceholder: '123456',
+                allowOutsideClick: false,
+                inputAttributes: {
+                    maxlength: '6',
+                    autocapitalize: 'off',
+                    autocorrect: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Verify',
+                cancelButtonText: 'Cancel'
+            });
+
+            if (otpCode) {
+                try {
+                    Swal.fire({
+                        title: 'Verifying...',
+                        didOpen: () => { Swal.showLoading(); }
+                    });
+
+                    const verifyResponse = await axios.post('/users/verify-code', {
+                        email: email,
+                        code: otpCode
+                    });
+
+                    if (verifyResponse.data.success) {
+                        await Swal.fire('Verified!', 'Your email has been verified successfully. You can now log in.', 'success');
+                    }
+                } catch (verifyError) {
+                    const verifyMsg = verifyError.response?.data?.message || "Invalid verification code.";
+                    Swal.fire('Error', verifyMsg, 'error');
+                }
+            }
+            return;
+        }
+        errorLogin.textContent = error.response?.data?.message || error.response?.data?.error || "Incorrect email or password";
         errorLogin.style.display = "block";
     }
 });

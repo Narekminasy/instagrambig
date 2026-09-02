@@ -177,6 +177,9 @@ router.get("/privacy", auth, async (req, res, next) => {
     res.render("privacy.ejs");
 });
 
+router.post('/verify-code', controller.verifyCode);
+
+
 
 
 export default router;

@@ -2,6 +2,9 @@ import HttpErrors from "http-errors";
 import jwt from "jsonwebtoken";
 import Users from "../models/users.js";
 import Confirm from "../models/confirm.js";
+import { sendVerificationCode } from "../services/mail.service.js";
+// import posts from "../models/posts.js";
+import moment from "moment";
 
 
 
@@ -12,7 +15,7 @@ import {
     updatePassword,
     updatePhoto
 } from "../controllers/authController.js";
-import posts from "../models/posts.js";
+
 
 const { JWT_SECRET } = process.env;
 
@@ -44,6 +47,12 @@ export const controller = {
             if (!user || user.password !== Users.hashPassword(password)) {
                 return next(
                     HttpErrors(401, "Invalid email or password")
+                );
+            }
+
+            if (!user.is_verified) {
+                return next(
+                    HttpErrors(403, "Your email is not verified. Please verify it using the code sent to your Gmail.")
                 );
             }
 
@@ -84,49 +93,91 @@ export const controller = {
         }
     },
 
-
     async register(req, res, next) {
+        console.log("--> POST /users/register հարցումը ՀԱՍԱՎ ԲԵՔԵՆԴ!", req.body);
         try {
-
-            const {
-                name,
-                email,
-                password,
-                age,
-            } = req.body;
-
+            const { name, email, password, age } = req.body;
 
             const emailExists = await checkEmailUnique(email);
-
             if (emailExists) {
                 return next(
                     HttpErrors(422, "Email is already in use!")
                 );
             }
 
+            const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
 
-            const user = await create({
+            const expiresAt = moment().add(15, "minutes").toDate();
+
+            try {
+                await sendVerificationCode(email, name, otpCode);
+            } catch (mailError) {
+                return next(
+                    HttpErrors(400, "The email address is invalid or does not exist.")
+                );
+            }
+
+            const user = await Users.create({
                 name,
                 email,
                 age,
                 password: Users.hashPassword(password),
+                verification_code: otpCode,
+                code_expires_at: expiresAt,
+                is_verified: false,
             });
 
-            const userResponse = { ...user };
-
+            const userResponse = JSON.parse(JSON.stringify(user));
             delete userResponse.password;
 
-
             res.json({
+                success: true,
                 message: "Successfully registered",
                 user: userResponse,
             });
-
 
         } catch (e) {
             next(e);
         }
     },
+
+    async verifyCode(req, res, next) {
+        try {
+            const { email, code } = req.body;
+
+            if (!email || !code) {
+                return next(HttpErrors(400, "Email and verification code are required."));
+            }
+
+            const user = await findByEmail(email);
+            if (!user) {
+                return next(HttpErrors(404, "User not found."));
+            }
+
+            if (String(user.verification_code).trim() !== String(code).trim()) {
+                return next(HttpErrors(400, "Invalid verification code."));
+            }
+            await Users.update(
+                {
+                    is_verified: true,
+                    verification_code: null,
+                    code_expires_at: null
+                },
+                {
+                    where: { id: user.id }
+                }
+            );
+
+            res.json({
+                success: true,
+                message: "Email verified successfully! You can now log in.",
+            });
+
+        } catch (e) {
+            next(e);
+        }
+    },
+
 
     async logout(req, res, next) {
         try {

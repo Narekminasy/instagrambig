@@ -1,11 +1,11 @@
-console.log("register.js loaded");
-
 const registerBtn = document.getElementById("registerBtn");
 const errorRegister = document.getElementById("errorRegister");
+const otpSection = document.getElementById("otpSection");
+
+let isOtpStep = false;
 
 registerBtn.addEventListener("click", async (e) => {
     e.preventDefault();
-
     errorRegister.style.display = "none";
 
     const name = document.getElementById("name").value;
@@ -13,19 +13,62 @@ registerBtn.addEventListener("click", async (e) => {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
-    try {
-        const response = await axios.post("/users/register", {
-            name,
-            age,
-            email,
-            password,
-        });
+    if (!isOtpStep) {
+        if (!name || !email || !password) {
+            errorRegister.textContent = "Please fill in all required fields.";
+            errorRegister.style.display = "block";
+            return;
+        }
 
-        window.location.href = "/users/login";
-    } catch (err) {
-        console.log(err.response?.data);
-        errorRegister.textContent = err.response?.data?.error || "Registration failed. Please try again.";
-        errorRegister.style.display = "block";
+        try {
+            registerBtn.textContent = "Sending code...";
+            registerBtn.disabled = true;
+
+            const response = await axios.post("/users/register", { name, age, email, password });
+
+            document.getElementById("name").style.display = "none";
+            document.getElementById("age").style.display = "none";
+            document.getElementById("password").style.display = "none";
+            document.querySelector(".form-box p").style.display = "none";
+
+            otpSection.style.display = "block";
+            registerBtn.textContent = "Verify Code";
+            registerBtn.disabled = false;
+            isOtpStep = true;
+
+        } catch (err) {
+            registerBtn.textContent = "Register";
+            registerBtn.disabled = false;
+            const errorMessage = err.response?.data?.message || "Registration failed. Try again.";
+            errorRegister.textContent = errorMessage;
+            errorRegister.style.display = "block";
+        }
+    }
+    else {
+        const code = document.getElementById("otpCode").value;
+
+        if (!code || code.length !== 6) {
+            errorRegister.textContent = "Please enter a valid 6-digit code.";
+            errorRegister.style.display = "block";
+            return;
+        }
+
+        try {
+            registerBtn.textContent = "Verifying...";
+            registerBtn.disabled = true;
+
+            const verifyResponse = await axios.post('/users/verify-code', { email, code });
+
+            if (verifyResponse.data.success) {
+                window.location.href = "/users/login";
+            }
+        } catch (err) {
+            registerBtn.textContent = "Verify Code";
+            registerBtn.disabled = false;
+            const errorMessage = err.response?.data?.message || "Invalid code. Please try again.";
+            errorRegister.textContent = errorMessage;
+            errorRegister.style.display = "block";
+        }
     }
 });
 

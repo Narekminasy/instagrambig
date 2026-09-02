@@ -46,11 +46,15 @@
 
         <h2 id="errorRegister" style="color: red; display: none;"></h2>
 
-        <!-- Ուշադրություն՝ placeholder-ների համար օգտագործում ենք հատուկ data-i18n-placeholder -->
         <input id="name" type="text" placeholder="Name" data-i18n-placeholder="register_page.placeholder_name">
         <input id="age" type="number" placeholder="Age" data-i18n-placeholder="register_page.placeholder_age">
         <input id="email" type="text" placeholder="Email" data-i18n-placeholder="register_page.placeholder_email">
         <input id="password" type="password" placeholder="Password" data-i18n-placeholder="register_page.placeholder_password">
+
+        <div id="otpSection" style="display: none; margin-top: 15px; width: 100%;">
+            <p style="color: #555; font-size: 14px; margin-bottom: 5px;">We sent a 6-digit code to your Gmail:</p>
+            <input id="otpCode" type="text" placeholder="123456" maxlength="6" style="text-align: center; letter-spacing: 5px; font-size: 20px; font-weight: bold;">
+        </div>
 
         <button id="registerBtn" data-i18n="register_page.btn_register">Register</button>
     </section>
@@ -67,8 +71,12 @@
     </p>
 </footer>
 
+
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 <script src="/js/register.js"></script>
+
+
 
 </body>
 </html>

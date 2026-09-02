@@ -59,8 +59,11 @@ app.use(usersRouter);
 
 
 // Database
+
 sequelize.sync()
-    .then(() => { console.log("Tables synced"); })
+    .then(() => {
+        console.log("Tables synced");
+    })
     .catch(console.error);
 
 
