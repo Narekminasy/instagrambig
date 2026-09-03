@@ -126,11 +126,8 @@
   "apparatus_page.title": "Медицинские Аппараты | Стоматология",
   "apparatus_page.heading": "Наши Медицинские Аппараты",
   "apparatus_page.btn_delete": "Удалить",
-  "apparatus_page.no_apparatus": "Информация о медицинских аппаратах пока не добавлена."
+  "apparatus_page.no_apparatus": "Информация о медицинских аппаратах пока не добавлена.",
 
-
-
-
-
-
+  "buttons.make_admin": "Сделать Админом",
+  "buttons.delete_user": "Удалить Пользователя"
 }

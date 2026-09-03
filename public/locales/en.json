@@ -126,6 +126,8 @@
   "apparatus_page.title": "Medical Apparatus | Dental Clinic",
   "apparatus_page.heading": "Our Medical Apparatus",
   "apparatus_page.btn_delete": "Delete",
-  "apparatus_page.no_apparatus": "No medical apparatus information added yet."
+  "apparatus_page.no_apparatus": "No medical apparatus information added yet.",
 
+  "buttons.make_admin": "Make Admin",
+  "buttons.delete_user": "Delete User"
 }

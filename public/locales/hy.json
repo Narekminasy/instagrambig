@@ -126,6 +126,8 @@
   "apparatus_page.title": "Բժշկական Սարքավորումներ | Ատամնաբուժարան",
   "apparatus_page.heading": "Մեր Բժշկական Սարքավորումները",
   "apparatus_page.btn_delete": "Ջնջել",
-  "apparatus_page.no_apparatus": "Բժշկական սարքավորումների վերաբերյալ տեղեկատվություն դեռ չի ավելացվել:"
+  "apparatus_page.no_apparatus": "Բժշկական սարքավորումների վերաբերյալ տեղեկատվություն դեռ չի ավելացվել:",
 
+  "buttons.make_admin": "Դարձնել Ադմին",
+  "buttons.delete_user": "Ջնջել Օգտատիրոջը"
 }
