@@ -269,11 +269,6 @@ export const controller = {
                 medicalDiploma: medicalDiploma.filename,
             });
 
-            res.status(201).json({
-                confirm,
-                message: "confirm already send"
-            });
-
             const attachments = [
                 { filename: photo.originalname, path: photo.path },
                 { filename: background.originalname, path: background.path },
@@ -281,7 +276,7 @@ export const controller = {
             ];
 
             const mailOptions = {
-                from: process.env.EMAIL_FROM || process.env.SMTP_USER,
+                from: 'onboarding@resend.dev',
                 to: 'narekminasyan52@gmail.com',
                 subject: `New Doctor Verification: ${firstname} ${lastname}`,
                 html: `
@@ -292,24 +287,27 @@ export const controller = {
                 <p><b>Applicant User ID:</b> ${userId}</p>
                 <p><b>Address:</b> ${address}</p>
                 <p><b>Phone:</b> ${phone}</p>
-                <br>
-                <p style="color: #666; font-style: italic;">The submitted profile photo, background, and medical diploma are attached to this email.</p>
             </div>
         `,
                 attachments: attachments
             };
 
-            transporter.sendMail(mailOptions).then(() => {
-                console.log("👉 Background Email sent successfully!");
-            }).catch((emailErr) => {
-                console.error("🚨 Background Nodemailer Error:", emailErr.message);
+            try {
+                await transporter.sendMail(mailOptions);
+                console.log("👉 Email successfully sent via background worker.");
+            } catch (emailErr) {
+                console.error("🚨 Nodemailer failed but files are safe:", emailErr.message);
+            }
+
+            return res.status(201).json({
+                confirm,
+                message: "confirm already send"
             });
 
         } catch (e) {
             next(e);
         }
     },
-
 
     async getAllUsers(req, res, next) {
         try {
