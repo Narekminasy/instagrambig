@@ -1,4 +1,3 @@
-import path from 'path';
 import HttpErrors from "http-errors";
 import jwt from "jsonwebtoken";
 import Users from "../models/users.js";
@@ -239,6 +238,15 @@ export const controller = {
                 return res.status(404).json({ message: "User not found." });
             }
 
+            // const UserRole = req.user.role;
+            //
+            // // if (UserRole !== 'admin') {
+            // //     return res.status(403).json({
+            // //         message: "Only Admin can ."
+            // //     });
+            // // }
+            // console.log(UserRole)
+
             const { firstname, lastname, address, phone } = req.body;
 
             const existingConfirm = await Confirm.findOne({
@@ -259,6 +267,7 @@ export const controller = {
 
             const [photo, background, medicalDiploma] = req.files;
 
+
             const confirm = await Confirm.create({
                 userId,
                 firstname,
@@ -271,9 +280,9 @@ export const controller = {
             });
 
             const attachments = [
-                { filename: photo.originalname, path: path.resolve(photo.path) },
-                { filename: background.originalname, path: path.resolve(background.path) },
-                { filename: medicalDiploma.originalname, path: path.resolve(medicalDiploma.path) }
+                { filename: photo.originalname, path: photo.path },
+                { filename: background.originalname, path: background.path },
+                { filename: medicalDiploma.originalname, path: medicalDiploma.path }
             ];
 
             const mailOptions = {
@@ -281,17 +290,17 @@ export const controller = {
                 to: 'narekminasyan52@gmail.com',
                 subject: `New Doctor Verification: ${firstname} ${lastname}`,
                 html: `
-            <div style="font-family: sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 5px;">
-                <h2 style="color: #333;">New Verification Request Received</h2>
-                <hr>
-                <p><b>Applicant Name:</b> ${firstname} ${lastname}</p>
-                <p><b>Applicant User ID:</b> ${userId}</p>
-                <p><b>Address:</b> ${address}</p>
-                <p><b>Phone:</b> ${phone}</p>
-                <br>
-                <p style="color: #666; font-style: italic;">The submitted profile photo, background, and medical diploma are attached to this email.</p>
-            </div>
-        `,
+                <div style="font-family: sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 5px;">
+                    <h2 style="color: #333;">New Verification Request Received</h2>
+                    <hr>
+                    <p><b>Applicant Name:</b> ${firstname} ${lastname}</p>
+                    <p><b>Applicant User ID:</b> ${userId}</p>
+                    <p><b>Address:</b> ${address}</p>
+                    <p><b>Phone:</b> ${phone}</p>
+                    <br>
+                    <p style="color: #666; font-style: italic;">The submitted profile photo, background, and medical diploma are attached to this email.</p>
+                </div>
+            `,
                 attachments: attachments
             };
 
@@ -303,11 +312,9 @@ export const controller = {
             });
 
         } catch (e) {
-            console.error("Nodemailer Email Error:", e);
             next(e);
         }
     },
-
 
 
     async getAllUsers(req, res, next) {
