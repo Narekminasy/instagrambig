@@ -181,7 +181,7 @@ export function decrypt(ciphertext) {
 export async function Adminmake(userId) {
     try {
         const [result] = await DBMysql.query(
-            `UPDATE users SET role = 'adminGeneral' WHERE id = ?`,
+            `UPDATE users SET role = 'admin' WHERE id = ?`,
             [userId]
         );
 
