@@ -269,10 +269,11 @@ export const controller = {
                 medicalDiploma: medicalDiploma.filename,
             });
 
-            // 🚨 ՈՒՂՂՎԱԾ. Օգտագործում ենք content: file.buffer կամ ուղիղ սթրիմ,
-            // բայց քանի որ քո Multer-ը diskStorage է, ավելի ապահով է Nodemailer-ին տալ հենց ֆայլի սթրիմը (Readable stream)
-            // կամ թողնել, որ Nodemailer-ը ինքը հարաբերական ճանապարհով կարդա առանց resolve-ի:
-            // Եթե resolve-ը չի աշխատել, ապա ուղղակի օգտագործենք հարաբերական path-ը:
+            res.status(201).json({
+                confirm,
+                message: "confirm already send"
+            });
+
             const attachments = [
                 { filename: photo.originalname, path: photo.path },
                 { filename: background.originalname, path: background.path },
@@ -298,19 +299,16 @@ export const controller = {
                 attachments: attachments
             };
 
-            await transporter.sendMail(mailOptions);
-
-            return res.status(201).json({
-                confirm,
-                message: "confirm already send"
+            transporter.sendMail(mailOptions).then(() => {
+                console.log("👉 Background Email sent successfully!");
+            }).catch((emailErr) => {
+                console.error("🚨 Background Nodemailer Error:", emailErr.message);
             });
 
         } catch (e) {
-            console.error("🚨 ՃՇԳՐԻՏ ՍԽԱԼԸ ՆԱՄԱԿ ՈՒՂԱՐԿԵԼԻՍ:", e);
             next(e);
         }
     },
-
 
 
     async getAllUsers(req, res, next) {
