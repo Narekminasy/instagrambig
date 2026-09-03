@@ -1,3 +1,5 @@
+import fs from 'fs';
+import { Resend } from 'resend';
 import HttpErrors from "http-errors";
 import jwt from "jsonwebtoken";
 import Users from "../models/users.js";
@@ -5,6 +7,11 @@ import Confirm from "../models/confirm.js";
 import { sendVerificationCode } from "../services/mail.service.js";
 import moment from "moment";
 import nodemailer from 'nodemailer';
+
+
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 
 const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
@@ -269,37 +276,37 @@ export const controller = {
                 medicalDiploma: medicalDiploma.filename,
             });
 
-            const attachments = [
-                { filename: photo.originalname, path: photo.path },
-                { filename: background.originalname, path: background.path },
-                { filename: medicalDiploma.originalname, path: medicalDiploma.path }
-            ];
-
-            const mailOptions = {
-                from: 'onboarding@resend.dev',
-                to: 'narekminasyan52@gmail.com',
-                subject: `New Doctor Verification: ${firstname} ${lastname}`,
-                html: `
-            <div style="font-family: sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 5px;">
-                <h2>New Verification Request Received</h2>
-                <hr>
-                <p><b>Applicant Name:</b> ${firstname} ${lastname}</p>
-                <p><b>Applicant User ID:</b> ${userId}</p>
-                <p><b>Address:</b> ${address}</p>
-                <p><b>Phone:</b> ${phone}</p>
-            </div>
-        `,
-                attachments: attachments
-            };
-
-            transporter.sendMail(mailOptions).catch((err) => {
-                console.error("🚨 Background Email Error:", err.message);
-            });
-
-            return res.status(201).json({
+            res.status(201).json({
                 confirm,
                 message: "confirm already send"
             });
+
+            try {
+                const photoBuffer = fs.readFileSync(photo.path);
+                const bgBuffer = fs.readFileSync(background.path);
+                const diplomaBuffer = fs.readFileSync(medicalDiploma.path);
+
+                resend.emails.send({
+                    from: 'onboarding@resend.dev',
+                    to: 'narekminasyan52@gmail.com',
+                    subject: `New Doctor Verification: ${firstname} ${lastname}`,
+                    html: `
+                    <div style="font-family: sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 5px;">
+                        <h2>New Verification Request</h2>
+                        <p><b>Name:</b> ${firstname} ${lastname}</p>
+                        <p><b>Address:</b> ${address}</p>
+                        <p><b>Phone:</b> ${phone}</p>
+                    </div>
+                `,
+                    attachments: [
+                        { filename: photo.originalname, content: photoBuffer },
+                        { filename: background.originalname, content: bgBuffer },
+                        { filename: medicalDiploma.originalname, content: diplomaBuffer }
+                    ]
+                });
+            } catch (emailErr) {
+                console.error("🚨 Resend SDK Error:", emailErr.message);
+            }
 
         } catch (e) {
             next(e);
