@@ -281,7 +281,7 @@ export const controller = {
                 subject: `New Doctor Verification: ${firstname} ${lastname}`,
                 html: `
             <div style="font-family: sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 5px;">
-                <h2 style="color: #333;">New Verification Request Received</h2>
+                <h2>New Verification Request Received</h2>
                 <hr>
                 <p><b>Applicant Name:</b> ${firstname} ${lastname}</p>
                 <p><b>Applicant User ID:</b> ${userId}</p>
@@ -292,12 +292,9 @@ export const controller = {
                 attachments: attachments
             };
 
-            try {
-                await transporter.sendMail(mailOptions);
-                console.log("👉 Email successfully sent via background worker.");
-            } catch (emailErr) {
-                console.error("🚨 Nodemailer failed but files are safe:", emailErr.message);
-            }
+            transporter.sendMail(mailOptions).catch((err) => {
+                console.error("🚨 Background Email Error:", err.message);
+            });
 
             return res.status(201).json({
                 confirm,
