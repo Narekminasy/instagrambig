@@ -153,7 +153,25 @@
             Send Message
         </a>
     <% } %>
+    <% if (typeof user !== 'undefined' && user.role === 'adminGeneral') { %>
+        <button type="button"
+                class="btn-make-admin"
+                data-id="<%= confirmData.userId || confirmData.id %>"
+                style="padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+            Make Admin
+        </button>
+
+        <button type="button"
+                class="btn-delete-user"
+                data-id="<%= confirmData.userId || confirmData.id %>"
+                style="padding: 10px 20px; background: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+            Delete User
+        </button>
+    <% } %>
 </section>
+
+
+
 
 <div class="ownPost">
     <h1 class="blogsWorld" data-i18n="profile_page.blogs_title">BLOGS</h1>

@@ -4,16 +4,25 @@ import Users from "../models/users.js";
 import Confirm from "../models/confirm.js";
 import { sendVerificationCode } from "../services/mail.service.js";
 import moment from "moment";
+import nodemailer from 'nodemailer';
 
-
-
+const transporter = nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: parseInt(process.env.SMTP_PORT, 10) || 587,
+    secure: process.env.SMTP_PORT == 465,
+    auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS
+    }
+});
 
 import {
     findByEmail,
     create,
     checkEmailUnique,
     updatePassword,
-    updatePhoto
+    updatePhoto,
+    Adminmake,
 } from "../controllers/authController.js";
 
 
@@ -219,21 +228,29 @@ export const controller = {
             next(e);
         }
     },
-
-
     async getConfirm(req, res, next) {
         try {
-            // console.log(req.files);
-            // console.log(req.body);
-
             const userId = req.user.id;
 
-            const { firstname, lastname, address, phone} = req.body;
+            const currentUser = await Users.findByPk(userId);
+
+            if (!currentUser) {
+                return res.status(404).json({ message: "User not found." });
+            }
+
+            // const UserRole = req.user.role;
+            //
+            // // if (UserRole !== 'admin') {
+            // //     return res.status(403).json({
+            // //         message: "Only Admin can ."
+            // //     });
+            // // }
+            // console.log(UserRole)
+
+            const { firstname, lastname, address, phone } = req.body;
 
             const existingConfirm = await Confirm.findOne({
-                where: {
-                    userId,
-                }
+                where: { userId }
             });
 
             if (existingConfirm) {
@@ -242,7 +259,14 @@ export const controller = {
                 });
             }
 
+            if (!req.files || req.files.length < 3) {
+                return res.status(400).json({
+                    message: "Please upload all 3 required photos (Profile, Background, Diploma)."
+                });
+            }
+
             const [photo, background, medicalDiploma] = req.files;
+
 
             const confirm = await Confirm.create({
                 userId,
@@ -255,14 +279,43 @@ export const controller = {
                 medicalDiploma: medicalDiploma.filename,
             });
 
+            const attachments = [
+                { filename: photo.originalname, path: photo.path },
+                { filename: background.originalname, path: background.path },
+                { filename: medicalDiploma.originalname, path: medicalDiploma.path }
+            ];
+
+            const mailOptions = {
+                from: process.env.EMAIL_FROM || process.env.SMTP_USER,
+                to: 'narekminasyan52@gmail.com',
+                subject: `New Doctor Verification: ${firstname} ${lastname}`,
+                html: `
+                <div style="font-family: sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 5px;">
+                    <h2 style="color: #333;">New Verification Request Received</h2>
+                    <hr>
+                    <p><b>Applicant Name:</b> ${firstname} ${lastname}</p>
+                    <p><b>Applicant User ID:</b> ${userId}</p>
+                    <p><b>Address:</b> ${address}</p>
+                    <p><b>Phone:</b> ${phone}</p>
+                    <br>
+                    <p style="color: #666; font-style: italic;">The submitted profile photo, background, and medical diploma are attached to this email.</p>
+                </div>
+            `,
+                attachments: attachments
+            };
+
+            await transporter.sendMail(mailOptions);
+
             return res.status(201).json({
                 confirm,
                 message: "confirm already send"
             });
-        }catch (e){
+
+        } catch (e) {
             next(e);
         }
     },
+
 
     async getAllUsers(req, res, next) {
         try {
@@ -364,6 +417,76 @@ export const controller = {
         } catch (err) {
             console.error("Backend Error:", err);
             return res.status(500).json({ success: false, message: "Server error" });
+        }
+    },
+
+    async getAdminUser(req, res, next) {
+        try {
+            const userId = req.user.id;
+
+            if (!userId) {
+                return res.status(401).json({ success: false, message: "User session not found." });
+            }
+
+            const currentUserRole = req.user.dataValues ? req.user.dataValues.role : req.user.role;
+            if (currentUserRole !== 'adminGeneral') {
+                return res.status(403).json({ success: false, message: "Access denied. Only admins can perform this action." });
+            }
+
+            const targetUserId = req.params.id;
+
+            const success = await Adminmake(targetUserId);
+
+            if (!success) {
+                return res.status(400).json({ success: false, message: "Failed to update user role or user not found." });
+            }
+
+            return res.status(200).json({
+                success: true,
+                message: "User has been successfully promoted to admin."
+            });
+
+        } catch (err) {
+            console.error("Backend Error:", err);
+            next(err);
+        }
+    },
+
+    async deleteUserAdmin(req, res, next) {
+        try {
+            const userId = req.user.id;
+
+            if (!userId) {
+                return res.status(401).json({ success: false, message: "User session not found." });
+            }
+
+            const currentUserRole = req.user.dataValues ? req.user.dataValues.role : req.user.role;
+            if (currentUserRole !== 'adminGeneral') {
+                return res.status(403).json({ success: false, message: "Access denied. Only adminGeneral can perform this action." });
+            }
+
+            const targetUserId = req.params.id;
+
+            await Confirm.destroy({
+                where: { userId: targetUserId }
+            });
+
+            const deletedRows = await Users.destroy({
+                where: { id: targetUserId }
+            });
+
+            if (deletedRows === 0) {
+                return res.status(444).json({ success: false, message: "User not found or already deleted." });
+            }
+
+            return res.status(200).json({
+                success: true,
+                message: "User account has been permanently deleted."
+            });
+
+        } catch (err) {
+            console.error("Backend Error:", err);
+            next(err);
         }
     }
 

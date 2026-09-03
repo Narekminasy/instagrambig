@@ -183,6 +183,17 @@ router.post('/verify-code', controller.verifyCode);
 router.post('/secure-remove-my-account', auth, controller.deleteUser);
 
 
+router.put('/make-admin/:id', auth, controller.getAdminUser);
+
+router.delete('/delete-user/:id', auth, controller.deleteUserAdmin);
+
+
+
+
+
+
+
+
 
 
 

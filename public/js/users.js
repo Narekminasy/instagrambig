@@ -10,6 +10,8 @@ const changePhotosContainer = document.getElementById('changePhotosContainer');
 const changePhotosForm = document.getElementById('changePhotosForm');
 const logoutBTN = document.getElementById('logoutBTN');
 const deleteLink = document.getElementById('btnDeleteUser');
+const makeAdminBtn = document.querySelector('.btn-make-admin');
+const deleteUserBtn = document.querySelector('.btn-delete-user');
 
 const firstNameInput = document.getElementById('firstname');
 const lastNameInput = document.getElementById('lastname');
@@ -36,7 +38,18 @@ if (profileForm) {
         const address = document.getElementById('address').value;
         const phone = document.getElementById('phone').value;
 
+        if (!photoFile || !backgroundFile || !diplomyFile) {
+            Swal.fire({
+                title: "Missing Files",
+                text: "Please upload all three required photos (Profile, Background, and Diploma).",
+                icon: "warning"
+            });
+            return;
+        }
+
+
         const formData = new FormData();
+
         formData.append('firstname', firstname);
         formData.append('lastname', lastname);
         formData.append('address', address);
@@ -346,3 +359,95 @@ if (deleteLink) {
         }
     });
 }
+
+
+if (makeAdminBtn) {
+    makeAdminBtn.addEventListener('click', async () => {
+        const targetId = makeAdminBtn.getAttribute('data-id');
+
+        const result = await Swal.fire({
+            title: "Are you sure?",
+            text: "You are about to promote this user to Admin status!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#28a745",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, Make Admin",
+            cancelButtonText: "Cancel"
+        });
+
+        if (result.isConfirmed) {
+            try {
+                // 🚨 Ուղարկում ենք դատարկ {} body, ID-ն գնում է URL-ով
+                const response = await axios.put(`/users/make-admin/${targetId}`, {}, {
+                    withCredentials: true
+                });
+
+                if (response.data.success) {
+                    await Swal.fire({
+                        title: "Promoted!",
+                        text: response.data.message,
+                        icon: "success",
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+
+                    window.location.reload();
+                }
+            } catch (error) {
+                console.error("Frontend Error:", error);
+                Swal.fire({
+                    title: "Action Failed",
+                    text: error.response?.data?.message || "Could not complete the promotion.",
+                    icon: "error"
+                });
+            }
+        }
+    });
+}
+
+
+if (deleteUserBtn) {
+    deleteUserBtn.addEventListener('click', async () => {
+        const targetId = deleteUserBtn.getAttribute('data-id');
+
+        const result = await Swal.fire({
+            title: "Are you sure?",
+            text: "You are about to permanently delete this user account!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#dc3545",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, Delete User",
+            cancelButtonText: "Cancel"
+        });
+
+        if (result.isConfirmed) {
+            try {
+                const response = await axios.delete(`/users/delete-user/${targetId}`, {
+                    withCredentials: true
+                });
+
+                if (response.data.success) {
+                    await Swal.fire({
+                        title: "Deleted!",
+                        text: response.data.message,
+                        icon: "success",
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+
+                    window.location.href = '/';
+                }
+            } catch (error) {
+                console.error("Frontend Error:", error);
+                Swal.fire({
+                    title: "Action Failed",
+                    text: error.response?.data?.message || "Could not delete the user.",
+                    icon: "error"
+                });
+            }
+        }
+    });
+}
+

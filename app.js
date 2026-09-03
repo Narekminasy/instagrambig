@@ -10,8 +10,6 @@ import { createServer } from "http";
 import path from "path";
 import usersRouter from "./routes/index.js";
 
-
-
 import Messages from "./models/messages.js";
 
 const app = express();
@@ -51,15 +49,10 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-
 // Routes
 app.use(usersRouter);
 
-
-
 // Database
-
 sequelize.sync()
     .then(() => {
         console.log("Tables synced");

@@ -178,6 +178,19 @@ export function decrypt(ciphertext) {
     }
 }
 
+export async function Adminmake(userId) {
+    try {
+        const [result] = await DBMysql.query(
+            `UPDATE users SET role = 'adminGeneral' WHERE id = ?`,
+            [userId]
+        );
+
+        return result.affectedRows > 0;
+    } catch (err) {
+        console.error("Database Error in Adminmake:", err);
+        return false;
+    }
+}
 
 
 export default {
@@ -189,4 +202,5 @@ export default {
     encrypt,
     decrypt,
     updatePassword,
+    Adminmake,
 };
