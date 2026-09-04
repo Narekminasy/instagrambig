@@ -4,17 +4,19 @@ import { v4 as UUIDv4 } from "uuid";
 import fs from "fs";
 import path from "path";
 
+const dir = path.join(process.cwd(), 'public', 'media');
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        const dir = path.resolve("public/media");
+        const dir = path.join(process.cwd(), 'public', 'media');
 
         fs.mkdirSync(dir, { recursive: true });
-
         cb(null, dir);
     },
     filename: (req, file, cb) => {
         cb(null, UUIDv4() + "." + mime.getExtension(file.mimetype));
     }
 });
+
 
 export default multer({ storage: storage });

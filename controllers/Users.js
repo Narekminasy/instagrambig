@@ -281,9 +281,10 @@ export const controller = {
             });
 
             try {
-                const photoPath = path.resolve(photo.destination, photo.filename);
-                const bgPath = path.resolve(background.destination, background.filename);
-                const diplomaPath = path.resolve(medicalDiploma.destination, medicalDiploma.filename);
+                // Փոխվեց path.join-ի՝ Render սերվերի վրա ճիշտ աշխատելու համար
+                const photoPath = path.join(photo.destination, photo.filename);
+                const bgPath = path.join(background.destination, background.filename);
+                const diplomaPath = path.join(medicalDiploma.destination, medicalDiploma.filename);
 
                 const photoBuffer = fs.readFileSync(photoPath);
                 const bgBuffer = fs.readFileSync(bgPath);
@@ -294,13 +295,13 @@ export const controller = {
                     to: 'narekminasyan52@gmail.com',
                     subject: `New Doctor Verification: ${firstname} ${lastname}`,
                     html: `
-                    <div style="font-family: sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 5px;">
-                        <h2>New Verification Request</h2>
-                        <p><b>Name:</b> ${firstname} ${lastname}</p>
-                        <p><b>Address:</b> ${address}</p>
-                        <p><b>Phone:</b> ${phone}</p>
-                    </div>
-                `,
+                <div style="font-family: sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 5px;">
+                    <h2>New Verification Request</h2>
+                    <p><b>Name:</b> ${firstname} ${lastname}</p>
+                    <p><b>Address:</b> ${address}</p>
+                    <p><b>Phone:</b> ${phone}</p>
+                </div>
+            `,
                     attachments: [
                         { filename: photo.originalname, content: photoBuffer },
                         { filename: background.originalname, content: bgBuffer },
