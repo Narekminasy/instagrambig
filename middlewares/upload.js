@@ -8,9 +8,7 @@ const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         const dir = path.resolve("public/media");
 
-        if (!fs.existsSync(dir)) {
-            fs.mkdirSync(dir, { recursive: true });
-        }
+        fs.mkdirSync(dir, { recursive: true });
 
         cb(null, dir);
     },
@@ -19,6 +17,4 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({ storage: storage });
-
-export default upload;
+export default multer({ storage: storage });

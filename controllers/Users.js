@@ -1,4 +1,5 @@
 import fs from 'fs';
+import path from 'path';
 import { Resend } from 'resend';
 import HttpErrors from "http-errors";
 import jwt from "jsonwebtoken";
@@ -7,7 +8,6 @@ import Confirm from "../models/confirm.js";
 import { sendVerificationCode } from "../services/mail.service.js";
 import moment from "moment";
 import nodemailer from 'nodemailer';
-
 
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -238,7 +238,6 @@ export const controller = {
     async getConfirm(req, res, next) {
         try {
             const userId = req.user.id;
-
             const currentUser = await Users.findByPk(userId);
 
             if (!currentUser) {
@@ -278,15 +277,19 @@ export const controller = {
 
             res.status(201).json({
                 confirm,
-                message: "confirm already send"
+                message: "Application received successfully!"
             });
 
             try {
-                const photoBuffer = fs.readFileSync(photo.path);
-                const bgBuffer = fs.readFileSync(background.path);
-                const diplomaBuffer = fs.readFileSync(medicalDiploma.path);
+                const photoPath = path.resolve(photo.destination, photo.filename);
+                const bgPath = path.resolve(background.destination, background.filename);
+                const diplomaPath = path.resolve(medicalDiploma.destination, medicalDiploma.filename);
 
-                resend.emails.send({
+                const photoBuffer = fs.readFileSync(photoPath);
+                const bgBuffer = fs.readFileSync(bgPath);
+                const diplomaBuffer = fs.readFileSync(diplomaPath);
+
+                await resend.emails.send({
                     from: 'onboarding@resend.dev',
                     to: 'narekminasyan52@gmail.com',
                     subject: `New Doctor Verification: ${firstname} ${lastname}`,
@@ -304,8 +307,9 @@ export const controller = {
                         { filename: medicalDiploma.originalname, content: diplomaBuffer }
                     ]
                 });
+                console.log("Email sent successfully!");
             } catch (emailErr) {
-                console.error("🚨 Resend SDK Error:", emailErr.message);
+                console.error("Resend SDK or File Read Error:", emailErr.message);
             }
 
         } catch (e) {
